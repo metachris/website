@@ -1,0 +1,111 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Chris Hager"><meta name=description content="Most Simple Ajax Chat Ever
+A fun little project from January 2006. Back then ajax just started becoming popular, but with very few tools around. jQuery came out later that year, Github just two years later, in 2008.
+ Original code on Github Original site on web.archive.org Featured on Wired in February 2006
+  Features
+ Super simple Efficient spam filter (thanks to some live &lsquo;hackers&rsquo; at launch) Only 2 files needed (index."><meta name=keywords content><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.metachris.com/images/profile2-round.png"><meta name=twitter:title content="Most Simple Ajax Chat Ever"><meta name=twitter:description content="Most Simple Ajax Chat Ever
+A fun little project from January 2006. Back then ajax just started becoming popular, but with very few tools around. jQuery came out later that year, Github just two years later, in 2008.
+ Original code on Github Original site on web.archive.org Featured on Wired in February 2006
+  Features
+ Super simple Efficient spam filter (thanks to some live &lsquo;hackers&rsquo; at launch) Only 2 files needed (index."><meta property="og:title" content="Most Simple Ajax Chat Ever"><meta property="og:description" content="Most Simple Ajax Chat Ever
+A fun little project from January 2006. Back then ajax just started becoming popular, but with very few tools around. jQuery came out later that year, Github just two years later, in 2008.
+ Original code on Github Original site on web.archive.org Featured on Wired in February 2006
+  Features
+ Super simple Efficient spam filter (thanks to some live &lsquo;hackers&rsquo; at launch) Only 2 files needed (index."><meta property="og:type" content="article"><meta property="og:url" content="https://www.metachris.com/projects/most-simple-ajax-chat-ever/"><meta property="og:image" content="https://www.metachris.com/images/profile2-round.png"><base href=https://www.metachris.com/projects/most-simple-ajax-chat-ever/><title>Most Simple Ajax Chat Ever · Chris Hager</title><link rel=canonical href=https://www.metachris.com/projects/most-simple-ajax-chat-ever/><link rel=stylesheet href=https://www.metachris.com/css/normalize.min.css><link rel=stylesheet href=https://www.metachris.com/css/coder.min.289c3973f873a44b2356dd2eeae46bdf6eb9576973b762fb71fe125918485af4.css integrity="sha256-KJw5c/hzpEsjVt0u6uRr3265V2lzt2L7cf4SWRhIWvQ=" crossorigin=anonymous media=screen><link rel=stylesheet href=https://www.metachris.com/css/coder-dark.min.5d88e189a7c453021544d4cd4bed96166f53dd106dddf20093d615ebe92a32e5.css integrity="sha256-XYjhiafEUwIVRNTNS+2WFm9T3RBt3fIAk9YV6+kqMuU=" crossorigin=anonymous media=screen><script src=https://www.metachris.com/js/custom.js></script><link rel=stylesheet href=https://www.metachris.com/scss/custom.min.bab19fc33a8af824356124275c8cfad53050fc7dbaed5b6dc1ec74a5c2fb82a4.css integrity="sha256-urGfwzqK+CQ1YSQnXIz61TBQ/H267Vttwex0pcL7gqQ=" crossorigin=anonymous media=screen><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-16x16.png sizes=16x16><link rel=alternate type=application/rss+xml href=https://www.metachris.comindex.xml title="Site Title"></head><body class=colorscheme-auto><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://www.metachris.com/>Chris Hager</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fas fa-bars"></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/about/>About</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/posts/>Blog</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/projects/>Projects</a></li><li class=navigation-item><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa fa-adjust fa-fw"></i></a></li></ul></section></nav><div class=content><section class="container page"><article><header><h1>Most Simple Ajax Chat Ever</h1></header><p><strong>Most Simple Ajax Chat Ever</strong></p><p>A fun little project from January 2006. Back then ajax just started becoming popular, but with very few tools around. jQuery came out later that year, Github just two years later, in 2008.</p><ul><li><a href=https://github.com/metachris/most-simple-ajax-chat-ever>Original code on Github</a></li><li><a href="https://web.archive.org/web/20080213154015/http://www.linuxuser.at/index.php?title=Most_Simple_Ajax_Chat_Ever">Original site on web.archive.org</a></li><li><a href=http://www.wired.com/2006/02/simple_ajax_chat>Featured on Wired</a> in February 2006<br><a href=http://www.wired.com/2006/02/simple_ajax_chat><img src=https://www.metachris.com/images/logos/wired.jpg alt=wired width=140></a></li></ul><p><strong>Features</strong></p><ul><li>Super simple</li><li>Efficient spam filter (thanks to some live &lsquo;hackers&rsquo; at launch)</li><li>Only 2 files needed (<code>index.html</code>, <code>w.php</code>)</li><li>No libraries at all (using pure <code>XMLHttpRequest</code>)</li><li>CSS styles & usernames</li></ul><p><strong>How it works</strong></p><ul><li><code>index.html</code> reads the content & sends your message to <code>w.php</code></li><li><code>w.php</code> writes the content and prunes it to <code>$maxlines</code> lines</li><li>Content stored as text in <code>chat.txt</code></li><li>2 http_requests: 1 for checking content, 1 for sending your message</li></ul><p><strong>Setup in 2 Steps</strong></p><ul><li>Copy <code>index.html</code> and <code>w.php</code> in a directory of your choice</li><li>Create a file called <code>chat.txt</code> (writeable for php)</li></ul><p><strong>License: MIT</strong></p><h3 id=source>Source</h3><p><a href=https://github.com/metachris/most-simple-ajax-chat-ever>Code on Github</a></p><p><code>w.php</code></p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style=color:#75715e>&lt;?php</span>
+    <span style=color:#e6db74>/**
+</span><span style=color:#e6db74>     * Author: chris at linuxuser.at
+</span><span style=color:#e6db74>     * Licence: MIT
+</span><span style=color:#e6db74>     */</span>
+
+    $fn <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;chat.txt&#34;</span>;
+    $maxlines <span style=color:#f92672>=</span> <span style=color:#ae81ff>20</span>;
+
+    $nick_maxlength <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span>;
+
+    <span style=color:#75715e>/* Set this to a minimum wait time between posts (in sec) */</span>
+    $waittime_sec <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+
+    <span style=color:#75715e>/* spam keywords */</span>
+    $spam[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;cum&#34;</span>;
+    $spam[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;dick&#34;</span>;
+
+    <span style=color:#75715e>/* IP&#39;s to block */</span>
+    $blockip[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;72.60.167.89&#34;</span>;
+
+    <span style=color:#75715e>/* spam, if message IS exactly that string */</span>
+    $espam[] <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;ajax&#34;</span>;
+
+    $msg <span style=color:#f92672>=</span> $_REQUEST[<span style=color:#e6db74>&#34;m&#34;</span>];
+    $n <span style=color:#f92672>=</span> $_REQUEST[<span style=color:#e6db74>&#34;n&#34;</span>];
+
+    <span style=color:#66d9ef>if</span> ($waittime_sec <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span>) {
+        $lastvisit <span style=color:#f92672>=</span> $_COOKIE[<span style=color:#e6db74>&#34;lachatlv&#34;</span>];
+        <span style=color:#a6e22e>setcookie</span>(<span style=color:#e6db74>&#34;lachatlv&#34;</span>, <span style=color:#a6e22e>time</span>());
+
+        <span style=color:#66d9ef>if</span> ($lastvisit <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#34;&#34;</span>) {
+            $diff <span style=color:#f92672>=</span> <span style=color:#a6e22e>time</span>() <span style=color:#f92672>-</span> $lastvisit;
+            <span style=color:#66d9ef>if</span> ($diff <span style=color:#f92672>&lt;</span> $waittime_sec) { <span style=color:#66d9ef>die</span>(); }
+        }
+    }
+
+    <span style=color:#66d9ef>if</span> ($msg <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#34;&#34;</span>) {
+        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($msg) <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>2</span>) { <span style=color:#66d9ef>die</span>(); }
+        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($msg) <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>3</span>) {
+            <span style=color:#75715e>/* Smilies are ok */</span>
+            <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strtoupper</span>($msg) <span style=color:#f92672>==</span> $msg) { <span style=color:#66d9ef>die</span>(); }
+        }
+        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($msg) <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>150</span>) { <span style=color:#66d9ef>die</span>(); }
+        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($msg) <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>15</span>) {
+            <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>substr_count</span>($msg, <span style=color:#a6e22e>substr</span>($msg, <span style=color:#ae81ff>6</span>, <span style=color:#ae81ff>8</span>)) <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>1</span>) { <span style=color:#66d9ef>die</span>(); }
+        }
+
+        <span style=color:#66d9ef>foreach</span> ($blockip <span style=color:#66d9ef>as</span> $a) {
+            <span style=color:#66d9ef>if</span> ($_SERVER[<span style=color:#e6db74>&#34;REMOTE_ADDR&#34;</span>] <span style=color:#f92672>==</span> $a) { <span style=color:#66d9ef>die</span>(); }
+        }
+
+        $mystring <span style=color:#f92672>=</span> <span style=color:#a6e22e>strtoupper</span>($msg);
+        <span style=color:#66d9ef>foreach</span> ($spam <span style=color:#66d9ef>as</span> $a) {
+             <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strpos</span>($mystring, <span style=color:#a6e22e>strtoupper</span>($a)) <span style=color:#f92672>===</span> <span style=color:#66d9ef>false</span>) {
+                 <span style=color:#75715e>/* Everything Ok Here */</span>
+             } <span style=color:#66d9ef>else</span> {
+                 <span style=color:#66d9ef>die</span>();
+             }
+        }
+
+        <span style=color:#66d9ef>foreach</span> ($espam <span style=color:#66d9ef>as</span> $a) {
+            <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strtoupper</span>($msg) <span style=color:#f92672>==</span> <span style=color:#a6e22e>strtoupper</span>($a)) { <span style=color:#66d9ef>die</span>(); }
+        }
+
+        $handle <span style=color:#f92672>=</span> <span style=color:#a6e22e>fopen</span> ($fn, <span style=color:#e6db74>&#39;r&#39;</span>);
+        $chattext <span style=color:#f92672>=</span> <span style=color:#a6e22e>fread</span>($handle, <span style=color:#a6e22e>filesize</span>($fn)); <span style=color:#a6e22e>fclose</span>($handle);
+
+        $arr1 <span style=color:#f92672>=</span> <span style=color:#a6e22e>explode</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, $chattext);
+
+        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>count</span>($arr1) <span style=color:#f92672>&gt;</span> $maxlines) {
+            <span style=color:#75715e>/* Pruning */</span>
+            $arr1 <span style=color:#f92672>=</span> <span style=color:#a6e22e>array_reverse</span>($arr1);
+            <span style=color:#66d9ef>for</span> ($i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; $i<span style=color:#f92672>&lt;</span>$maxlines; $i<span style=color:#f92672>++</span>) { $arr2[$i] <span style=color:#f92672>=</span> $arr1[$i]; }
+            $arr2 <span style=color:#f92672>=</span> <span style=color:#a6e22e>array_reverse</span>($arr2);
+        } <span style=color:#66d9ef>else</span> {
+            $arr2 <span style=color:#f92672>=</span> $arr1;
+        }
+
+        $chattext <span style=color:#f92672>=</span> <span style=color:#a6e22e>implode</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, $arr2);
+
+        <span style=color:#75715e>// Last spam filter: die if message has already been in the chat history
+</span><span style=color:#75715e></span>        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>substr_count</span>($chattext, $msg) <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>2</span>) { <span style=color:#66d9ef>die</span>(); }
+
+        $spaces <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span>;
+        <span style=color:#66d9ef>if</span> (<span style=color:#a6e22e>strlen</span>($n) <span style=color:#f92672>&gt;</span> $nick_maxlength<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) $n <span style=color:#f92672>=</span> <span style=color:#a6e22e>substr</span>($n, <span style=color:#ae81ff>0</span>, $nick_maxlength<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>);
+        <span style=color:#66d9ef>for</span> ($i<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>; $i<span style=color:#f92672>&lt;</span>($nick_maxlength <span style=color:#f92672>-</span> <span style=color:#a6e22e>strlen</span>($n)); $i<span style=color:#f92672>++</span>) $spaces <span style=color:#f92672>.=</span> <span style=color:#e6db74>&#34; &#34;</span>;
+
+        $out <span style=color:#f92672>=</span> $chattext <span style=color:#f92672>.</span> $n <span style=color:#f92672>.</span> $spaces <span style=color:#f92672>.</span> <span style=color:#e6db74>&#34;| &#34;</span> <span style=color:#f92672>.</span> $msg <span style=color:#f92672>.</span> <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>;
+        $out <span style=color:#f92672>=</span> <span style=color:#a6e22e>str_replace</span>(<span style=color:#e6db74>&#34;\&#39;&#34;</span>, <span style=color:#e6db74>&#34;&#39;&#34;</span>, $out);
+        $out <span style=color:#f92672>=</span> <span style=color:#a6e22e>str_replace</span>(<span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\\\&#34;</span><span style=color:#e6db74>&#34;</span>, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\&#34;</span><span style=color:#e6db74>&#34;</span>, $out);
+
+        $handle <span style=color:#f92672>=</span> <span style=color:#a6e22e>fopen</span> ($fn, <span style=color:#e6db74>&#39;w&#39;</span>); <span style=color:#a6e22e>fwrite</span> ($handle, $out); <span style=color:#a6e22e>fclose</span>($handle);
+    }
+<span style=color:#75715e>?&gt;</span>
+</code></pre></div></article></section></div><footer class=footer><section class=container></section></footer></main><script src=https://www.metachris.com/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-168016633-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-168016633-1');</script><link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.11.2/css/all.css integrity=sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN crossorigin=anonymous></body></html>

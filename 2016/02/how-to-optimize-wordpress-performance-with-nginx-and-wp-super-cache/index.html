@@ -1,0 +1,125 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Chris Hager"><meta name=description content="This is a simple and effective method how to serve Wordpress pages blazingly fast: produce static HTML files with WP Super Cache, and serve them directly with nginx.
+  WP Super Cache (on Github) is an immensely popular, official Wordpress caching plugin with more than 1 million active installations. Basically the plugin produces static html pages of your posts and pages, and anonymous users can directly load the html without any interaction with PHP."><meta name=keywords content><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.metachris.com/images/profile2-round.png"><meta name=twitter:title content="How to Optimize Wordpress Performance with nginx and WP Super Cache"><meta name=twitter:description content="This is a simple and effective method how to serve Wordpress pages blazingly fast: produce static HTML files with WP Super Cache, and serve them directly with nginx.
+  WP Super Cache (on Github) is an immensely popular, official Wordpress caching plugin with more than 1 million active installations. Basically the plugin produces static html pages of your posts and pages, and anonymous users can directly load the html without any interaction with PHP."><meta property="og:title" content="How to Optimize Wordpress Performance with nginx and WP Super Cache"><meta property="og:description" content="This is a simple and effective method how to serve Wordpress pages blazingly fast: produce static HTML files with WP Super Cache, and serve them directly with nginx.
+  WP Super Cache (on Github) is an immensely popular, official Wordpress caching plugin with more than 1 million active installations. Basically the plugin produces static html pages of your posts and pages, and anonymous users can directly load the html without any interaction with PHP."><meta property="og:type" content="article"><meta property="og:url" content="https://www.metachris.com/2016/02/how-to-optimize-wordpress-performance-with-nginx-and-wp-super-cache/"><meta property="og:image" content="https://www.metachris.com/images/profile2-round.png"><meta property="article:published_time" content="2016-02-21T00:00:00+00:00"><meta property="article:modified_time" content="2016-02-21T00:00:00+00:00"><base href=https://www.metachris.com/2016/02/how-to-optimize-wordpress-performance-with-nginx-and-wp-super-cache/><title>How to Optimize Wordpress Performance with nginx and WP Super Cache · Chris Hager</title><link rel=canonical href=https://www.metachris.com/2016/02/how-to-optimize-wordpress-performance-with-nginx-and-wp-super-cache/><link rel=stylesheet href=https://www.metachris.com/css/normalize.min.css><link rel=stylesheet href=https://www.metachris.com/css/coder.min.289c3973f873a44b2356dd2eeae46bdf6eb9576973b762fb71fe125918485af4.css integrity="sha256-KJw5c/hzpEsjVt0u6uRr3265V2lzt2L7cf4SWRhIWvQ=" crossorigin=anonymous media=screen><link rel=stylesheet href=https://www.metachris.com/css/coder-dark.min.5d88e189a7c453021544d4cd4bed96166f53dd106dddf20093d615ebe92a32e5.css integrity="sha256-XYjhiafEUwIVRNTNS+2WFm9T3RBt3fIAk9YV6+kqMuU=" crossorigin=anonymous media=screen><script src=https://www.metachris.com/js/custom.js></script><link rel=stylesheet href=https://www.metachris.com/scss/custom.min.bab19fc33a8af824356124275c8cfad53050fc7dbaed5b6dc1ec74a5c2fb82a4.css integrity="sha256-urGfwzqK+CQ1YSQnXIz61TBQ/H267Vttwex0pcL7gqQ=" crossorigin=anonymous media=screen><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-16x16.png sizes=16x16><link rel=alternate type=application/rss+xml href=https://www.metachris.comindex.xml title="Site Title"></head><body class=colorscheme-auto><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://www.metachris.com/>Chris Hager</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fas fa-bars"></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/about/>About</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/posts/>Blog</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/projects/>Projects</a></li><li class=navigation-item><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa fa-adjust fa-fw"></i></a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title>How to Optimize Wordpress Performance with nginx and WP Super Cache</h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fas fa-calendar"></i><time datetime=2016-02-21T00:00:00Z>February 21, 2016</time></span>
+<span class=reading-time><i class="fas fa-clock"></i>4 minutes read</span></div><div class=tags><i class="fas fa-tag"></i><a href=https://www.metachris.com/tags/how-to/>How-To</a>
+<span class=separator>•</span>
+<a href=https://www.metachris.com/tags/wordpress/>Wordpress</a>
+<span class=separator>•</span>
+<a href=https://www.metachris.com/tags/server/>Server</a></div></div></header><div><p>This is a simple and effective method how to serve Wordpress pages blazingly fast: <b>produce static HTML files with WP Super Cache, and serve them directly with nginx</b>.</p><ul><li><p><a href=https://wordpress.org/plugins/wp-super-cache/>WP Super Cache</a> (on <a href=https://github.com/Automattic/wp-super-cache>Github</a>) is an immensely popular, official Wordpress caching plugin with more than 1 million active installations. Basically the plugin produces static html pages of your posts and pages, and anonymous users can directly load the html without any interaction with PHP.</p></li><li><p><a href=http://nginx.org/>nginx</a> is a very fast, flexible webserver, reverse proxy, load balancer and cache. If you are using Apache, WP Super Cache explains mod_rewrite rules to achieve the same thing as explained in this post.</p></li></ul><p>After installing the WP Super Cache plugin, enable caching in the plugin settings, and configure the garbage collector timeout according to your needs.</p><p style=text-align:center><img src=https://www.metachris.com/images/posts/wp-caching/wp-super-cache-activate.png style="border:1px solid #ccc;max-width:500px"></p><p>Once enabled, visits by anonymous users (user which are not logged in) will create static .html files in the <code>/wp-content/cache/supercache/</code> directory.</p><hr class=spaced><p>To achieve optimal performance, serve those .html files directly, bypassing PHP altogether. The following nginx config snippet works well for http:// and https:// sites. I save this snippet as <code>wp-supercache.conf</code> and reference it from the various server configs.</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nginx data-lang=nginx><span style=color:#66d9ef>set</span> $cache_uri $request_uri;
+
+<span style=color:#75715e># POST requests and urls with a query string should always go to PHP
+</span><span style=color:#75715e></span><span style=color:#66d9ef>if</span> <span style=color:#e6db74>(</span>$request_method = <span style=color:#e6db74>POST)</span> {
+    <span style=color:#f92672>set</span> $cache_uri <span style=color:#e6db74>&#39;null</span> <span style=color:#e6db74>cache&#39;</span>;
+}
+<span style=color:#66d9ef>if</span> <span style=color:#e6db74>(</span>$query_string <span style=color:#e6db74>!=</span> <span style=color:#e6db74>&#34;&#34;)</span> {
+    <span style=color:#f92672>set</span> $cache_uri <span style=color:#e6db74>&#39;null</span> <span style=color:#e6db74>cache&#39;</span>;
+}
+
+<span style=color:#75715e># Don&#39;t cache uris containing the following segments
+</span><span style=color:#75715e></span><span style=color:#66d9ef>if</span> <span style=color:#e6db74>(</span>$request_uri ~<span style=color:#e6db74>*</span> <span style=color:#e6db74>&#34;(/wp-admin/|/xmlrpc.php|/wp-(app|cron|login|register|mail).php</span>
+                      <span style=color:#e6db74>|wp-.*.php|/feed/|index.php|wp-comments-popup.php</span>
+                      <span style=color:#e6db74>|wp-links-opml.php|wp-locations.php</span> <span style=color:#e6db74>|sitemap(_index)?.xml</span>
+                      <span style=color:#e6db74>|[a-z0-9_-]+-sitemap([0-9]+)?.xml)&#34;)</span> {
+
+    <span style=color:#f92672>set</span> $cache_uri <span style=color:#e6db74>&#39;null</span> <span style=color:#e6db74>cache&#39;</span>;
+}
+
+<span style=color:#75715e># Don&#39;t use the cache for logged-in users or recent commenters
+</span><span style=color:#75715e></span><span style=color:#66d9ef>if</span> <span style=color:#e6db74>(</span>$http_cookie ~<span style=color:#e6db74>*</span> <span style=color:#e6db74>&#34;comment_author|wordpress_[a-f0-9]+</span>
+                     <span style=color:#e6db74>|wp-postpass|wordpress_logged_in&#34;)</span> {
+    <span style=color:#f92672>set</span> $cache_uri <span style=color:#e6db74>&#39;null</span> <span style=color:#e6db74>cache&#39;</span>;
+}
+
+<span style=color:#75715e># Set the cache file
+</span><span style=color:#75715e></span><span style=color:#66d9ef>set</span> $cachefile <span style=color:#e6db74>&#34;/wp-content/cache/supercache/</span>$http_host/$cache_uri/index.html&#34;;
+<span style=color:#66d9ef>if</span> <span style=color:#e6db74>(</span>$https ~<span style=color:#e6db74>*</span> <span style=color:#e6db74>&#34;on&#34;)</span> {
+    <span style=color:#f92672>set</span> $cachefile <span style=color:#e6db74>&#34;/wp-content/cache/supercache/</span>$http_host/$cache_uri/index-https.html&#34;;
+}
+
+<span style=color:#75715e># Add cache file debug info as header
+</span><span style=color:#75715e>#add_header X-Cache-File $cachefile;
+</span><span style=color:#75715e></span>
+<span style=color:#75715e># Try in the following order: (1) cachefile, (2) normal url, (3) php
+</span><span style=color:#75715e></span><span style=color:#66d9ef>location</span> <span style=color:#e6db74>/</span> {
+    <span style=color:#f92672>try_files</span> $cachefile $uri $uri/ <span style=color:#e6db74>/index.php</span>;
+}</code></pre></div><p>This config snippet is based on the nginx.com article <a href=https://www.nginx.com/blog/9-tips-for-improving-wordpress-performance-with-nginx/>9 Tips for Improving WordPress Performance</a>, with added support for https.</p><hr class=spaced><p>Now just include the above snippet from a nginx server config:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nginx data-lang=nginx><span style=color:#66d9ef>server</span> {
+    <span style=color:#f92672>listen</span> <span style=color:#ae81ff>80</span>;
+    <span style=color:#f92672>listen</span> <span style=color:#ae81ff>443</span> <span style=color:#e6db74>ssl</span> <span style=color:#e6db74>http2</span>;
+    <span style=color:#f92672>server_name</span> <span style=color:#e6db74>www.foremka.at</span>;
+
+    <span style=color:#f92672>client_max_body_size</span> <span style=color:#ae81ff>24m</span>;
+    <span style=color:#f92672>gzip</span> <span style=color:#66d9ef>on</span>;
+
+    <span style=color:#f92672>root</span> <span style=color:#e6db74>/var/www/foremka.at/htdocs</span>;
+    <span style=color:#f92672>index</span> <span style=color:#e6db74>index.php</span>;
+
+    <span style=color:#f92672>include</span> <span style=color:#e6db74>snippets/wp-supercache.conf</span>;  <span style=color:#75715e># &lt;-- here we reference the wp-supercache snippet
+</span><span style=color:#75715e></span>
+    <span style=color:#f92672>location</span> ~ <span style=color:#e6db74>\.php$</span> {
+        <span style=color:#f92672>try_files</span> $uri $uri/ <span style=color:#e6db74>/index.php?</span>$args;
+        <span style=color:#f92672>include</span> <span style=color:#e6db74>fastcgi.conf</span>;
+        <span style=color:#f92672>fastcgi_pass</span> <span style=color:#e6db74>unix:/var/run/php5-fpm.sock</span>;
+    }
+
+    <span style=color:#75715e># Caching of media: images, icons, video, audio, HTC
+</span><span style=color:#75715e></span>    <span style=color:#f92672>location</span> ~<span style=color:#e6db74>*</span> <span style=color:#e6db74>\.(?:jpg|jpeg|gif|png|ico|cur|gz|svg|svgz|mp4|ogg|ogv|webm|htc|woff|woff2)</span>$ {
+        <span style=color:#f92672>expires</span> <span style=color:#e6db74>2M</span>;
+        <span style=color:#f92672>add_header</span> <span style=color:#e6db74>Cache-Control</span> <span style=color:#e6db74>&#34;public&#34;</span>;
+    }
+
+    <span style=color:#75715e># CSS and Javascript
+</span><span style=color:#75715e></span>    <span style=color:#f92672>location</span> ~<span style=color:#e6db74>*</span> <span style=color:#e6db74>\.(?:css|js)</span>$ {
+        <span style=color:#f92672>expires</span> <span style=color:#e6db74>1d</span>;
+        <span style=color:#f92672>add_header</span> <span style=color:#e6db74>Cache-Control</span> <span style=color:#e6db74>&#34;public&#34;</span>;
+    }
+}</code></pre></div><p>As always, test and reload the nginx config with <code>nginx -t && nginx -s reload</code>. This
+command will only reload the config if it doesn&rsquo;t contain any errors.</p><hr class=spaced><p>Now let&rsquo;s test if it works:</p><ol><li>The first anonymous visit will call the PHP code and produce the static .html file</li><li>The second anonymous visit will receive the cached html</li></ol><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=color:#75715e># First call to the website serves directly from wordpress</span>
+$ curl -s -D - http://www.foremka.at -o /dev/null
+HTTP/1.1 <span style=color:#ae81ff>200</span> OK
+Server: nginx
+Date: Sun, <span style=color:#ae81ff>21</span> Feb <span style=color:#ae81ff>2016</span> 12:12:42 GMT
+Content-Type: text/html; charset<span style=color:#f92672>=</span>UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Powered-By: PHP/5.5.9-1ubuntu4.14
+Vary: Cookie
+Link: &lt;http://www.foremka.at/wp-json/&gt;; rel<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;https://api.w.org/&#34;</span>
+Link: &lt;http://www.foremka.at/&gt;; rel<span style=color:#f92672>=</span>shortlink
+Strict-Transport-Security: max-age<span style=color:#f92672>=</span><span style=color:#ae81ff>15768000</span>
+
+<span style=color:#75715e># Second call to the website should serve the plain html</span>
+$ curl -s -D - http://www.foremka.at -o /dev/null
+HTTP/1.1 <span style=color:#ae81ff>200</span> OK
+Server: nginx
+Date: Sun, <span style=color:#ae81ff>21</span> Feb <span style=color:#ae81ff>2016</span> 12:13:48 GMT
+Content-Type: text/html; charset<span style=color:#f92672>=</span>utf-8
+Content-Length: <span style=color:#ae81ff>7146</span>
+Last-Modified: Sun, <span style=color:#ae81ff>21</span> Feb <span style=color:#ae81ff>2016</span> 12:12:42 GMT
+Connection: keep-alive
+Vary: Accept-Encoding
+ETag: <span style=color:#e6db74>&#34;56c9a9ba-1bea&#34;</span>
+Strict-Transport-Security: max-age<span style=color:#f92672>=</span><span style=color:#ae81ff>15768000</span>
+Accept-Ranges: bytes</code></pre></div><p>How do we know it didn&rsquo;t go through the PHP WP Super Cache? Because WP Super Cache
+adds it&rsquo;s own header, as you can see in this example with the nginx config disabled:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ curl -s -D - http://www.foremka.at -o /dev/null
+HTTP/1.1 <span style=color:#ae81ff>200</span> OK
+Server: nginx
+Date: Sun, <span style=color:#ae81ff>21</span> Feb <span style=color:#ae81ff>2016</span> 12:15:12 GMT
+Content-Type: text/html; charset<span style=color:#f92672>=</span>UTF-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Vary: Accept-Encoding
+X-Powered-By: PHP/5.5.9-1ubuntu4.14
+Vary: Accept-Encoding, Cookie
+Cache-Control: max-age<span style=color:#f92672>=</span>3, must-revalidate
+WP-Super-Cache: Served supercache file from PHP  &lt;-- WP Super Cache Header
+Strict-Transport-Security: max-age<span style=color:#f92672>=</span><span style=color:#ae81ff>15768000</span></code></pre></div><hr class=spaced><h2 id=troubleshooting>Troubleshooting</h2><p>If you run into problems, you can always enable the WP Super Cache debugging which
+logs a lot of info into a logfile, and manually delete the <code>/wp-content/cache</code> directory
+for a fresh start.</p><p>You can easily verify that WP Super Cache is producing the static files by
+showing all files in the directory <code>wp-content/cache</code>, for instance with the command <code>tree</code>
+or <code>find ./</code>, or by opening the &ldquo;Contents&rdquo; tab in the WP Super Cache Settings
+and then clicking &ldquo;Regenerate cache stats&rdquo;.</p><hr class=spaced><p>And that&rsquo;s it! Enjoy your blazingly fast Wordpress setup 😎🚀</p><p>If you have suggestions or feedback, let me know via <a href=https://twitter.com/@metachris target=_blank>@metachris</a>.</p><hr class=spaced><h2 id=references>References</h2><ul><li><a href=https://wordpress.org/plugins/wp-super-cache/>WP Super Cache</a> (on <a href=https://github.com/Automattic/wp-super-cache>Github</a>)</li><li><a href=https://www.nginx.com/blog/9-tips-for-improving-wordpress-performance-with-nginx/>9 Tips for Improving WordPress Performance</a></li></ul></div><footer><script src=https://utteranc.es/client.js repo=metachris/metachris.com-comments issue-term=og:title theme=preferred-color-scheme crossorigin=anonymous async></script></footer></article></section></div><footer class=footer><section class=container></section></footer></main><script src=https://www.metachris.com/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-168016633-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-168016633-1');</script><link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.11.2/css/all.css integrity=sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN crossorigin=anonymous></body></html>

@@ -1,0 +1,133 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Chris Hager"><meta name=description content="Peter Norvig, the famous American computer scientist and Director of Research at Google Inc., participated in this year&rsquo;s Advent of Code (a series of small programming puzzles), and shared his experience in an interesting blog post.
+The post starts with this amazing collection of Python utility functions, which may also be useful for your next project:
+# Python 3.x import re import numpy as np import math import urllib.request from collections import Counter, defaultdict, namedtuple, deque from functools import lru_cache from itertools import permutations, combinations, chain, cycle, product from heapq import heappop, heappush def Input(day): &#34;Open this day's input file."><meta name=keywords content><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.metachris.com/images/profile2-round.png"><meta name=twitter:title content="Python Utilities by Peter Norvig"><meta name=twitter:description content="Peter Norvig, the famous American computer scientist and Director of Research at Google Inc., participated in this year&rsquo;s Advent of Code (a series of small programming puzzles), and shared his experience in an interesting blog post.
+The post starts with this amazing collection of Python utility functions, which may also be useful for your next project:
+# Python 3.x import re import numpy as np import math import urllib.request from collections import Counter, defaultdict, namedtuple, deque from functools import lru_cache from itertools import permutations, combinations, chain, cycle, product from heapq import heappop, heappush def Input(day): &#34;Open this day's input file."><meta property="og:title" content="Python Utilities by Peter Norvig"><meta property="og:description" content="Peter Norvig, the famous American computer scientist and Director of Research at Google Inc., participated in this year&rsquo;s Advent of Code (a series of small programming puzzles), and shared his experience in an interesting blog post.
+The post starts with this amazing collection of Python utility functions, which may also be useful for your next project:
+# Python 3.x import re import numpy as np import math import urllib.request from collections import Counter, defaultdict, namedtuple, deque from functools import lru_cache from itertools import permutations, combinations, chain, cycle, product from heapq import heappop, heappush def Input(day): &#34;Open this day's input file."><meta property="og:type" content="article"><meta property="og:url" content="https://www.metachris.com/2016/12/peter-norvigs-python-utilities-advent-of-code/"><meta property="og:image" content="https://www.metachris.com/images/profile2-round.png"><meta property="article:published_time" content="2016-12-27T00:00:00+00:00"><meta property="article:modified_time" content="2016-12-27T00:00:00+00:00"><base href=https://www.metachris.com/2016/12/peter-norvigs-python-utilities-advent-of-code/><title>Python Utilities by Peter Norvig · Chris Hager</title><link rel=canonical href=https://www.metachris.com/2016/12/peter-norvigs-python-utilities-advent-of-code/><link rel=stylesheet href=https://www.metachris.com/css/normalize.min.css><link rel=stylesheet href=https://www.metachris.com/css/coder.min.289c3973f873a44b2356dd2eeae46bdf6eb9576973b762fb71fe125918485af4.css integrity="sha256-KJw5c/hzpEsjVt0u6uRr3265V2lzt2L7cf4SWRhIWvQ=" crossorigin=anonymous media=screen><link rel=stylesheet href=https://www.metachris.com/css/coder-dark.min.5d88e189a7c453021544d4cd4bed96166f53dd106dddf20093d615ebe92a32e5.css integrity="sha256-XYjhiafEUwIVRNTNS+2WFm9T3RBt3fIAk9YV6+kqMuU=" crossorigin=anonymous media=screen><script src=https://www.metachris.com/js/custom.js></script><link rel=stylesheet href=https://www.metachris.com/scss/custom.min.bab19fc33a8af824356124275c8cfad53050fc7dbaed5b6dc1ec74a5c2fb82a4.css integrity="sha256-urGfwzqK+CQ1YSQnXIz61TBQ/H267Vttwex0pcL7gqQ=" crossorigin=anonymous media=screen><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-16x16.png sizes=16x16><link rel=alternate type=application/rss+xml href=https://www.metachris.comindex.xml title="Site Title"></head><body class=colorscheme-auto><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://www.metachris.com/>Chris Hager</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle><i class="fas fa-bars"></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/about/>About</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/posts/>Blog</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/projects/>Projects</a></li><li class=navigation-item><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa fa-adjust fa-fw"></i></a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title>Python Utilities by Peter Norvig</h1></div><div class=post-meta><div class=date><span class=posted-on><i class="fas fa-calendar"></i><time datetime=2016-12-27T00:00:00Z>December 27, 2016</time></span>
+<span class=reading-time><i class="fas fa-clock"></i>3 minutes read</span></div><div class=tags><i class="fas fa-tag"></i><a href=https://www.metachris.com/tags/python/>Python</a></div></div></header><div><p><a href=https://en.wikipedia.org/wiki/Peter_Norvig target=_blank>Peter Norvig</a>, the famous American computer scientist and Director of Research at Google Inc., participated in this year&rsquo;s <a href=http://adventofcode.com/ target=_blank>Advent of Code</a> (a series of small programming puzzles), and shared his experience <a href=http://nbviewer.jupyter.org/url/norvig.com/ipython/Advent%20of%20Code.ipynb>in an interesting blog post</a>.</p><p>The post starts with this amazing collection of Python utility functions, which may also be useful for your
+next project:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#75715e># Python 3.x</span>
+<span style=color:#f92672>import</span> re
+<span style=color:#f92672>import</span> numpy <span style=color:#f92672>as</span> np
+<span style=color:#f92672>import</span> math
+<span style=color:#f92672>import</span> urllib.request
+
+<span style=color:#f92672>from</span> collections <span style=color:#f92672>import</span> Counter, defaultdict, namedtuple, deque
+<span style=color:#f92672>from</span> functools   <span style=color:#f92672>import</span> lru_cache
+<span style=color:#f92672>from</span> itertools   <span style=color:#f92672>import</span> permutations, combinations, chain, cycle, product
+<span style=color:#f92672>from</span> heapq       <span style=color:#f92672>import</span> heappop, heappush
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Input</span>(day):
+    <span style=color:#e6db74>&#34;Open this day&#39;s input file.&#34;</span>
+    filename <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;advent2016/input{}.txt&#39;</span><span style=color:#f92672>.</span>format(day)
+    <span style=color:#66d9ef>try</span>:
+        <span style=color:#66d9ef>return</span> open(filename)
+    <span style=color:#66d9ef>except</span> FileNotFoundError:
+        urllib<span style=color:#f92672>.</span>request<span style=color:#f92672>.</span>urlopen(<span style=color:#e6db74>&#34;http://norvig.com/ipython/&#34;</span> <span style=color:#f92672>+</span> filename)
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>transpose</span>(matrix): <span style=color:#66d9ef>return</span> zip(<span style=color:#f92672>*</span>matrix)
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>first</span>(iterable): <span style=color:#66d9ef>return</span> next(iter(iterable))
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>firsttrue</span>(iterable): <span style=color:#66d9ef>return</span> first(it <span style=color:#66d9ef>for</span> it <span style=color:#f92672>in</span> iterable <span style=color:#66d9ef>if</span> it)
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>counttrue</span>(iterable): <span style=color:#66d9ef>return</span> sum(bool(it) <span style=color:#66d9ef>for</span> it <span style=color:#f92672>in</span> iterable)
+
+cat <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;&#39;</span><span style=color:#f92672>.</span>join
+
+<span style=color:#960050;background-color:#1e0010>Ø</span>   <span style=color:#f92672>=</span> frozenset() <span style=color:#75715e># Empty set</span>
+inf <span style=color:#f92672>=</span> float(<span style=color:#e6db74>&#39;inf&#39;</span>)
+BIG <span style=color:#f92672>=</span> <span style=color:#ae81ff>10</span> <span style=color:#f92672>**</span> <span style=color:#ae81ff>999</span>
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>grep</span>(pattern, lines):
+    <span style=color:#e6db74>&#34;Print lines that match pattern.&#34;</span>
+    <span style=color:#66d9ef>for</span> line <span style=color:#f92672>in</span> lines:
+        <span style=color:#66d9ef>if</span> re<span style=color:#f92672>.</span>search(pattern, line):
+            <span style=color:#66d9ef>print</span>(line)
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>groupby</span>(iterable, key<span style=color:#f92672>=</span><span style=color:#66d9ef>lambda</span> it: it):
+    <span style=color:#e6db74>&#34;Return a dic whose keys are key(it) and whose values are all the elements of iterable with that key.&#34;</span>
+    dic <span style=color:#f92672>=</span> defaultdict(list)
+    <span style=color:#66d9ef>for</span> it <span style=color:#f92672>in</span> iterable:
+        dic[key(it)]<span style=color:#f92672>.</span>append(it)
+    <span style=color:#66d9ef>return</span> dic
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>powerset</span>(iterable):
+    <span style=color:#e6db74>&#34;Yield all subsets of items.&#34;</span>
+    items <span style=color:#f92672>=</span> list(iterable)
+    <span style=color:#66d9ef>for</span> r <span style=color:#f92672>in</span> range(len(items)<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>):
+        <span style=color:#66d9ef>for</span> c <span style=color:#f92672>in</span> combinations(items, r):
+            <span style=color:#66d9ef>yield</span> c
+
+<span style=color:#75715e># 2-D points implemented using (x, y) tuples</span>
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>X</span>(point): <span style=color:#66d9ef>return</span> point[<span style=color:#ae81ff>0</span>]
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Y</span>(point): <span style=color:#66d9ef>return</span> point[<span style=color:#ae81ff>1</span>]
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>neighbors4</span>(point): 
+    <span style=color:#e6db74>&#34;The four neighbors (without diagonals).&#34;</span>
+    x, y <span style=color:#f92672>=</span> point
+    <span style=color:#66d9ef>return</span> ((x<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>, y), (x<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, y), (x, y<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>), (x, y<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>))
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>neighbors8</span>(point): 
+    <span style=color:#e6db74>&#34;The eight neifhbors (with diagonals).&#34;</span>
+    x, y <span style=color:#f92672>=</span> point 
+    <span style=color:#66d9ef>return</span> ((x<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>, y), (x<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, y), (x, y<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>), (x, y<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>),
+            (X<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>, y<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>), (x<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, y<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>), (x<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>, y<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>), (x<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, y<span style=color:#f92672>+</span><span style=color:#ae81ff>1</span>))
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>cityblock_distance</span>(p, q<span style=color:#f92672>=</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>)): 
+    <span style=color:#e6db74>&#34;City block distance between two points.&#34;</span>
+    <span style=color:#66d9ef>return</span> abs(X(p) <span style=color:#f92672>-</span> X(q)) <span style=color:#f92672>+</span> abs(Y(p) <span style=color:#f92672>-</span> Y(q))
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>euclidean_distance</span>(p, q<span style=color:#f92672>=</span>(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>)): 
+    <span style=color:#e6db74>&#34;Euclidean (hypotenuse) distance between two points.&#34;</span>
+    <span style=color:#66d9ef>return</span> math<span style=color:#f92672>.</span>hypot(X(p) <span style=color:#f92672>-</span> X(q), Y(p) <span style=color:#f92672>-</span> Y(q))
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>trace1</span>(f):
+    <span style=color:#e6db74>&#34;Print a trace of the input and output of a function on one line.&#34;</span>
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>traced_f</span>(<span style=color:#f92672>*</span>args):
+        result <span style=color:#f92672>=</span> f(<span style=color:#f92672>*</span>args)
+        <span style=color:#66d9ef>print</span>(<span style=color:#e6db74>&#39;{} = {}&#39;</span><span style=color:#f92672>.</span>format(_callstr(f, args), result))
+        <span style=color:#66d9ef>return</span> result
+    <span style=color:#66d9ef>return</span> traced_f
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>trace</span>(f):
+    <span style=color:#e6db74>&#34;Print a trace of the call and args on one line, and the return on another.&#34;</span>
+    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>traced_f</span>(<span style=color:#f92672>*</span>args):
+        <span style=color:#66d9ef>print</span>(_callstr(f, args))
+        trace<span style=color:#f92672>.</span>indent <span style=color:#f92672>+=</span> <span style=color:#ae81ff>1</span>
+        <span style=color:#66d9ef>try</span>:
+            result <span style=color:#f92672>=</span> f(<span style=color:#f92672>*</span>args)
+        <span style=color:#66d9ef>finally</span>:
+            trace<span style=color:#f92672>.</span>indent <span style=color:#f92672>-=</span> <span style=color:#ae81ff>1</span>
+        <span style=color:#66d9ef>print</span>(<span style=color:#e6db74>&#39;{} = {}&#39;</span><span style=color:#f92672>.</span>format(_callstr(f, args), result))
+        <span style=color:#66d9ef>return</span> result
+    <span style=color:#66d9ef>return</span> traced_f
+trace<span style=color:#f92672>.</span>indent <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>_callstr</span>(f, args):
+    <span style=color:#e6db74>&#34;Return a string representing f(*args).&#34;</span>
+    <span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#39;{}{}({})&#39;</span><span style=color:#f92672>.</span>format(<span style=color:#e6db74>&#39;&gt; &#39;</span> <span style=color:#f92672>*</span> trace<span style=color:#f92672>.</span>indent, f<span style=color:#f92672>.</span>__name__, <span style=color:#e6db74>&#39;, &#39;</span><span style=color:#f92672>.</span>join(map(str, args)))
+        
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>astar_search</span>(start, h_func, move_func):
+    <span style=color:#e6db74>&#34;Find a shortest sequence of states from start to a goal state (a state s with h_func(s) == 0).&#34;</span>
+    frontier  <span style=color:#f92672>=</span> [(h_func(start), start)] <span style=color:#75715e># A priority queue, ordered by path length, f = g + h</span>
+    previous  <span style=color:#f92672>=</span> {start: None}  <span style=color:#75715e># start state has no previous state; other states will</span>
+    path_cost <span style=color:#f92672>=</span> {start: <span style=color:#ae81ff>0</span>}     <span style=color:#75715e># The cost of the best path to a state.</span>
+    <span style=color:#66d9ef>while</span> frontier:
+        (f, s) <span style=color:#f92672>=</span> heappop(frontier)
+        <span style=color:#66d9ef>if</span> h_func(s) <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>:
+            <span style=color:#66d9ef>return</span> Path(previous, s)
+        <span style=color:#66d9ef>for</span> s2 <span style=color:#f92672>in</span> move_func(s):
+            new_cost <span style=color:#f92672>=</span> path_cost[s] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>
+            <span style=color:#66d9ef>if</span> s2 <span style=color:#f92672>not</span> <span style=color:#f92672>in</span> path_cost <span style=color:#f92672>or</span> new_cost <span style=color:#f92672>&lt;</span> path_cost[s2]:
+                heappush(frontier, (new_cost <span style=color:#f92672>+</span> h_func(s2), s2))
+                path_cost[s2] <span style=color:#f92672>=</span> new_cost
+                previous[s2] <span style=color:#f92672>=</span> s
+    <span style=color:#66d9ef>return</span> dict(fail<span style=color:#f92672>=</span>True, front<span style=color:#f92672>=</span>len(frontier), prev<span style=color:#f92672>=</span>len(previous))
+                
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>Path</span>(previous, s): 
+    <span style=color:#e6db74>&#34;Return a list of states that lead to state s, according to the previous dict.&#34;</span>
+    <span style=color:#66d9ef>return</span> ([] <span style=color:#66d9ef>if</span> (s <span style=color:#f92672>is</span> None) <span style=color:#66d9ef>else</span> Path(previous, previous[s]) <span style=color:#f92672>+</span> [s])</code></pre></div><p>Read the <a href=http://nbviewer.jupyter.org/url/norvig.com/ipython/Advent%20of%20Code.ipynb>full post</a> for more interesting ideas and elegant solutions.</p></div><footer><script src=https://utteranc.es/client.js repo=metachris/metachris.com-comments issue-term=og:title theme=preferred-color-scheme crossorigin=anonymous async></script></footer></article></section></div><footer class=footer><section class=container></section></footer></main><script src=https://www.metachris.com/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-168016633-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','UA-168016633-1');</script><link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.11.2/css/all.css integrity=sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN crossorigin=anonymous></body></html>

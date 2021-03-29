@@ -1,0 +1,10 @@
+{
+    "search.exclude": {
+        "**/themes/hugo-coder": true
+    },
+    "emmet.excludeLanguages": [],
+    "emmet.includeLanguages": {
+        "markdown": "html"
+    },
+    "emmet.triggerExpansionOnTab": true
+}

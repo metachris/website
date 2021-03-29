@@ -1,0 +1,25 @@
+// Fonts
+// $text-font-family: Merriweather, Georgia, serif;
+// $text-font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+$text-font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,BlinkMacSystemFont,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+// medium: $text-font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
+
+
+$heading-font-family: Lato, Helvetica, sans-serif;
+$code-font-family: 'Source Code Pro', 'Lucida Console', monospace;
+
+// Colors
+$bg-color: #FAFAFA !default;
+$fg-color: #212121 !default;
+$alt-bg-color: #E0E0E0 !default;
+$alt-fg-color: #000 !default;
+$link-color: #1565c0 !default;
+$code-inline-color: #cb49ce !default;
+
+// Colors dark
+$bg-color-dark: #2a2a2a !default;
+$fg-color-dark: rgb(233, 233, 233) !default;
+$alt-bg-color-dark: #424242 !default;
+$alt-fg-color-dark: #dadada !default;
+$link-color-dark: rgb(60, 164, 255) !default;
+$code-inline-color-dark: #ed7aef !default;

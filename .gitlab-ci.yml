@@ -1,0 +1,27 @@
+# All available Hugo versions are listed here: https://gitlab.com/pages/hugo/container_registry
+image: registry.gitlab.com/pages/hugo/hugo_extended:0.72.0
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+# The 'test' job runs on all branches except master
+test:
+  except:
+    - master
+
+  script:
+    - hugo
+
+#
+# The 'pages' job builds and publishes the page on master
+#
+pages:
+  only:
+    - master
+
+  script:
+    - hugo --baseURL https://metachris.gitlab.io/metachris.com-2020/
+
+  artifacts:
+    paths:
+      - public

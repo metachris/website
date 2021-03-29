@@ -1,0 +1,9 @@
+<section class="container page">
+  <article>
+    <header>
+      {{ if ne .Params.hideHeader true }}<h1>{{ .Title }}</h1>{{ end }}
+    </header>
+
+    {{ .Content }}
+  </article>
+</section>

@@ -1,0 +1,129 @@
+baseurl = "https://www.metachris.com"
+title = "Chris Hager"
+
+theme = "mc2020"
+
+languagecode = "en"
+defaultcontentlanguage = "en"
+
+paginate = 20
+canonifyurls = true
+
+pygmentsstyle = "monokai"
+pygmentscodefences = true
+pygmentscodefencesguesssyntax = true
+
+summaryLength = 70
+# disqusShortname = "yourdiscussshortname"
+
+# enableGitInfo = true
+enableEmoji = true
+
+[permalinks]
+  posts = "/:year/:month/:title/"
+  # posts = "/blog/:title/"
+
+[params]
+    author = "Chris Hager"
+    info = "Hacker, Maker, Engineer"
+    description = "Hacker, Maker, Engineer"
+    images = ["images/profile2-round.png"]  # OG & Twitter meta tags on homepage
+    avatarurl = "images/profile2-round.png"
+    # footercontent = "Nice going."
+
+    dateformat = "January 2, 2006"
+
+    hideCopyright = true
+    hideCredits = false
+    since = 2016
+
+    rtl = false
+
+    # Specify light/dark colorscheme
+    # Supported values:
+    # "auto" (use preference set by browser)
+    # "dark" (dark background, light foreground)
+    # "light" (light background, dark foreground) (default)
+    colorscheme = "auto"
+
+    # Series see also post count
+    maxSeeAlsoItems = 5
+
+    # Custom CSS
+    custom_css = []
+
+    # Custom JS
+    custom_js = ['js/custom.js']
+
+    # Custom SCSS
+    custom_scss = ["scss/custom.scss"]
+
+[params.utteranc]
+    repo = "metachris/metachris.com-comments"
+    theme = "preferred-color-scheme"
+    issueTerm = "og:title"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[taxonomies]
+  category = "categories"
+  series = "series"
+  tag = "tags"
+
+[[params.social]]
+    name = "Github"
+    icon = "fab fa-github"
+    weight = 2
+    url = "https://github.com/metachris/"
+#[[params.social]]
+#    name = "Gitlab"
+#    icon = "fab fa-gitlab"
+#    weight = 3
+#    url = "https://gitlab.com/metachris/"
+[[params.social]]
+    name = "Twitter"
+    icon = "fab fa-twitter"
+    weight = 1
+    url = "https://twitter.com/metachris/"
+[[params.social]]
+    name = "LinkedIn"
+    icon = "fab fa-linkedin"
+    weight = 4
+    url = "https://www.linkedin.com/in/metachris/"
+#[[params.social]]
+#    name = "Medium"
+#    icon = "fab fa-medium"
+#    weight = 5
+#    url = "https://medium.com/@metachris"
+[[params.social]]
+    name = "RSS"
+    icon = "fas fa-rss"
+    weight = 6
+    url = "https://metachris.com/index.xml"
+    rel = "alternate"
+    type = "application/rss+xml"
+
+
+[languages]
+    [languages.en]
+        languagename = "English"
+
+        [languages.en.menu]
+            [[languages.en.menu.main]]
+            name = "About"
+            weight = 1
+            url = "about/"
+
+            [[languages.en.menu.main]]
+            name = "Blog"
+            weight = 2
+            url = "posts/"
+
+            [[languages.en.menu.main]]
+            name = "Projects"
+            weight = 3
+            url = "projects/"
+

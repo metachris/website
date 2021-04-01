@@ -38,13 +38,13 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
 
 ---
 
-**Some of the things I currently find particularly interesting:**
+**Some of the topics I work with right now:**
 
 * Programming languages & runtimes
-  * **[TypeScript](https://www.typescriptlang.org/)** - Versatile, great language. Quick to write code that runs everywhere.
-  * **[Python](https://www.python.org/)** - Versatile for scripting and prototyping, only outside of browser context
-  * **[Rust](https://www.rust-lang.org/)** - Concurrency, safety and performance with minimal overhead, no GC. Programs and libraries.
-  * **[Go](https://golang.org/)** - fast, great concurrency, scheduling, GC, simpler. DevOps and backends. Build-speed.
+  * **[TypeScript](https://www.typescriptlang.org/)** - versatile, really good language. Quick to write code that runs everywhere.
+  * **[Python](https://www.python.org/)** - great for scripting and prototyping. Only outside of browser context.
+  * **[Rust](https://www.rust-lang.org/)** - concurrency, safety and performance with minimal overhead, no GC. Programs and libraries.
+  * **[Go](https://golang.org/)** - fast, great concurrency, scheduling, GC. DevOps, services and backends. Build-speed.
   * **[Solidity](https://docs.soliditylang.org/)** - smart contracts for the Ethereum VM
   * **[Crystal](https://crystal-lang.org/)** - new, interesting, experimental
   * **[Deno](https://deno.land/)** - a better V8 runtime / successor of Node.js

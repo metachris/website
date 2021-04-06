@@ -1,0 +1,11 @@
+<div class="post-entry" style="display: flex; flex-direction: row; justify-content: flex-start; align-items: flex-start;">
+
+  <div class="date">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</div>
+  <div>
+    <a class="title" href="{{ .Params.ExternalLink | default .RelPermalink }}">
+      {{ .Title }}
+      {{ if .Params.ExternalLink }}<i class="fas fa-external-link-alt post-link-external"></i>{{ end }}
+    </a>
+  </div>
+
+</div>

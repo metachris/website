@@ -8,16 +8,14 @@
         <h1 class="title">{{ .Title }}</h1>
       </div>
     </header>
+    <ul>
+      {{- range .Paginator.Pages -}}
+        {{ if not .Params.hideInPostlist }}
+          {{- .Render "li" -}}
+        {{ end }}
+      {{- end -}}
+    </ul>
 
-    <div class="postlist">
-      {{ if not .Params.hideInPostlist }}
-        {{- range .Paginator.Pages -}}
-          {{- .Render "entry" -}}
-
-          <hr>
-        {{- end -}}
-      {{ end }}
-    </div>
     {{ partial "pagination.html" . }}
   </section>
 {{ end }}

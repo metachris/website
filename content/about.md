@@ -10,9 +10,10 @@ hideHeader = true
     <img src="/images/profile2-round.png" alt="profile pic" />
 </div>
 
-I am interested in technology and collaboration. Fascinated by what is possible. Appreciate and participate in free software.
+I am fascinated by technology and collaboration. Curious about what is possible. Free software practitioner.
+Dad of two little kids.
 
-Dad of two little kids. Living in Vienna, Austria.
+Vienna, Austria.
 
 <hr style="overflow:auto;">
 
@@ -38,18 +39,17 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
 
 ---
 
-**Some of the topics I work with right now:**
+**Some of my current topics:**
 
+* Code execution environments
 * Programming languages & runtimes
-  * **[TypeScript](https://www.typescriptlang.org/)** - versatile, really good language. Quick to write code that runs everywhere.
-  * **[Python](https://www.python.org/)** - great for scripting and prototyping. Only outside of browser context.
-  * **[Rust](https://www.rust-lang.org/)** - concurrency, safety and performance with minimal overhead, no GC. Programs and libraries.
-  * **[Go](https://golang.org/)** - fast, great concurrency, scheduling, GC. DevOps, services and backends. Build-speed.
-  * **[Solidity](https://docs.soliditylang.org/)** - smart contracts for the Ethereum VM
-  * **[Crystal](https://crystal-lang.org/)** - new, interesting, experimental
-  * **[Deno](https://deno.land/)** - a better V8 runtime / successor of Node.js
-  * **[wasm](https://webassembly.org/)** - WebAssembly
-* Execution environments, Kubernetes
+  * [TypeScript](https://www.typescriptlang.org/) - makes JavaScript fun, and can run on websites, desktop, mobile and backend
+  * [Python](https://www.python.org/) - scripting, data transformations, quick prototyping
+  * [Rust](https://www.rust-lang.org/) - concurrency, safety and performance
+  * [Go](https://golang.org/) - -||-
+  * [Solidity](https://docs.soliditylang.org/) - smart contracts
+  * [Deno](https://deno.land/) - successor of Node.js, a better V8 runtime
+  * [wasm](https://webassembly.org/) - WebAssembly
 * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32)-like devices
 
 ---

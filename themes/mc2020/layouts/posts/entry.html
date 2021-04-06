@@ -1,0 +1,22 @@
+<div class="post-entry">
+
+  <div class="date">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</div>
+  <div class="title">
+    <a class="title" href="{{ .Params.ExternalLink | default .RelPermalink }}">
+      {{ if .Params.ExternalLink }}<i class="fas fa-external-link-alt post-link-external"></i>&nbsp;{{ end }}
+      {{ .Title }}
+    </a>
+  </div>
+  <div class="description">
+    {{ if not .Params.ExternalLink }}
+    {{ .Description | default .Content | htmlUnescape | plainify | truncate 200 }}
+    {{ end }}
+  </div>
+  <!-- <div class="tags">
+    {{- range .Params.Tags -}}
+    <span class="tag">
+      <a href="{{ ( printf "tags/%s/" ( . | urlize ) ) | relLangURL }}">#{{ . | lower }}</a>
+    </span>
+    {{ end }}
+  </div> -->
+</div>

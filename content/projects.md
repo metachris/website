@@ -38,7 +38,7 @@ Notable projects and products I've made significant contributions or co/created:
   * **[Python NEO smart contract workshop](https://github.com/CityOfZion/python-smart-contract-workshop)** - smart contract tutorials for my workshops
   * Docker images: [NEO private network](https://hub.docker.com/r/cityofzion/neo-privatenet), [neo-python](https://hub.docker.com/r/cityofzion/neo-python)
   * [Red Pulse Smart Contract](https://github.com/RedPulse/phx-smart-contract) Migration
-* [Flock Multiplayer Engine](http://flock.bitsworking.com/) - Mobile multiplayer as a service
+* [Flock Multiplayer Engine](https://metachris.gitlab.io/flock-engine) - Mobile multiplayer as a service
 * [USB Looper, Multilooper](https://www.usblooper.com/) - Media player for exhibitions and museums
 * [logzero](https://github.com/metachris/logzero) - Robust and effective logging for Python 2 and 3
 * [python-boilerplate.com](https://www.python-boilerplate.com/) - Python boilerplate generator

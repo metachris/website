@@ -56,6 +56,11 @@ ul {
   margin-bottom: 0.5rem;
 }
 
+.highlight pre {
+  border: 1px solid #676767;
+  border-radius: 4px;
+}
+
 /**
  * Anchors that are added through JS to headers
  */

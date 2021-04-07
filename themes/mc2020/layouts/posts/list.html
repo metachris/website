@@ -10,14 +10,14 @@
     </header>
 
     <div class="postlist">
-      {{ if not .Params.hideInPostlist }}
-        {{- range .Paginator.Pages -}}
+      {{- range .Paginator.Pages -}}
+        {{ if not .Params.hideInPostlist }}
           {{- .Render "entry" -}}
-
           <hr>
-        {{- end -}}
-      {{ end }}
+        {{ end }}
+      {{- end -}}
     </div>
+
     {{ partial "pagination.html" . }}
   </section>
 {{ end }}

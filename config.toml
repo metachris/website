@@ -6,7 +6,7 @@ theme = "mc2020"
 languagecode = "en"
 defaultcontentlanguage = "en"
 
-paginate = 20
+paginate = 25
 canonifyurls = true
 
 pygmentsstyle = "monokai"

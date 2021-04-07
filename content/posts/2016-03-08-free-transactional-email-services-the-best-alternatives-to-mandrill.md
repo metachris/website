@@ -7,7 +7,7 @@ image: images/posts/transactional-email/thumbnail.png
 tags:
 - Server
 - Email
-title: Free Transactional Email Services - The Best Alternatives to Mandrill &amp;
+title: Free Transactional Email Services - The Best Alternatives to Mandrill &
   Co.
 twitterTags: email
 url: /2016/03/free-transactional-email-services-the-best-alternatives-to-mandrill/
@@ -224,9 +224,8 @@ Finally a quick overview in tabular form:
         <td>✅</td>
         <td>✅</td>
         <td>✅</td>
-
 	</tr>
-        <tr>
+    <tr>
 		<td><a href="https://www.sendinblue.com">Sendin Blue</a></td>
 		<td>300/day, 9k/m</td>
 		<td>$7.37</td>

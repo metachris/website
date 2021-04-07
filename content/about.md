@@ -19,13 +19,12 @@ Vienna, Austria.
 
 **Things I'm doing:**
 
-* Blockchain development and smart contracts
+* Blockchain development, smart contracts
 * Backend services, infrastructure, distributed systems
 * APIs, web, mobile, desktop, embedded devices
-* Technical planning, building and starting teams
+* Technical planning, building teams
 * Workshops, speaking, teaching
-
-I keep learning, driven by curiosity.
+* I keep learning, driven by a deep curiosity
 
 ---
 
@@ -43,14 +42,16 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
 
 * Code execution environments
 * Programming languages & runtimes
-  * [TypeScript](https://www.typescriptlang.org/) - makes JavaScript fun, and can run on websites, desktop, mobile and backend
-  * [Python](https://www.python.org/) - scripting, data transformations, quick prototyping
-  * [Rust](https://www.rust-lang.org/) - concurrency, safety and performance
+  * [TypeScript](https://www.typescriptlang.org/) - solid language, makes JavaScript fun
+  * [Python](https://www.python.org/) - scripting, data transformations, prototyping
+  * [Rust](https://www.rust-lang.org/) - concurrency, safety, performance
   * [Go](https://golang.org/) - -||-
   * [Solidity](https://docs.soliditylang.org/) - smart contracts
+  * [C](https://en.wikipedia.org/wiki/C_(programming_language)), [C++](https://en.wikipedia.org/wiki/C%2B%2B) - embedded systems
+  * [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/) - Android native apps & JVM
   * [Deno](https://deno.land/) - successor of Node.js, a better V8 runtime
   * [wasm](https://webassembly.org/) - WebAssembly
-* [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32)-like devices
+ * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32)-like devices
 
 ---
 
@@ -58,7 +59,7 @@ Sharing a studio with <a href="https://twitter.com/overflo">Flo Bittner</a>, in 
 
 <img src="../images/spacebar.pano.jpg" style="border-radius:4px;" alt="the office">
 
-Loving the Austrian landscape (here [Lower Austria](http://maps.google.com/?q=lunz%20am%20see,%20lower%20austria)):
+Loving the Austrian landscape ([Lower Austria](http://maps.google.com/?q=lunz%20am%20see,%20lower%20austria) in this picture):
 
 <img src="../images/nature.jpg" style="border-radius:4px; margin-bottom:0px;" alt="alpine nature">
 

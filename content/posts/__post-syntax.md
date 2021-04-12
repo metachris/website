@@ -1,16 +1,18 @@
 +++
 draft = true
-date = "2021-03-25"
+date = "2021-01-01"
 title = "Test Title"
-images = ["/images/posts/typescript-nodejs.jpg"]
+images = ["/images/posts/typescript-nodejs.jpg"]  # 1200 x 630 px
 tags = ["TypeScript", "webdev"]
 keywords = ["TypeScript", "Node.js", "Project", "Setup", "Template", "Boilerplate"]
 # hideTags = true
 # disableComments = true
-# hideInPostlist: true
+# hideInPostlist = true
 +++
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+<!--more-->
 
 <div class="infobox1">
 

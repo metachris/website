@@ -1,65 +1,73 @@
 +++
 date = "2021-03-24"
-title = "Bootstrapping a TypeScript + Node.js Project"
+title = "Starting a TypeScript Project in 2021"
 images = ["/images/posts/typescript-nodejs.jpg"]
 tags = ["TypeScript", "webdev"]
 keywords = ["TypeScript", "Node.js", "Project", "Setup", "Template", "Boilerplate"]
-# hideTags = true
+url = "/2021/03/bootstrapping-a-typescript-node.js-project/"
 +++
 
-This is a guide for bootstrapping a minimal TypeScript + Node.js project with modern tooling (March 2021).
+This is a guide for starting a TypeScript project in 2021 using modern tooling:
 
-* TypeScript 4, optionally [esbuild](https://esbuild.github.io/)
+* TypeScript 4
+* Optionally using [esbuild](https://esbuild.github.io/)
 * Linting with [typescript-eslint](https://github.com/typescript-eslint/typescript-eslint) ([tslint](https://palantir.github.io/tslint/) is deprecated)
-* Tests with [Jest](https://jestjs.io/docs/getting-started) (and [ts-jest](https://www.npmjs.com/package/ts-jest))
-* CI for testing and linting ([GitHub Actions](https://docs.github.com/en/actions) / [GitLab CI](https://docs.gitlab.com/ee/ci/))
-* Automatic API documentation with [typedoc](https://typedoc.org/guides/doccomments/)
+* Testing with [Jest](https://jestjs.io/docs/getting-started) (and [ts-jest](https://www.npmjs.com/package/ts-jest))
+* Continuous integration ([GitHub Actions](https://docs.github.com/en/actions) / [GitLab CI](https://docs.gitlab.com/ee/ci/))
+* Automatic API documentation with [TypeDoc](https://typedoc.org/guides/doccomments/)
+* Building for Node.js, and browser-compatible modules (using [esbuild](https://esbuild.github.io/) or [webpack](https://webpack.js.org/))
 
 <div class="infobox1">
 
-Example repository: [github.com/metachris/typescript-nodejs-boilerplate](https://github.com/metachris/typescript-nodejs-boilerplate)
+You can clone the [example repository](https://github.com/metachris/typescript-nodejs-boilerplate), or follow the manual steps outlined in this post.
 
-You can either clone the example repository or follow the individual steps outlined in this post.
-
-
+```
+git clone https://github.com/metachris/typescript-nodejs-boilerplate.git
+```
 
 </div>
 
 Notes:
 
-* To bootstrap a web project, you probably want to use a template with hot code reloading specific for web projects. I'll write another post that covers this soon. In the meantime, see the [webpack hot reload docs](https://webpack.js.org/guides/hot-module-replacement/).
-* There are a couple of gotchas for projects that target
-both Node.js and web, since several APIs and available libraries are different (eg. fetch, websockets, Buffer, etc.).
+* You might be interested in using [Deno](https://deno.land/) instead of Node.js. Deno is a more modern V8 runtime with a lot of great features, created by [Ryan Dahl, author of Node.js](https://www.youtube.com/watch?v=M3BM9TB-8yA).
+* To bootstrap a full web project, you might want to use **hot module replacement** (HMR). This is outside the scope of this post. In the meantime, see the [webpack docs](https://webpack.js.org/guides/hot-module-replacement/) and [parcel docs](https://parceljs.org/hmr.html) about HMR.
+* If you want to target both Node.js and browsers, be aware that several APIs are different, most notably `fetch`, `WebSocket`, `Buffer`.
 
 ---
 
-## Steps
+# Steps
 
-1. Create a project and source directory
+Project setup:
+
+1. Create the project and source directories
 1. Create a `package.json`
-1. Get a `.gitignore`, `tsconfig.json`, `tslint.json`
+1. Get a [`.gitignore`](https://github.com/metachris/typescript-nodejs-boilerplate/blob/master/.gitignore), [`tsconfig.json`](https://github.com/metachris/typescript-nodejs-boilerplate/blob/master/tsconfig.json), [`.eslintrc.js`](https://github.com/metachris/typescript-nodejs-boilerplate/blob/master/.eslintrc.js)
 1. Install TypeScript & dependencies
 1. Integrate tests with Jest
-1. Setup CI tasks
-1. Optional: API documentation with typedoc
-1. Optional: esbuild
-1. [Choose a license](https://opensource.guide/legal/#which-open-source-license-is-appropriate-for-my-project)
+1. Setup CI tasks (GitHub Actions, Gitlab CI)
+
+Optional:
+
+1. API documentation with [TypeDoc](https://typedoc.org/guides/doccomments/)
+1. Using [esbuild](https://esbuild.github.io/) to compile and bundle
+1. Building a browser-compatible module for websites
 
 ---
 
-## Basic project setup
+# Basic project setup
 
-Create the directories and install the primary dependencies. These steps use `yarn`, but you
+Create the directories and install the primary dependencies. This guide uses `yarn`, but you
 can also substitute it with `npm` if you prefer.
+
 
 ```bash
 # Create project folder
 mkdir my-project
 cd my-project
 
-# Create source folder and file
+# Create source folder and files
 mkdir src
-touch src/main.ts src/main.test.ts
+touch src/main.ts src/lib.ts src/lib.test.ts
 
 # Create a package.json
 yarn init
@@ -89,6 +97,13 @@ git init
 git commit -am "initial commit"
 ```
 
+<div class="infobox1">
+
+I recommend to use `src/main.ts` just as entrypoint, and put the real code into other files (eg. `src/lib.ts`). This
+makes testing easier because the code can be included without running the entrypoint code, and allows for easier cross-target building and code branches (eg. Node.js and web).
+
+</div>
+
 Add `scripts` to your `package.json`:
 
 ```json
@@ -114,12 +129,12 @@ Now you can run `yarn run`, `yarn lint`, `yarn test`, `yarn build` and `yarn ts-
 
 ---
 
-## Tests with Jest
+# Tests with Jest
 
 You can write [Jest tests](https://jestjs.io/docs/getting-started) [like this](https://github.com/metachris/typescript-nodejs-boilerplate/blob/master/src/main.test.ts):
 
 ```typescript
-import { greet } from './main'
+import { greet } from './lib'
 
 test('the data is peanut butter', () => {
   expect(1).toBe(1)
@@ -138,7 +153,7 @@ See also:
 
 ---
 
-## Continuous integration: GitHub Actions / GitLab CI
+# Continuous integration: GitHub Actions / GitLab CI
 
 You probably want to run the tests and linter on every code push.
 
@@ -193,12 +208,12 @@ lint-and-test:
 
 ---
 
-## API documentation with typedoc
+# API documentation with TypeDoc
 
-You can auto-generate API documentation from the TyoeScript source files using [typedoc](https://typedoc.org/guides/doccomments/). The generated documentation can be published to GitHub / GitLab pages through the CI:
+You can auto-generate API documentation from the TyoeScript source files using [TypeDoc](https://typedoc.org/guides/doccomments/). The generated documentation can be published to GitHub / GitLab pages through the CI:
 
-* Install [typedoc](https://typedoc.org/guides/doccomments/): `yarn add -D typedoc`
-* Add `docs` script to `package.json`: `"docs": "typedoc --entryPoints src/main.ts"`
+* Install [TypeDoc](https://typedoc.org/guides/doccomments/): `yarn add -D typedoc`
+* Add `docs` script to `package.json`: `"docs": "typedoc --entryPoints src/lib.ts"`
 * You can now generate the documentation with `yarn docs`. The resulting HTML is saved in `docs/`.
 * Publish to pages through CI:
   * [GitHub pages](https://pages.github.com/): Add [`.github/workflows/deploy-gh-pages.yml`](https://github.com/metachris/typescript-nodejs-boilerplate/blob/master/.github/workflows/deploy-gh-pages.yml) and enable pages in GitHub repo settings
@@ -207,7 +222,7 @@ You can auto-generate API documentation from the TyoeScript source files using [
 
 ---
 
-## esbuild
+# esbuild
 
 [esbuild](https://esbuild.github.io/) is an extremely fast JavaScript bundler that
 can also compile a [large subset of TypeScript code](https://esbuild.github.io/content-types/#typescript). It's typically used as a webpack alternative, although it can also be used for many Node.js projects.
@@ -223,6 +238,9 @@ yarn add -D esbuild
 # Compile and bundle
 ./node_modules/.bin/esbuild src/main.ts --bundle --platform=node --outfile=dist/out.js
 
+# Same, but with minification and sourcemaps
+./node_modules/.bin/esbuild src/main.ts --bundle --platform=node --minify --sourcemap=external --outfile=dist/out.js
+
 # Run the bundled output
 node dist/out.js
 ```
@@ -233,7 +251,51 @@ Further reading:
 
 ---
 
-## References & documentation
+# Building a browser-compatible module
+
+If your code is meant to be used both by Node.js and websites in browsers, you can also generate a browser compatible module with esbuild, webpack or other bundlers.
+
+Using `esbuild`:
+
+```bash
+# Bundle browser module
+./node_modules/.bin/esbuild src/main.ts --bundle --outfile=dist/browser.js
+
+# Same, but with minification and sourcemaps
+./node_modules/.bin/esbuild src/main.ts --bundle --minify --sourcemap=external --outfile=dist/browser.js
+```
+
+#### Accessing DOM properties (`window`, `document`)
+
+In `tsconfig.json`, add `DOM` to the [list of libraries](https://www.typescriptlang.org/tsconfig#lib):
+
+```js
+"lib": ["ES6", "DOM"]
+```
+
+Create a separate entrypoint for browser builds, eg. `src/main-browser.ts`. There you can attach custom properties to `window` like this:
+
+```js
+import { greet } from './lib'
+(window as any).greet = greet
+```
+
+Now simply use that entrypoint with `esbuild` when building for the browser:
+
+
+```bash
+./node_modules/.bin/esbuild src/main-browser.ts --bundle --outfile=dist/browser.js
+```
+
+<div class="infobox1">
+
+If you prefer to use [webpack](https://webpack.js.org/), take a look at this [webpack.config.js](https://github.com/metachris/micropython-ctl/blob/master/webpack.config.js) for inspiration.
+
+</div>
+
+---
+
+# References & documentation
 
 * **[Example repository](https://github.com/metachris/typescript-nodejs-boilerplate)**
 * [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
@@ -242,8 +304,10 @@ Further reading:
 * [typescript-eslint docs](https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/README.md)
 * [Jest docs](https://jestjs.io/docs/getting-started)
 * [GitHub Actions](https://docs.github.com/en/actions), [GitLab CI](https://docs.gitlab.com/ee/ci/)
+* [webpack](https://webpack.js.org/)
 
 Reach out with feedback and ideas:
 
 * [twitter.com/metachris](https://twitter.com/metachris)
 * [github.com/metachris/typescript-nodejs-boilerplate/issues](https://github.com/metachris/typescript-nodejs-boilerplate/issues)
+* Leave a commend below :point_down:

@@ -38,10 +38,15 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
 
 ---
 
-**Some of my current topics:**
+**Some of my current topics and interests:**
 
 * Code execution environments
-* Programming languages & runtimes
+* Programming languages: [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [Rust](https://www.rust-lang.org/), [Go](https://golang.org/), [Solidity](https://docs.soliditylang.org/), [C](https://en.wikipedia.org/wiki/C_(programming_language)), [C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
+ * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32)-like devices
+ * Ethereum & Eth 2
+
+
+<!-- * Programming languages & runtimes
   * [TypeScript](https://www.typescriptlang.org/) - solid language, makes JavaScript fun
   * [Python](https://www.python.org/) - scripting, data transformations, prototyping
   * [Rust](https://www.rust-lang.org/) - concurrency, safety, performance
@@ -52,7 +57,7 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
   * [Deno](https://deno.land/) - successor of Node.js, a better V8 runtime
   * [wasm](https://webassembly.org/) - WebAssembly
  * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32)-like devices
-
+ -->
 ---
 
 Sharing a studio with <a href="https://twitter.com/overflo">Flo Bittner</a>, in the west of Vienna:

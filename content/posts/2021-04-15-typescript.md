@@ -6,7 +6,7 @@ tags = ["TypeScript", "WebDev"]
 keywords = ["TypeScript", "Node.js", "Project", "Setup", "Template", "Boilerplate"]
 +++
 
-This is a guide for starting a TypeScript project in 2021, using modern tooling:
+This is a guide for starting a TypeScript project in 2021 with modern tooling.
 
 * [TypeScript](https://www.typescriptlang.org/) 4
 * Optionally [esbuild](https://esbuild.github.io/) - to bundle for browsers and Node.js
@@ -20,19 +20,13 @@ This is a guide for starting a TypeScript project in 2021, using modern tooling:
 
 <div class="infobox1">
 
-There is an [example repository](https://github.com/metachris/typescript-boilerplate) - you can clone it like this:
+Take a look at the [example repository](https://github.com/metachris/typescript-boilerplate). You can clone it like this:
 
 ```
 git clone https://github.com/metachris/typescript-boilerplate.git
 ```
 
 </div>
-
-Notes:
-
-* You might be interested in using [Deno](https://deno.land/) instead of Node.js. Deno is a more modern V8 runtime with a lot of great features, created by [Ryan Dahl, author of Node.js](https://www.youtube.com/watch?v=M3BM9TB-8yA).
-* To bootstrap a full web project, you might want to use **hot module replacement** (HMR). This is outside the scope of this post. In the meantime, see the [webpack docs](https://webpack.js.org/guides/hot-module-replacement/) and [parcel docs](https://parceljs.org/hmr.html) about HMR.
-* If you want to target both Node.js and browsers, be aware that several APIs are different, most notably `fetch`, `WebSocket`, `Buffer`.
 
 ---
 
@@ -418,7 +412,7 @@ I hope this guide is helpful. Please leave your comments below.
 
 ---
 
-## References & documentation
+## References
 
 * [Example repository](https://github.com/metachris/typescript-boilerplate)
 * [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
@@ -427,6 +421,13 @@ I hope this guide is helpful. Please leave your comments below.
 * [typescript-eslint docs](https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/README.md)
 * [Jest docs](https://jestjs.io/docs/getting-started)
 * [GitHub Actions](https://docs.github.com/en/actions), [GitLab CI](https://docs.gitlab.com/ee/ci/)
+
+## Notes
+
+* You might be interested in using [Deno](https://deno.land/) instead of Node.js. Deno is a modern V8 runtime with a lot of great features, created by [Ryan Dahl, author of Node.js](https://www.youtube.com/watch?v=M3BM9TB-8yA). It's still somewhat new and experimental though.
+* To bootstrap a full web project, you might want to use **hot module replacement** (HMR). This is outside the scope of this post. In the meantime, see the [webpack docs](https://webpack.js.org/guides/hot-module-replacement/) and [parcel docs](https://parceljs.org/hmr.html) about HMR.
+* If you want to target both Node.js and browsers, be aware that several APIs are different, most notably `fetch`, `WebSocket`, `Buffer`.
+
 
 ---
 

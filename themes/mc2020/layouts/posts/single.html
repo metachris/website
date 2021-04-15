@@ -1,43 +1,59 @@
 {{ define "title" }}
-  {{ .Title }} · {{ .Site.Title }}
+{{ .Title }} · {{ .Site.Title }}
 {{ end }}
 {{ define "content" }}
-  <section class="container post">
-    <article>
-      <header>
-        <div class="post-title">
-          <h1 class="title">{{ .Title }}</h1>
-        </div>
-        <div class="post-meta">
-          <div class="date">
-            <span class="posted-on">
-              <i class="fas fa-calendar"></i>
-              <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
-                {{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
-              </time>
-            </span>
-            <span class="reading-time">
-              <i class="fas fa-clock"></i>
-              {{ i18n "reading_time" .ReadingTime }}
-            </span>
-          </div>
-          {{ with .Page.Params.Categories }}{{ partial "taxonomy/categories.html" . }}{{ end }}
-          {{ if ne .Params.hideTags true }}{{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}{{ end }}
-        </div>
-      </header>
-
-      <div>
-        {{ .Content }}
+<section class="container post">
+  <article>
+    <header>
+      <div class="post-title">
+        <h1 class="title">{{ .Title }}</h1>
       </div>
+      <div class="post-meta">
+        <div class="date">
+          <span class="posted-on">
+            <i class="fas fa-calendar"></i>
+            <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
+              {{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+            </time>
+          </span>
+          <span class="reading-time">
+            <i class="fas fa-clock"></i>
+            {{ i18n "reading_time" .ReadingTime }}
+          </span>
+        </div>
+        {{ with .Page.Params.Categories }}{{ partial "taxonomy/categories.html" . }}{{ end }}
+        {{ if ne .Params.hideTags true }}{{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}{{ end }}
+      </div>
+    </header>
 
-      <footer>
-        {{ partial "posts/series.html" . }}
-        {{ partial "posts/disqus.html" . }}
-        {{ partial "posts/commento.html" . }}
-        {{ partial "posts/utteranc.html" . }}
-      </footer>
-    </article>
+    <div>
+      {{ .Content }}
+    </div>
 
-    {{ partial "posts/math.html" . }}
-  </section>
+    <hr>
+
+    {{ if ne .Params.hideEmailSubscribe true }}
+    <form class="tinyletter-subscribe" action="https://tinyletter.com/metachris" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/metachris', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+      <div>
+
+        <label for="tlemail"><small>⚡️</small> &nbsp;Subscribe to new posts:</label>&nbsp;
+        <input type="email" style="width:140px" name="email" id="tlemail" placeholder="email" />&nbsp;
+        <input type="hidden" value="1" name="embed" /><input type="submit" value="Subscribe" />
+      </div>
+      <div style="padding-top: 8px;"><small>(two mails per month max)</small></div>
+    </form>
+    <hr>
+    {{ end }}
+
+    <footer>
+      {{ partial "posts/series.html" . }}
+      {{ partial "posts/disqus.html" . }}
+      {{ partial "posts/commento.html" . }}
+      {{ partial "posts/utteranc.html" . }}
+    </footer>
+  </article>
+
+  {{ partial "posts/math.html" . }}
+</section>
+
 {{ end }}

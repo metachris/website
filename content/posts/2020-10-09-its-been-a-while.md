@@ -22,4 +22,4 @@ I'm not yet sure if I will keep it just for myself or also share or stream on Tw
 
 You can reach me at https://twitter.com/metachris. I will announce new posts and projects through my newsletter at [tinyletter.com/metachris](https://tinyletter.com/metachris) - subscribe if you want to receive irregular emails and updates!
 
-It's 1am now and I'm going to bed! See you soon. ♥️
+See you soon. ♥️

@@ -64,6 +64,9 @@ enableEmoji = true
     issueTerm = "og:title"
 
 [markup]
+  [markup.tableOfContents]
+    endLevel = 3
+
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true

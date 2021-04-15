@@ -2,7 +2,7 @@
 date = "2021-01-29"
 title = "MicroPython-Ctl - a TypeScript library for talking to MicroPython devices"
 images = ["/images/posts/micropython-ctl/landscape1.jpg"]
-tags = ["MicroPython", "WebDev", "Python"]
+tags = ["MicroPython", "WebDev", "Python", "TypeScript"]
 hideTags = true
 +++
 

@@ -120,7 +120,6 @@ h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
 }
 
 .tinyletter-subscribe {
-
   padding:2rem;
   text-align:center;
   margin: 4rem 0rem;
@@ -128,4 +127,9 @@ h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
   margin: auto;
   font-size: 1.6rem;
   border-radius: 3px;
+}
+
+.tinyletter-subscribe input {
+  padding: 4px;
+  font-size: 14px;
 }

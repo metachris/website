@@ -43,7 +43,7 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
 * Code execution environments
 * Programming languages: [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [Rust](https://www.rust-lang.org/), [Go](https://golang.org/), [Solidity](https://docs.soliditylang.org/), [C](https://en.wikipedia.org/wiki/C_(programming_language)), [C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
  * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32)-like devices
- * Ethereum & Eth 2
+ * Ethereum, Eth 2, NEO
 
 
 <!-- * Programming languages & runtimes

@@ -67,7 +67,7 @@ git commit -am <span style=color:#e6db74>&#34;initial commit&#34;</span>
     <span style=color:#f92672>&#34;scripts&#34;</span>: {
         <span style=color:#f92672>&#34;cli&#34;</span>: <span style=color:#e6db74>&#34;ts-node src/cli.ts&#34;</span>,
         <span style=color:#f92672>&#34;test&#34;</span>: <span style=color:#e6db74>&#34;jest&#34;</span>,
-        <span style=color:#f92672>&#34;lint&#34;</span>: <span style=color:#e6db74>&#34;tslint -c tslint.json &#39;src/**/*.ts&#39;&#34;</span>,
+        <span style=color:#f92672>&#34;lint&#34;</span>: <span style=color:#e6db74>&#34;eslint src/ --ext .js,.jsx,.ts,.tsx&#34;</span>,
         <span style=color:#f92672>&#34;build&#34;</span>: <span style=color:#e6db74>&#34;tsc -p tsconfig.json&#34;</span>,
         <span style=color:#f92672>&#34;clean&#34;</span>: <span style=color:#e6db74>&#34;rm -rf dist build&#34;</span>,
         <span style=color:#f92672>&#34;ts-node&#34;</span>: <span style=color:#e6db74>&#34;ts-node&#34;</span>

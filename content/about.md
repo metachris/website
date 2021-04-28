@@ -10,21 +10,27 @@ hideHeader = true
     <img src="/images/profile2-round.png" alt="profile pic" />
 </div>
 
-I am fascinated by technology and collaboration. Curious about what is possible. Free software practitioner.
+<!-- I am fascinated by technology and collaboration, endlessly curious about what is possible.
+Free software advocate, participating in hacker spaces and collaborative collectives.
+Dad of two little kids. -->
+
+Hi. My name is Chris. I am fascinated by technology and collaboration, endlessly curious about what is possible.
+Advocate of free software. Participating in hacker spaces, collectives and communities.
 Dad of two little kids.
 
-Vienna, Austria.
+Living in Vienna, Austria.
 
 <hr style="overflow:auto;">
 
 **Things I'm doing:**
 
-* Blockchain development, smart contracts
-* Backend services, infrastructure, distributed systems
-* APIs, web, mobile, desktop, embedded devices
+* Blockchain development, infra, smart contracts
+* Backend services, APIs, distributed systems
+* Web, mobile, desktop, embedded
 * Technical planning, building teams
 * Workshops, speaking, teaching
-* I keep learning, driven by a deep curiosity
+
+I keep learning driven by deep curiosity.
 
 ---
 
@@ -38,12 +44,15 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
 
 ---
 
-**Some of my current topics and interests:**
+**Some current topics and interests:**
 
 * Code execution environments
-* Programming languages: [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [Rust](https://www.rust-lang.org/), [Go](https://golang.org/), [Solidity](https://docs.soliditylang.org/), [C](https://en.wikipedia.org/wiki/C_(programming_language)), [C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
- * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32)-like devices
- * Ethereum, Eth 2, NEO
+* [Go](https://golang.org/), [Rust](https://www.rust-lang.org/), [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [MicroPython](http://micropython.org/), [Solidity](https://docs.soliditylang.org/), [C / C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
+ * WebAssembly as smart contract runtime
+ * Ethereum, Eth2, Neo, Cosmos / CosmWasm
+ * Toying with Raspberry and ESP devices
+
+ <!-- * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32) devices -->
 
 
 <!-- * Programming languages & runtimes

@@ -28,6 +28,7 @@ I've been working with those groups and organisations in recent years:
 
 Notable projects and products I've made significant contributions or co/created:
 
+* **[TypeScript Boilerplate](https://github.com/metachris/typescript-boilerplate)** - modern TypeScript project setup, for Node.js and browsers
 * **[frischluft.works](http://frischluft.works)** - CO2 monitor with charts and alerts (MicroPython, ESP32)
 * **[micropython-ctl](https://github.com/metachris/micropython-ctl)** - TypeScript library for talking to MicroPython devices
 * **[Nash App](https://play.google.com/store/apps/details?id=io.nash.app)** - Cryptocurrency wallet & platform (cross-platform)

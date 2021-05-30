@@ -14,7 +14,7 @@ hideHeader = true
 Free software advocate, participating in hacker spaces and collaborative collectives.
 Dad of two little kids. -->
 
-Hi. My name is Chris. I am fascinated by technology and collaboration, endlessly curious about what is possible.
+Hi, My name is Chris. I am interested in technology and collaboration.
 Advocate of free software. Participating in hacker spaces, collectives and communities.
 Dad of two little kids.
 

@@ -5,6 +5,8 @@ slug = "projects"
 
 <!-- #### <i class="fas fa-user-friends"></i> &nbsp;Groups & Communities -->
 
+You can find most of my recent projects on Github: https://github.com/metachris
+
 ---
 
 I've been working with those groups and organisations in recent years:
@@ -26,8 +28,16 @@ I've been working with those groups and organisations in recent years:
 
 ## Products and Projects
 
-Notable projects and products I've made significant contributions or co/created:
+<!-- Notable projects and products I've made significant contributions or co/created: -->
 
+Notable projects and products, in more or less chronological order (most recent first):
+
+<!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
+
+* **[go-ethutils](https://github.com/metachris/go-ethutils)** - Go helpers for Ethereum data analysis
+* **[flashbots-failed-tx](https://github.com/metachris/flashbots-failed-tx)** - Detecting failed 0-gas and Flashbots transactions
+* [flashbots-failed-tx Telegram Bot](https://github.com/metachris/flashbots-tx-telegram-bot) - Telegram bot for :point_up:
+* **[eth-go-bindings](https://github.com/metachris/eth-go-bindings)** - Go bindings for Ethereum smart contracts: ERC20, ERC165 and ERC721, ERC777, ERC1155
 * **[TypeScript Boilerplate](https://github.com/metachris/typescript-boilerplate)** - modern TypeScript project setup, for Node.js and browsers
 * **[frischluft.works](http://frischluft.works)** - CO2 monitor with charts and alerts (MicroPython, ESP32)
 * **[micropython-ctl](https://github.com/metachris/micropython-ctl)** - TypeScript library for talking to MicroPython devices
@@ -61,10 +71,10 @@ Notable projects and products I've made significant contributions or co/created:
 
 <!-- I enjoy speaking, teaching and holding workshops. -->
 
-NEO Smart Contract Development with Python:
+Neo Smart Contract Development with Python:
 
-* NEO DevCon 2018 (San Francisco). Workshop held at Github headquarters ([YouTube](https://www.youtube.com/watch?v=sk8tu1uqRDI), 2h 17m)
-* NEO World Tour 2018 (Vienna, Austria)
+* Neo DevCon 2018 (San Francisco). Workshop held at Github headquarters ([YouTube](https://www.youtube.com/watch?v=sk8tu1uqRDI), 2h 17m)
+* Neo World Tour 2018 (Vienna, Austria)
 * Blockchain Summit 2019 (Vienna, Austria)
 * Resouces: [code used in workshop](https://github.com/CityOfZion/python-smart-contract-workshop)
 

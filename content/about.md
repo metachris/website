@@ -24,11 +24,11 @@ Living in Vienna, Austria.
 
 **Things I'm doing:**
 
-* Blockchain development, infra, smart contracts
+* Blockchain tooling, infrastructure, smart contracts
 * Backend services, APIs, distributed systems
 * Web, mobile, desktop, embedded
 * Technical planning, building teams
-* Workshops, speaking, teaching
+* Workshops, teaching, speaking
 
 I keep learning driven by deep curiosity.
 
@@ -38,19 +38,16 @@ I keep learning driven by deep curiosity.
 
 * [chris@linuxuser.at](mailto:chris@linuxuser.at)
 * [twitter.com/metachris](https://twitter.com/metachris)
-
-
-You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](https://linkedin.com/in/metachris).
+* [github.com/metachris](https://github.com/metachris)
 
 ---
 
 **Some current topics and interests:**
 
 * Code execution environments
-* [Go](https://golang.org/), [Rust](https://www.rust-lang.org/), [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [MicroPython](http://micropython.org/), [Solidity](https://docs.soliditylang.org/), [C / C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
- * WebAssembly as smart contract runtime
- * Ethereum, Eth2, Neo, Cosmos / CosmWasm
- * Toying with Raspberry and ESP devices
+* [Go](https://golang.org/), [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [Rust](https://www.rust-lang.org/), [Solidity](https://docs.soliditylang.org/), [C / C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
+ * WebAssembly as smart contract runtime, Eth/2, Neo, Cosmos / CosmWasm
+ * Toying with Raspberry, ESP devices and [MicroPython](http://micropython.org/)
 
  <!-- * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32) devices -->
 
@@ -69,7 +66,7 @@ You can also find me on [GitHub](https://github.com/metachris) and [LinkedIn](ht
  -->
 ---
 
-Sharing a studio with <a href="https://twitter.com/overflo">Flo Bittner</a>, in the west of Vienna:
+Sharing a studio with <a href="https://twitter.com/overflo">Flo Bittner</a>, in the [west of Vienna](https://www.google.com/maps/place/Kauergasse,+1150+Wien/@48.1589133,16.1941559,11.69z/data=!4m5!3m4!1s0x476da804a323a76d:0xc1e13233e0100b73!8m2!3d48.1914738!4d16.3236574):
 
 <img src="../images/spacebar.pano.jpg" style="border-radius:4px;" alt="the office">
 

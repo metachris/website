@@ -34,9 +34,8 @@ Notable projects and products, in more or less chronological order (most recent 
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
-* **[go-ethutils](https://github.com/metachris/go-ethutils)** - Go helpers for Ethereum data analysis
-* **[flashbots-failed-tx](https://github.com/metachris/flashbots-failed-tx)** - Detecting failed 0-gas and Flashbots transactions
-* [flashbots-failed-tx Telegram Bot](https://github.com/metachris/flashbots-tx-telegram-bot) - Telegram bot for :point_up:
+* **[go-ethutils](https://github.com/metachris/go-ethutils)** - Ethereum data analysis helpers
+* **[flashbots utilities](https://github.com/metachris/flashbots)** - Detecting failed 0-gas and Flashbots transactions
 * **[eth-go-bindings](https://github.com/metachris/eth-go-bindings)** - Go bindings for Ethereum smart contracts: ERC20, ERC165 and ERC721, ERC777, ERC1155
 * **[TypeScript Boilerplate](https://github.com/metachris/typescript-boilerplate)** - modern TypeScript project setup, for Node.js and browsers
 * **[frischluft.works](http://frischluft.works)** - CO2 monitor with charts and alerts (MicroPython, ESP32)

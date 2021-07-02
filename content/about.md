@@ -39,14 +39,15 @@ I keep learning driven by deep curiosity.
 * [chris@linuxuser.at](mailto:chris@linuxuser.at)
 * [twitter.com/metachris](https://twitter.com/metachris)
 * [github.com/metachris](https://github.com/metachris)
+* [linkedin.com/in/metachris](https://www.linkedin.com/in/metachris/)
 
 ---
 
 **Some current topics and interests:**
 
-* Code execution environments
+* Code execution environments & smart contract runtimes
 * [Go](https://golang.org/), [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [Rust](https://www.rust-lang.org/), [Solidity](https://docs.soliditylang.org/), [C / C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
- * WebAssembly as smart contract runtime, Eth/2, Neo, Cosmos / CosmWasm
+ * MEV, Eth/2, Neo, Cosmos / CosmWasm, WebAssembly
  * Toying with Raspberry, ESP devices and [MicroPython](http://micropython.org/)
 
  <!-- * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32) devices -->

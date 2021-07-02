@@ -5,13 +5,14 @@ slug = "projects"
 
 <!-- #### <i class="fas fa-user-friends"></i> &nbsp;Groups & Communities -->
 
-You can find most of my recent projects on Github: https://github.com/metachris
+You can find many of my projects on Github: https://github.com/metachris
 
 ---
 
-I've been working with those groups and organisations in recent years:
+I've been collaborating with various groups and organisations:
 
 * [Nash](https://nash.io/)
+* [Flashbots](https://github.com/flashbots/pm)
 * [Red Pulse](https://www.redpulse.com/)
 * [City of Zion](https://www.cityofzion.io)
 * [NEO Smart Economy](https://neo.org/contributors)
@@ -34,8 +35,8 @@ Notable projects and products, in more or less chronological order (most recent 
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
-* **[go-ethutils](https://github.com/metachris/go-ethutils)** - Ethereum data analysis helpers
-* **[flashbots utilities](https://github.com/metachris/flashbots)** - Detecting failed 0-gas and Flashbots transactions
+* **[go-ethutils](https://github.com/metachris/go-ethutils)** - Ethereum data analysis utilities
+* **[flashbots utilities](https://github.com/metachris/flashbots)** - [Flashbots](https://github.com/flashbots/pm) tooling & data analysis
 * **[eth-go-bindings](https://github.com/metachris/eth-go-bindings)** - Go bindings for Ethereum smart contracts: ERC20, ERC165 and ERC721, ERC777, ERC1155
 * **[TypeScript Boilerplate](https://github.com/metachris/typescript-boilerplate)** - modern TypeScript project setup, for Node.js and browsers
 * **[frischluft.works](http://frischluft.works)** - CO2 monitor with charts and alerts (MicroPython, ESP32)
@@ -80,6 +81,7 @@ Neo Smart Contract Development with Python:
 Various:
 
 * Teaching software engineering and Android app development at [University of Applied Sciences Vienna](https://www.technikum-wien.at/en/)
-* [Git Workshops at Metalab Vienna, 2014](https://metalab.at/wiki/GIT_Workshop_2014)
+* Space Generation Advisory Council Congress (Daejeon, South Korea, 2012)
+* [Git Workshops at Metalab Vienna](https://metalab.at/wiki/GIT_Workshop_2014)
 * [Chaos Radio - About One Laptop Per Child (70 min, German)](http://cre.fm/cre071-one-laptop-per-child)
 * [Rundfreifunk - Live at 24C3, about One Laptop Per Child (15 min, English)](http://www.public-ip.org/sendung-211.html)

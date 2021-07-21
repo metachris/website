@@ -14,8 +14,8 @@ hideHeader = true
 Free software advocate, participating in hacker spaces and collaborative collectives.
 Dad of two little kids. -->
 
-Hi, My name is Chris. I am interested in technology and collaboration.
-Advocate of free software. Participating in hacker spaces, collectives and communities.
+Hi, my name is Chris. I am interested in technology and collaboration.
+Advocate of free software, participating in hacker spaces, collectives and communities.
 Dad of two little kids.
 
 Living in Vienna, Austria.
@@ -46,9 +46,10 @@ I keep learning driven by deep curiosity.
 **Some current topics and interests:**
 
 * Code execution environments & smart contract runtimes
+* Ethereum/Eth2, Neo, Cosmos / CosmWasm, WebAssembly, MEV
+* Multiparty computation and threshold signatures
 * [Go](https://golang.org/), [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [Rust](https://www.rust-lang.org/), [Solidity](https://docs.soliditylang.org/), [C / C++](https://en.wikipedia.org/wiki/C%2B%2B), [Java](https://en.wikipedia.org/wiki/Java_(programming_language)), [Kotlin](https://kotlinlang.org/), [Deno](https://deno.land/), [wasm](https://webassembly.org/)
- * MEV, Eth/2, Neo, Cosmos / CosmWasm, WebAssembly
- * Toying with Raspberry, ESP devices and [MicroPython](http://micropython.org/)
+ * Toying with ESP devices and [MicroPython](http://micropython.org/)
 
  <!-- * [MicroPython](http://micropython.org/) and [ESP32](https://en.wikipedia.org/wiki/ESP32) devices -->
 

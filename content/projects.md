@@ -12,7 +12,6 @@ You can find many of my projects on Github: https://github.com/metachris
 I've been collaborating with various groups and organisations:
 
 * [Nash](https://nash.io/)
-* [Flashbots](https://github.com/flashbots/pm)
 * [Red Pulse](https://www.redpulse.com/)
 * [City of Zion](https://www.cityofzion.io)
 * [NEO Smart Economy](https://neo.org/contributors)
@@ -22,6 +21,8 @@ I've been collaborating with various groups and organisations:
 * [Metalab Vienna](https://metalab.at/)
 * [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en)
 * [Doctors Without Borders](https://www.msf.org/)
+
+<!-- * [Flashbots](https://github.com/flashbots/pm) -->
 
 <!-- #### <i class="far fa-star"></i> &nbsp;Notable Projects -->
 
@@ -35,6 +36,7 @@ Notable projects and products, in more or less chronological order (most recent 
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
+* **[eth-reorg-monitor](https://github.com/metachris/eth-reorg-monitor)** - Ethereum reorg monitor
 * **[go-ethutils](https://github.com/metachris/go-ethutils)** - Ethereum data analysis utilities
 * **[flashbots utilities](https://github.com/metachris/flashbots)** - [Flashbots](https://github.com/flashbots/pm) tooling & data analysis
 * **[eth-go-bindings](https://github.com/metachris/eth-go-bindings)** - Go bindings for Ethereum smart contracts: ERC20, ERC165 and ERC721, ERC777, ERC1155

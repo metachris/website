@@ -11,7 +11,7 @@ A fun little project from January 2006. Back then ajax just started becoming pop
 
 * [Original code on Github](https://github.com/metachris/most-simple-ajax-chat-ever)
 * [Original site on web.archive.org](https://web.archive.org/web/20080213154015/http://www.linuxuser.at/index.php?title=Most_Simple_Ajax_Chat_Ever)
-* [Featured on Wired](http://www.wired.com/2006/02/simple_ajax_chat) in February 2006<br>
+* [Featured on Wired](https://web.archive.org/web/20161222202258/https://www.wired.com/2006/02/simple_ajax_chat/) in February 2006<br>
   <a href="http://www.wired.com/2006/02/simple_ajax_chat"><img src="/images/logos/wired.jpg" alt="wired" width="140" /></a>
 
 **Features**

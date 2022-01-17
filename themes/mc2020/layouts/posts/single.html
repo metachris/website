@@ -21,8 +21,6 @@
             {{ i18n "reading_time" .ReadingTime }}
           </span>
         </div>
-        {{ with .Page.Params.Categories }}{{ partial "taxonomy/categories.html" . }}{{ end }}
-        {{ if ne .Params.hideTags true }}{{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}{{ end }}
       </div>
     </header>
 
@@ -33,17 +31,44 @@
     <hr>
 
     {{ if ne .Params.hideEmailSubscribe true }}
-    <form class="tinyletter-subscribe" action="https://tinyletter.com/metachris" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/metachris', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
-      <div>
-
-        <label for="tlemail">📬 &nbsp;Subscribe to ~monthly project updates:</label>&nbsp;
-        <input type="email" style="width:140px" name="email" id="tlemail" placeholder="your email" />&nbsp;
-        <input type="hidden" value="1" name="embed" /><input type="submit" value="Subscribe" />
-      </div>
-      <!-- <div style="padding-top: 2px;"><small>(about one mail per month)</small></div> -->
-    </form>
+    <div class="subscribe" style="padding:0px 10px; font-style: italic; font-size: 1.6rem;">
+      If you enjoyed this post, consider subscribing to <a href="https://tinyletter.com/metachris">my newsletter</a> or following me on <a href="https://twitter.com/metachris">Twitter</a> to get updates on my new blog posts and current projects.
+    </div>
     <hr>
     {{ end }}
+
+    <div style="height:14px;"></div>
+
+    <div style="float: right">
+      {{ with .Page.Params.Categories }}{{ partial " taxonomy/categories.html" . }}{{ end }} {{ if ne .Params.hideTags true }}{{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}{{ end }} </div>
+
+    <div class="bottomAbout" style="display: flex;">
+      <div>
+        <a href="https://twitter.com/metachris">
+          <img src="/images/profile2-round.png" alt="Chris" class="profile" style="max-width:80px;">
+        </a>
+      </div>
+      <div style="padding-left:20px;" class="me">
+        <a href="https://twitter.com/metachris">Chris Hager
+          <br>
+          <i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+
+    <div class="bottom-post-links">
+      <div class="prev">
+        {{ if .PrevInSection }}
+        <span class="title">OLDER POST</span><br>
+        <a href="{{.PrevInSection.Permalink}}">{{ .PrevInSection.Title }}</a>
+        {{ end }}
+      </div>
+      <div class="next">
+        {{ if .NextInSection }}
+        <span class="title">NEWER POST</span><br>
+        <a href="{{.NextInSection.Permalink}}">{{ .NextInSection.Title }}</a>
+        {{ end }}
+      </div>
+    </div>
 
     <footer>
       {{ partial "posts/series.html" . }}

@@ -16,9 +16,9 @@ Dad of two little kids. -->
 
 Hi, my name is Chris. I am interested in technology and collaboration.
 Advocate of free software, participating in hacker spaces, collectives and communities.
-Dad of two little kids.
+Dad of two little kids, living in Vienna, Austria.
 
-Living in Vienna, Austria.
+Engineer at Flashbots :zap: :robot:
 
 <hr style="overflow:auto;">
 

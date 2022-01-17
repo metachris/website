@@ -133,3 +133,42 @@ h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
   padding: 4px;
   font-size: 14px;
 }
+
+.bottomAbout .me {
+  .fab {
+    color: #939191;
+    transition-duration: 0.5s;
+  }
+
+  a {
+    color: #212121;
+  }
+
+  a:hover {
+    text-decoration: none;
+    .fab {
+      color: #212121;
+    }
+  }
+}
+
+
+.bottom-post-links {
+  display: flex;
+  margin-top: 40px;
+  margin-bottom: 40px;
+
+  div {
+    flex-grow: 1;
+    max-width: 50%;
+  }
+
+  .next {
+    text-align: right;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    color: #939393;
+  }
+}

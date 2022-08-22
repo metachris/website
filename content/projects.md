@@ -9,8 +9,9 @@ You can find many of my projects on Github: https://github.com/metachris
 
 ---
 
-I've been collaborating with various groups and organisations:
+Previous collaborations include:
 
+* [Flashbots](https://flashbots.net/)
 * [Nash](https://nash.io/)
 * [Red Pulse](https://www.redpulse.com/)
 * [City of Zion](https://www.cityofzion.io)
@@ -30,12 +31,13 @@ I've been collaborating with various groups and organisations:
 
 ## Products and Projects
 
-<!-- Notable projects and products I've made significant contributions or co/created: -->
-
-Notable projects and products, in more or less chronological order (most recent first):
+Some projects and products I find notable, in more or less chronological order (most recent first):
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
+* **[mev-boost](https://github.com/flashbots/mev-boost)** - mev-boost allows proof-of-stake Ethereum consensus clients to outsource block construction
+* **[mev-boost relay](https://github.com/flashbots/mev-boost-relay)** - the relay sits between Eth2 proposers/mev-boost and block builders
+* **[go-boost-utils](https://github.com/flashbots/go-boost-utils)** - Eth2 builder API types and signing for Golang
 * **[eth-reorg-monitor](https://github.com/metachris/eth-reorg-monitor)** - Ethereum reorg monitor
 * **[go-ethutils](https://github.com/metachris/go-ethutils)** - Ethereum data analysis utilities
 * **[flashbots utilities](https://github.com/metachris/flashbots)** - [Flashbots](https://github.com/flashbots/pm) tooling & data analysis

@@ -36,7 +36,7 @@ Some projects and products I find notable, in more or less chronological order (
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
 * **[mev-boost](https://github.com/flashbots/mev-boost)** - mev-boost allows proof-of-stake Ethereum consensus clients to outsource block construction
-* **[mev-boost relay](https://github.com/flashbots/mev-boost-relay)** - the relay sits between Eth2 proposers/mev-boost and block builders
+* **[mev-boost relay](https://github.com/flashbots/mev-boost-relay)** - the relay sits between Eth2 proposers/mev-boost and block builders (live at [boost-relay.flashbots.net](https://boost-relay.flashbots.net/))
 * **[go-boost-utils](https://github.com/flashbots/go-boost-utils)** - Eth2 builder API types and signing for Golang
 * **[eth-reorg-monitor](https://github.com/metachris/eth-reorg-monitor)** - Ethereum reorg monitor
 * **[go-ethutils](https://github.com/metachris/go-ethutils)** - Ethereum data analysis utilities

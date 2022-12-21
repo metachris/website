@@ -10,4 +10,8 @@ Internal pages:
 
 * Example 404 page: http://localhost:1313/404.html
 
-Getting started: `hugo server --buildDrafts`
+## Getting started
+
+```
+docker run -p 1313:1313 --rm -it -w /mnt -v $(pwd):/mnt jakejarvis/hugo-extended:0.82.0 serve --bind 0.0.0.0 --buildDrafts
+```

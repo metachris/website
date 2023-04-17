@@ -37,11 +37,13 @@ Some projects and products I find notable, in more or less chronological order (
 
 * **[mev-boost](https://github.com/flashbots/mev-boost)** - mev-boost allows proof-of-stake Ethereum consensus clients to outsource block construction
 * **[mev-boost relay](https://github.com/flashbots/mev-boost-relay)** - the relay sits between Eth2 proposers/mev-boost and block builders (live at [boost-relay.flashbots.net](https://boost-relay.flashbots.net/))
-* **[go-boost-utils](https://github.com/flashbots/go-boost-utils)** - Eth2 builder API types and signing for Golang
-* **[eth-reorg-monitor](https://github.com/metachris/eth-reorg-monitor)** - Ethereum reorg monitor
-* **[go-ethutils](https://github.com/metachris/go-ethutils)** - Ethereum data analysis utilities
-* **[flashbots utilities](https://github.com/metachris/flashbots)** - [Flashbots](https://github.com/flashbots/pm) tooling & data analysis
-* **[eth-go-bindings](https://github.com/metachris/eth-go-bindings)** - Go bindings for Ethereum smart contracts: ERC20, ERC165 and ERC721, ERC777, ERC1155
+* [Flashbots Protect](https://github.com/flashbots/rpc-endpoint) - RPC endpoint to be used with wallets (eg. MetaMask)
+* [prio-load-balancer](https://github.com/flashbots/prio-load-balancer) - Priority JSON-RPC load balancer with retries, and SGX RA-TLS support
+* [go-boost-utils](https://github.com/flashbots/go-boost-utils) - Eth2 builder API types and signing for Golang
+* [eth-reorg-monitor](https://github.com/metachris/eth-reorg-monitor) - Ethereum reorg monitor
+* [go-ethutils](https://github.com/metachris/go-ethutils) - Ethereum data analysis utilities
+* [flashbots utilities](https://github.com/metachris/flashbots) - [Flashbots](https://github.com/flashbots/pm) tooling & data analysis
+* [eth-go-bindings](https://github.com/metachris/eth-go-bindings) - Go bindings for Ethereum smart contracts: ERC20, ERC165 and ERC721, ERC777, ERC1155
 * **[TypeScript Boilerplate](https://github.com/metachris/typescript-boilerplate)** - modern TypeScript project setup, for Node.js and browsers
 * **[frischluft.works](http://frischluft.works)** - CO2 monitor with charts and alerts (MicroPython, ESP32)
 * **[micropython-ctl](https://github.com/metachris/micropython-ctl)** - TypeScript library for talking to MicroPython devices
@@ -73,7 +75,10 @@ Some projects and products I find notable, in more or less chronological order (
 
 ## Talks, Workshops & Teaching
 
-<!-- I enjoy speaking, teaching and holding workshops. -->
+More recent:
+
+* [Shanghai Debrief w/ Galaxy - What's next for Ethereum?](https://twitter.com/i/spaces/1LyxBqrnanYJN?s=20)
+* [zeroknowledge.fm Episode 243: Dive Back into MEV with Alex Stokes and Chris Hager](https://zeroknowledge.fm/243-2/)
 
 Neo Smart Contract Development with Python:
 

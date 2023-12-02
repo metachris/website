@@ -29,6 +29,10 @@ enableEmoji = true
     description = "Hacker, Maker, Engineer"
     images = ["images/profile2-round.png"]  # OG & Twitter meta tags on homepage
     avatarurl = "images/profile2-round.png"
+
+    favicon_32 = "images/favicon-32px.png"
+    favicon_16 = "images/favicon-16px.png"
+
     # footercontent = "Nice going."
 
     dateformat = "January 2, 2006"

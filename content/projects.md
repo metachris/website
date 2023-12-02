@@ -9,7 +9,7 @@ You can find many of my projects on Github: https://github.com/metachris
 
 ---
 
-Previous collaborations include:
+Noteworthy collaborations include:
 
 * [Flashbots](https://flashbots.net/)
 * [Nash](https://nash.io/)
@@ -23,8 +23,6 @@ Previous collaborations include:
 * [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en)
 * [Doctors Without Borders](https://www.msf.org/)
 
-<!-- * [Flashbots](https://github.com/flashbots/pm) -->
-
 <!-- #### <i class="far fa-star"></i> &nbsp;Notable Projects -->
 
 ---
@@ -35,10 +33,14 @@ Some projects and products I find notable, in more or less chronological order (
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
-* **[mev-boost](https://github.com/flashbots/mev-boost)** - mev-boost allows proof-of-stake Ethereum consensus clients to outsource block construction
-* **[mev-boost relay](https://github.com/flashbots/mev-boost-relay)** - the relay sits between Eth2 proposers/mev-boost and block builders (live at [boost-relay.flashbots.net](https://boost-relay.flashbots.net/))
-* [Flashbots Protect](https://github.com/flashbots/rpc-endpoint) - RPC endpoint to be used with wallets (eg. MetaMask)
+* **[SUAVE](https://github.com/flashbots/suave-specs)** - Single Unifying Auction for Value Expression
+* **[MEV-Boost](https://github.com/flashbots/mev-boost)** - MEV-Boost allows Ethereum proposers to outsource block construction
+* **[MEV-Boost Relay](https://github.com/flashbots/mev-boost-relay)** - Mediator between Ethereum proposers and block builders (i.e. [boost-relay.flashbots.net](https://boost-relay.flashbots.net/))
+* **[Mempool Dumpster](https://mempool-dumpster.flashbots.net/index.html)** - Free Ethereum Mempool transactions archive
+* **[Relayscan.io](https://www.relayscan.io/)** - MEV-Boost ecosystem statistics
+* **[Flashbots Protect](https://github.com/flashbots/rpc-endpoint)** - RPC endpoint to be used with wallets (eg. MetaMask)
 * [prio-load-balancer](https://github.com/flashbots/prio-load-balancer) - Priority JSON-RPC load balancer with retries, and SGX RA-TLS support
+* [go-template](https://github.com/flashbots/go-template) - Golang project template and toolbox, to get started quickly and right-footed.
 * [go-boost-utils](https://github.com/flashbots/go-boost-utils) - Eth2 builder API types and signing for Golang
 * [eth-reorg-monitor](https://github.com/metachris/eth-reorg-monitor) - Ethereum reorg monitor
 * [go-ethutils](https://github.com/metachris/go-ethutils) - Ethereum data analysis utilities

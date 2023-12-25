@@ -1,82 +1,83 @@
 <!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=author content="Chris Hager"><meta name=description content="A thread pool is a group of pre-instantiated, idle threads which stand ready to be given work. These are often preferred over instantiating new threads for each task when there is a large number of (short) tasks to be done rather than a small number of long ones.
- Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time."><meta name=keywords content><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.metachris.com/images/profile2-round.png"><meta name=twitter:title content="Python Thread Pool"><meta name=twitter:description content="A thread pool is a group of pre-instantiated, idle threads which stand ready to be given work. These are often preferred over instantiating new threads for each task when there is a large number of (short) tasks to be done rather than a small number of long ones.
- Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time."><meta property="og:title" content="Python Thread Pool"><meta property="og:description" content="A thread pool is a group of pre-instantiated, idle threads which stand ready to be given work. These are often preferred over instantiating new threads for each task when there is a large number of (short) tasks to be done rather than a small number of long ones.
- Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time."><meta property="og:type" content="article"><meta property="og:url" content="https://www.metachris.com/2016/04/python-threadpool/"><meta property="og:image" content="https://www.metachris.com/images/profile2-round.png"><meta property="article:published_time" content="2016-04-11T00:00:00+00:00"><meta property="article:modified_time" content="2016-04-11T00:00:00+00:00"><base href=https://www.metachris.com/2016/04/python-threadpool/><title>Python Thread Pool · Chris Hager</title><link rel=canonical href=https://www.metachris.com/2016/04/python-threadpool/><link rel=stylesheet href=https://www.metachris.com/css/normalize.min.css><link rel=stylesheet href=https://www.metachris.com/css/coder.min.da2b6b200241fd26faec376e50c1f447e157a1b7ca08b7fddc6eb68508199646.css integrity="sha256-2itrIAJB/Sb67DduUMH0R+FXobfKCLf93G62hQgZlkY=" crossorigin=anonymous media=screen><link rel=stylesheet href=https://www.metachris.com/css/coder-dark.min.555a1ef52d640ac2e953517fb98e13f034f07996d15b0efd41f0c2cb15932293.css integrity="sha256-VVoe9S1kCsLpU1F/uY4T8DTweZbRWw79QfDCyxWTIpM=" crossorigin=anonymous media=screen><script src=https://www.metachris.com/js/custom.js></script><link rel=stylesheet href=https://www.metachris.com/scss/custom.min.db3d6cd8845fc4effb6f357e28b9a5c49a60a87cbf845b4d14868639c668a017.css integrity="sha256-2z1s2IRfxO/7bzV+KLmlxJpgqHy/hFtNFIaGOcZooBc=" crossorigin=anonymous media=screen><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-32px.png sizes=32x32><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-16px.png sizes=16x16><link rel=alternate type=application/rss+xml href=https://www.metachris.comindex.xml title="Site Title"></head><body class=colorscheme-auto><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://www.metachris.com/>Chris Hager</a>
-<input type=checkbox id=menu-toggle>
+Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time. The solution is to utilize is a thread pool, spawning a fixed number of threads to download all the URLs from a queue, 50 at a time."><meta name=keywords content><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="https://www.metachris.com/images/profile2-round.png"><meta name=twitter:title content="Python Thread Pool"><meta name=twitter:description content="A thread pool is a group of pre-instantiated, idle threads which stand ready to be given work. These are often preferred over instantiating new threads for each task when there is a large number of (short) tasks to be done rather than a small number of long ones.
+Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time. The solution is to utilize is a thread pool, spawning a fixed number of threads to download all the URLs from a queue, 50 at a time."><meta property="og:title" content="Python Thread Pool"><meta property="og:description" content="A thread pool is a group of pre-instantiated, idle threads which stand ready to be given work. These are often preferred over instantiating new threads for each task when there is a large number of (short) tasks to be done rather than a small number of long ones.
+Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time. The solution is to utilize is a thread pool, spawning a fixed number of threads to download all the URLs from a queue, 50 at a time."><meta property="og:type" content="article"><meta property="og:url" content="https://www.metachris.com/2016/04/python-threadpool/"><meta property="og:image" content="https://www.metachris.com/images/profile2-round.png"><meta property="article:section" content="posts"><meta property="article:published_time" content="2016-04-11T00:00:00+00:00"><meta property="article:modified_time" content="2016-04-11T00:00:00+00:00"><base href=https://www.metachris.com/2016/04/python-threadpool/><title>Python Thread Pool · Chris Hager
+</title><link rel=canonical href=https://www.metachris.com/2016/04/python-threadpool/><link rel=stylesheet href=https://www.metachris.com/css/normalize.min.css><link rel=stylesheet href=https://www.metachris.com/css/coder.min.da2b6b200241fd26faec376e50c1f447e157a1b7ca08b7fddc6eb68508199646.css integrity="sha256-2itrIAJB/Sb67DduUMH0R+FXobfKCLf93G62hQgZlkY=" crossorigin=anonymous media=screen><link rel=stylesheet href=https://www.metachris.com/css/coder-dark.min.555a1ef52d640ac2e953517fb98e13f034f07996d15b0efd41f0c2cb15932293.css integrity="sha256-VVoe9S1kCsLpU1F/uY4T8DTweZbRWw79QfDCyxWTIpM=" crossorigin=anonymous media=screen><script src=https://www.metachris.com/js/custom.js></script><link rel=stylesheet href=https://www.metachris.com/scss/custom.min.db3d6cd8845fc4effb6f357e28b9a5c49a60a87cbf845b4d14868639c668a017.css integrity="sha256-2z1s2IRfxO/7bzV+KLmlxJpgqHy/hFtNFIaGOcZooBc=" crossorigin=anonymous media=screen><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-32px.png sizes=32x32><link rel=icon type=image/png href=https://www.metachris.com/images/favicon-16px.png sizes=16x16><link rel=alternate type=application/rss+xml href=https://www.metachris.comindex.xml title="Site Title"></head><body class=colorscheme-auto><main class=wrapper><nav class=navigation><section class=container><a class=navigation-title href=https://www.metachris.com/>Chris Hager
+</a><input type=checkbox id=menu-toggle>
 <label class="menu-button float-right" for=menu-toggle><i class="fas fa-bars"></i></label><ul class=navigation-list><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/about/>About</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/posts/>Writing</a></li><li class=navigation-item><a class=navigation-link href=https://www.metachris.com/projects/>Projects</a></li><li class=navigation-item><a id=dark-mode-toggle class=colorscheme-toggle><i class="fa fa-adjust fa-fw"></i></a></li></ul></section></nav><div class=content><section class="container post"><article><header><div class=post-title><h1 class=title>Python Thread Pool</h1></div><div class=post-meta><div class=date><span class=posted-on><time datetime=2016-04-11T00:00:00Z>April 2016</time></span></div></div></header><div><blockquote><p>A thread pool is a group of pre-instantiated, idle threads which stand ready to be given work.
-These are often preferred over instantiating new threads for each task when there is a large number of (short) tasks to be done rather than a small number of long ones.</p></blockquote><p>Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time. The solution is to utilize is a thread pool, spawning a fixed number of threads to download all the URLs from a queue, 50 at a time.</p><p>In order to use thread pools, Python 3.x includes the <a href=https://docs.python.org/dev/library/concurrent.futures.html#threadpoolexecutor>ThreadPoolExecutor</a> class, and both Python 2.x and 3.x have <code>multiprocessing.dummy.ThreadPool</code>. <a href=https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.dummy><code>multiprocessing.dummy</code></a> replicates the API of <a href=https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing>multiprocessing</a> but is no more than a wrapper around the <a href=https://docs.python.org/3/library/threading.html#module-threading>threading</a> module.</p><p>The downside of <code>multiprocessing.dummy.ThreadPool</code> is that in Python 2.x, it is not possible to exit the program with eg. a KeyboardInterrupt before all tasks from the queue have been finished by the threads.</p><p>In order to achieve an interruptable thread queue in Python 2.x and 3.x (for use in <a href=https://www.metachris.com/pdfx>PDFx</a>), I&rsquo;ve build this code, inspired by <a href=http://stackoverflow.com/a/7257510>stackoverflow.com/a/7257510</a>. It implements a thread pool which works with Python 2.x and 3.x:</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> sys
-IS_PY2 <span style=color:#f92672>=</span> sys<span style=color:#f92672>.</span>version_info <span style=color:#f92672>&lt;</span> (<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>0</span>)
-
-<span style=color:#66d9ef>if</span> IS_PY2:
-    <span style=color:#f92672>from</span> Queue <span style=color:#f92672>import</span> Queue
-<span style=color:#66d9ef>else</span>:
-    <span style=color:#f92672>from</span> queue <span style=color:#f92672>import</span> Queue
-
-<span style=color:#f92672>from</span> threading <span style=color:#f92672>import</span> Thread
-
-
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Worker</span>(Thread):
-    <span style=color:#e6db74>&#34;&#34;&#34; Thread executing tasks from a given tasks queue &#34;&#34;&#34;</span>
-    <span style=color:#66d9ef>def</span> __init__(self, tasks):
-        Thread<span style=color:#f92672>.</span>__init__(self)
-        self<span style=color:#f92672>.</span>tasks <span style=color:#f92672>=</span> tasks
-        self<span style=color:#f92672>.</span>daemon <span style=color:#f92672>=</span> True
-        self<span style=color:#f92672>.</span>start()
-
-    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>(self):
-        <span style=color:#66d9ef>while</span> True:
-            func, args, kargs <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>get()
-            <span style=color:#66d9ef>try</span>:
-                func(<span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kargs)
-            <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
-                <span style=color:#75715e># An exception happened in this thread</span>
-                <span style=color:#66d9ef>print</span>(e)
-            <span style=color:#66d9ef>finally</span>:
-                <span style=color:#75715e># Mark this task as done, whether an exception happened or not</span>
-                self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>task_done()
-
-
-<span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ThreadPool</span>:
-    <span style=color:#e6db74>&#34;&#34;&#34; Pool of threads consuming tasks from a queue &#34;&#34;&#34;</span>
-    <span style=color:#66d9ef>def</span> __init__(self, num_threads):
-        self<span style=color:#f92672>.</span>tasks <span style=color:#f92672>=</span> Queue(num_threads)
-        <span style=color:#66d9ef>for</span> _ <span style=color:#f92672>in</span> range(num_threads):
-            Worker(self<span style=color:#f92672>.</span>tasks)
-
-    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>add_task</span>(self, func, <span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kargs):
-        <span style=color:#e6db74>&#34;&#34;&#34; Add a task to the queue &#34;&#34;&#34;</span>
-        self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>put((func, args, kargs))
-
-    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>map</span>(self, func, args_list):
-        <span style=color:#e6db74>&#34;&#34;&#34; Add a list of tasks to the queue &#34;&#34;&#34;</span>
-        <span style=color:#66d9ef>for</span> args <span style=color:#f92672>in</span> args_list:
-            self<span style=color:#f92672>.</span>add_task(func, args)
-
-    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>wait_completion</span>(self):
-        <span style=color:#e6db74>&#34;&#34;&#34; Wait for completion of all the tasks in the queue &#34;&#34;&#34;</span>
-        self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>join()
-
-
-<span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
-    <span style=color:#f92672>from</span> random <span style=color:#f92672>import</span> randrange
-    <span style=color:#f92672>from</span> time <span style=color:#f92672>import</span> sleep
-
-    <span style=color:#75715e># Function to be executed in a thread</span>
-    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>wait_delay</span>(d):
-        <span style=color:#66d9ef>print</span>(<span style=color:#e6db74>&#34;sleeping for (</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>)sec&#34;</span> <span style=color:#f92672>%</span> d)
-        sleep(d)
-
-    <span style=color:#75715e># Generate random delays</span>
-    delays <span style=color:#f92672>=</span> [randrange(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>7</span>) <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>50</span>)]
-
-    <span style=color:#75715e># Instantiate a thread pool with 5 worker threads</span>
-    pool <span style=color:#f92672>=</span> ThreadPool(<span style=color:#ae81ff>5</span>)
-
-    <span style=color:#75715e># Add the jobs in bulk to the thread pool. Alternatively you could use</span>
-    <span style=color:#75715e># `pool.add_task` to add single jobs. The code will block here, which</span>
-    <span style=color:#75715e># makes it possible to cancel the thread pool with an exception when</span>
-    <span style=color:#75715e># the currently running batch of workers is finished.</span>
-    pool<span style=color:#f92672>.</span>map(wait_delay, delays)
-    pool<span style=color:#f92672>.</span>wait_completion()</code></pre></div><p>The queue size is similar to the number of threads (see <code>self.tasks = Queue(num_threads)</code>), therefore adding tasks with <code>pool.map(..)</code> and <code>pool.add_task(..)</code> blocks until a new slot in the Queue is available.</p><p>When you issue a KeyboardInterrupt by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd>, the current batch of workers
-will finish and the program quits with the exception at the <code>pool.map(..)</code> step.</p><hr class=spaced><p>If you have suggestions or feedback, let me know via <a href=https://twitter.com/@metachris target=_blank>@metachris</a></p></div><hr><div style=height:14px></div><div style=float:right><div class=tags><i class="fas fa-tag"></i><a href=https://www.metachris.com/tags/python/>Python</a></div></div><div class=bottomAbout style=display:flex><div><a href=https://twitter.com/metachris><img src=https://www.metachris.com/images/profile2-round.png alt=Chris class=profile style=max-width:60px></a></div><div style=padding-left:20px class=me><a href=https://twitter.com/metachris>Chris Hager<br><i class="fab fa-twitter"></i></a></div></div><div class=bottom-post-links><div class=prev><span class=title>OLDER POST</span><br><a href=https://www.metachris.com/2016/03/how-to-install-qt56-pyqt5-virtualenv-python3/>How to install Qt 5.6 and PyQt5 in a Python 3.4 virtual environment on Mac OS X and Linux</a></div><div class=next><span class=title>NEWER POST</span><br><a href=https://www.metachris.com/2016/12/peter-norvigs-python-utilities-advent-of-code/>Python Utilities by Peter Norvig</a></div></div><footer><script src=https://utteranc.es/client.js repo=metachris/metachris.com-comments issue-term=og:title theme=preferred-color-scheme crossorigin=anonymous async></script></footer></article></section></div><footer class=footer><section class=container></section></footer></main><script src=https://www.metachris.com/js/dark-mode.min.0213e1773e6d1c5a644f847c67a6f8abac49a3776e2976f6008038af8c5b76a1.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-168016633-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
-gtag('js',new Date());gtag('config','UA-168016633-1');</script><link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.11.2/css/all.css integrity=sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN crossorigin=anonymous></body></html>
+These are often preferred over instantiating new threads for each task when there is a large number of (short) tasks to be done rather than a small number of long ones.</p></blockquote><p>Suppose you want do download 1000s of documents from the internet, but only have resources for downloading 50 at a time. The solution is to utilize is a thread pool, spawning a fixed number of threads to download all the URLs from a queue, 50 at a time.</p><p>In order to use thread pools, Python 3.x includes the <a href=https://docs.python.org/dev/library/concurrent.futures.html#threadpoolexecutor>ThreadPoolExecutor</a> class, and both Python 2.x and 3.x have <code>multiprocessing.dummy.ThreadPool</code>. <a href=https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing.dummy><code>multiprocessing.dummy</code></a> replicates the API of <a href=https://docs.python.org/3/library/multiprocessing.html#module-multiprocessing>multiprocessing</a> but is no more than a wrapper around the <a href=https://docs.python.org/3/library/threading.html#module-threading>threading</a> module.</p><p>The downside of <code>multiprocessing.dummy.ThreadPool</code> is that in Python 2.x, it is not possible to exit the program with eg. a KeyboardInterrupt before all tasks from the queue have been finished by the threads.</p><p>In order to achieve an interruptable thread queue in Python 2.x and 3.x (for use in <a href=https://www.metachris.com/pdfx>PDFx</a>), I&rsquo;ve build this code, inspired by <a href=http://stackoverflow.com/a/7257510>stackoverflow.com/a/7257510</a>. It implements a thread pool which works with Python 2.x and 3.x:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#f92672>import</span> sys
+</span></span><span style=display:flex><span>IS_PY2 <span style=color:#f92672>=</span> sys<span style=color:#f92672>.</span>version_info <span style=color:#f92672>&lt;</span> (<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>0</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> IS_PY2:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>from</span> Queue <span style=color:#f92672>import</span> Queue
+</span></span><span style=display:flex><span><span style=color:#66d9ef>else</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>from</span> queue <span style=color:#f92672>import</span> Queue
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>from</span> threading <span style=color:#f92672>import</span> Thread
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>Worker</span>(Thread):
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34; Thread executing tasks from a given tasks queue &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, tasks):
+</span></span><span style=display:flex><span>        Thread<span style=color:#f92672>.</span>__init__(self)
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>tasks <span style=color:#f92672>=</span> tasks
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>daemon <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>start()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>run</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
+</span></span><span style=display:flex><span>            func, args, kargs <span style=color:#f92672>=</span> self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>get()
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>try</span>:
+</span></span><span style=display:flex><span>                func(<span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kargs)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>except</span> <span style=color:#a6e22e>Exception</span> <span style=color:#66d9ef>as</span> e:
+</span></span><span style=display:flex><span>                <span style=color:#75715e># An exception happened in this thread</span>
+</span></span><span style=display:flex><span>                print(e)
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>finally</span>:
+</span></span><span style=display:flex><span>                <span style=color:#75715e># Mark this task as done, whether an exception happened or not</span>
+</span></span><span style=display:flex><span>                self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>task_done()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>class</span> <span style=color:#a6e22e>ThreadPool</span>:
+</span></span><span style=display:flex><span>    <span style=color:#e6db74>&#34;&#34;&#34; Pool of threads consuming tasks from a queue &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> __init__(self, num_threads):
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>tasks <span style=color:#f92672>=</span> Queue(num_threads)
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> _ <span style=color:#f92672>in</span> range(num_threads):
+</span></span><span style=display:flex><span>            Worker(self<span style=color:#f92672>.</span>tasks)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>add_task</span>(self, func, <span style=color:#f92672>*</span>args, <span style=color:#f92672>**</span>kargs):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34; Add a task to the queue &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>put((func, args, kargs))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>map</span>(self, func, args_list):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34; Add a list of tasks to the queue &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> args <span style=color:#f92672>in</span> args_list:
+</span></span><span style=display:flex><span>            self<span style=color:#f92672>.</span>add_task(func, args)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>wait_completion</span>(self):
+</span></span><span style=display:flex><span>        <span style=color:#e6db74>&#34;&#34;&#34; Wait for completion of all the tasks in the queue &#34;&#34;&#34;</span>
+</span></span><span style=display:flex><span>        self<span style=color:#f92672>.</span>tasks<span style=color:#f92672>.</span>join()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> __name__ <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;__main__&#34;</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>from</span> random <span style=color:#f92672>import</span> randrange
+</span></span><span style=display:flex><span>    <span style=color:#f92672>from</span> time <span style=color:#f92672>import</span> sleep
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Function to be executed in a thread</span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>def</span> <span style=color:#a6e22e>wait_delay</span>(d):
+</span></span><span style=display:flex><span>        print(<span style=color:#e6db74>&#34;sleeping for (</span><span style=color:#e6db74>%d</span><span style=color:#e6db74>)sec&#34;</span> <span style=color:#f92672>%</span> d)
+</span></span><span style=display:flex><span>        sleep(d)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Generate random delays</span>
+</span></span><span style=display:flex><span>    delays <span style=color:#f92672>=</span> [randrange(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>7</span>) <span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>50</span>)]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Instantiate a thread pool with 5 worker threads</span>
+</span></span><span style=display:flex><span>    pool <span style=color:#f92672>=</span> ThreadPool(<span style=color:#ae81ff>5</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># Add the jobs in bulk to the thread pool. Alternatively you could use</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># `pool.add_task` to add single jobs. The code will block here, which</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># makes it possible to cancel the thread pool with an exception when</span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e># the currently running batch of workers is finished.</span>
+</span></span><span style=display:flex><span>    pool<span style=color:#f92672>.</span>map(wait_delay, delays)
+</span></span><span style=display:flex><span>    pool<span style=color:#f92672>.</span>wait_completion()</span></span></code></pre></div><p>The queue size is similar to the number of threads (see <code>self.tasks = Queue(num_threads)</code>), therefore adding tasks with <code>pool.map(..)</code> and <code>pool.add_task(..)</code> blocks until a new slot in the Queue is available.</p><p>When you issue a KeyboardInterrupt by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd>, the current batch of workers
+will finish and the program quits with the exception at the <code>pool.map(..)</code> step.</p><hr class=spaced><p>If you have suggestions or feedback, let me know via <a href=https://twitter.com/@metachris target=_blank>@metachris</a></p></div><hr><div style=height:14px></div><div style=float:right><div class=tags><i class="fas fa-tag"></i>
+<a href=https://www.metachris.com/tags/python/>Python</a></div></div><div class=bottomAbout style=display:flex><div><a href=https://twitter.com/metachris><img src=https://www.metachris.com/images/profile2-round.png alt=Chris class=profile style=max-width:60px></a></div><div style=padding-left:20px class=me><a href=https://twitter.com/metachris>Chris Hager<br><i class="fab fa-twitter"></i></a></div></div><div class=bottom-post-links><div class=prev><span class=title>OLDER POST</span><br><a href=https://www.metachris.com/2016/03/how-to-install-qt56-pyqt5-virtualenv-python3/>How to install Qt 5.6 and PyQt5 in a Python 3.4 virtual environment on Mac OS X and Linux</a></div><div class=next><span class=title>NEWER POST</span><br><a href=https://www.metachris.com/2016/12/peter-norvigs-python-utilities-advent-of-code/>Python Utilities by Peter Norvig</a></div></div><footer><script src=https://utteranc.es/client.js repo=metachris/metachris.com-comments issue-term=og:title theme=preferred-color-scheme crossorigin=anonymous async></script></footer></article></section></div><footer class=footer><section class=container></section></footer></main><script src=https://www.metachris.com/js/dark-mode.min.c2d8a1f8f2660e4a46d776277c72695a1e0ca65939d79f754441d47551604af5.js></script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-168016633-1"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","UA-168016633-1")</script><link href="https://fonts.googleapis.com/css?family=Lato:400,700%7CMerriweather:300,700%7CSource+Code+Pro:400,700&display=swap" rel=stylesheet><link rel=stylesheet href=https://use.fontawesome.com/releases/v5.11.2/css/all.css integrity=sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN crossorigin=anonymous></body></html>

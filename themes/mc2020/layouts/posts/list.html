@@ -1,23 +1,23 @@
 {{ define "title" }}
-  {{ .Title }} · {{ .Site.Title }}
+{{ .Title }} · {{ .Site.Title }}
 {{ end }}
 {{ define "content" }}
-  <section class="container list">
-    <header>
-      <div class="post-title">
-        <h1 class="title">{{ .Title }}</h1>
-      </div>
-    </header>
-
-    <div class="postlist">
-      {{- range .Paginator.Pages -}}
-        {{ if not .Params.hideInPostlist }}
-          {{- .Render "entry" -}}
-          <hr>
-        {{ end }}
-      {{- end -}}
+<section class="container list">
+  <header>
+    <div class="post-title">
+      <h1 class="title">Posts & Writings</h1>
     </div>
+  </header>
 
-    {{ partial "pagination.html" . }}
-  </section>
+  <div class="postlist">
+    {{- range .Paginator.Pages -}}
+    {{ if not .Params.hideInPostlist }}
+    {{- .Render "entry" -}}
+    <hr>
+    {{ end }}
+    {{- end -}}
+  </div>
+
+  {{ partial "pagination.html" . }}
+</section>
 {{ end }}

@@ -1,11 +1,9 @@
 +++
-title = "About Me"
+title = "About Me 🥸"
 slug = "about"
-hideHeader = true
+# hideHeader = true
 +++
 
-<br>
-<br>
 <div class="avatar" style="float: right; margin-left: 30px; margin-top:4px;">
     <img src="/images/profile2-round.png" alt="profile pic" />
 </div>
@@ -14,15 +12,14 @@ hideHeader = true
 Free software advocate, participating in hacker spaces and collaborative collectives.
 Dad of two little kids. -->
 
-Hi, my name is Chris Hager. I'm interested in technology and collaboration,
-and participate in hacker spaces, collectives and communities.
+Hey there 👋 My name is Chris, aka metachris. I'm a builder, maker, engineer. Interested in all kinds of technology and collaboration, hacker spaces, collectives and communities.
 Dad of two little kids, living in Vienna, Austria.
 
-Engineer at Flashbots :zap: :robot:
+Mate at Flashbots :zap: :robot: 🏴‍☠️
 
 <hr style="overflow:auto;">
 
-**Feel free to reach out:**
+**Reach out:**
 
 * [chris@linuxuser.at](mailto:chris@linuxuser.at)
 * [twitter.com/metachris](https://twitter.com/metachris)

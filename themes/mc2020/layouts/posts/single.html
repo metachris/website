@@ -11,15 +11,15 @@
       <div class="post-meta">
         <div class="date">
           <span class="posted-on">
-            <i class="fas fa-calendar"></i>
+            <!-- <i class="fas fa-calendar"></i> -->
             <time datetime='{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}'>
-              {{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}
+              {{ .Date.Format "January 2006" }}
             </time>
           </span>
-          <span class="reading-time">
+          <!-- <span class="reading-time">
             <i class="fas fa-clock"></i>
             {{ i18n "reading_time" .ReadingTime }}
-          </span>
+          </span> -->
         </div>
       </div>
     </header>
@@ -31,10 +31,10 @@
     <hr>
 
     {{ if ne .Params.hideEmailSubscribe true }}
-    <div class="subscribe" style="padding:0px 10px; font-style: italic; font-size: 1.6rem;">
+    <!-- <div class="subscribe" style="padding:0px 10px; font-style: italic; font-size: 1.6rem;">
       If you enjoyed this post, consider subscribing to <a href="https://tinyletter.com/metachris">my newsletter</a> or following me on <a href="https://twitter.com/metachris">Twitter</a> to get updates on my new blog posts and current projects.
     </div>
-    <hr>
+    <hr> -->
     {{ end }}
 
     <div style="height:14px;"></div>
@@ -45,7 +45,7 @@
     <div class="bottomAbout" style="display: flex;">
       <div>
         <a href="https://twitter.com/metachris">
-          <img src="/images/profile2-round.png" alt="Chris" class="profile" style="max-width:80px;">
+          <img src="/images/profile2-round.png" alt="Chris" class="profile" style="max-width:60px;">
         </a>
       </div>
       <div style="padding-left:20px;" class="me">

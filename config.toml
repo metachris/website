@@ -25,8 +25,8 @@ enableEmoji = true
 
 [params]
     author = "Chris Hager"
-    info = "Hacker, Maker, Engineer"
-    description = "Hacker, Maker, Engineer"
+    info = "Builder, Maker, Engineer"
+    description = "Builder, Maker, Engineer"
     images = ["images/profile2-round.png"]  # OG & Twitter meta tags on homepage
     avatarurl = "images/profile2-round.png"
 
@@ -83,7 +83,7 @@ enableEmoji = true
 [[params.social]]
     name = "Github"
     icon = "fab fa-github"
-    weight = 2
+    weight = 3
     url = "https://github.com/metachris/"
 #[[params.social]]
 #    name = "Gitlab"
@@ -95,11 +95,16 @@ enableEmoji = true
     icon = "fab fa-twitter"
     weight = 1
     url = "https://twitter.com/metachris/"
-[[params.social]]
-    name = "LinkedIn"
-    icon = "fab fa-linkedin"
-    weight = 4
-    url = "https://www.linkedin.com/in/metachris/"
+#[[params.social]]
+#    name = "Telegram"
+#    icon = "fab fa-telegram"
+#    weight = 2
+#    url = "https://www.linkedin.com/in/metachris/"
+#[[params.social]]
+#    name = "LinkedIn"
+#    icon = "fab fa-linkedin"
+#    weight = 4
+#    url = "https://www.linkedin.com/in/metachris/"
 #[[params.social]]
 #    name = "Medium"
 #    icon = "fab fa-medium"
@@ -125,7 +130,7 @@ enableEmoji = true
             url = "about/"
 
             [[languages.en.menu.main]]
-            name = "Blog"
+            name = "Writing"
             weight = 2
             url = "posts/"
 

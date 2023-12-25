@@ -1,24 +1,25 @@
 *,
 *:after,
 *:before {
-	box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 html {
-	box-sizing: border-box;
-	font-size: 62.5%;
+  box-sizing: border-box;
+  font-size: 62.5%;
 }
 
 body {
   color: $fg-color;
   background-color: $bg-color;
-	font-family: $text-font-family;
+  font-family: $text-font-family;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
 
-	font-size: 1.7em;
-	// font-weight: 300;
+  font-size: 1.7em;
+  // font-weight: 300;
   line-height: 1.8em;
+
   @media only screen and (max-width : 768px) {
     font-size: 1.6em;
     line-height: 1.6em;
@@ -28,6 +29,7 @@ body {
 a {
   color: $link-color;
   text-decoration: none;
+
   &:focus,
   &:hover {
     text-decoration: underline;
@@ -53,53 +55,65 @@ h6 {
 h1 {
   font-size: 3.2rem;
   line-height: 3.6rem;
+
   @media only screen and (max-width : 768px) {
     font-size: 3.0rem;
     line-height: 3.4rem;
   }
 }
+
 h2 {
   font-size: 2.8rem;
   line-height: 3.2rem;
+
   @media only screen and (max-width : 768px) {
     font-size: 2.6rem;
     line-height: 3.0rem;
   }
 }
+
 h3 {
   font-size: 2.4rem;
   line-height: 2.8rem;
+
   @media only screen and (max-width : 768px) {
     font-size: 2.2rem;
     line-height: 2.6rem;
   }
 }
+
 h4 {
   font-size: 2.2rem;
   line-height: 2.6rem;
+
   @media only screen and (max-width : 768px) {
     font-size: 2.0rem;
     line-height: 2.4rem;
   }
 }
+
 h5 {
   font-size: 2.0rem;
   line-height: 2.4rem;
+
   @media only screen and (max-width : 768px) {
     font-size: 1.8rem;
     line-height: 2.2rem;
   }
 }
+
 h6 {
   font-size: 1.8rem;
   line-height: 2.2rem;
+
   @media only screen and (max-width : 768px) {
     font-size: 1.6rem;
     line-height: 2.0rem;
   }
 }
 
-b, strong {
+b,
+strong {
   font-weight: 700;
 }
 
@@ -113,6 +127,7 @@ pre {
   padding: 1.4rem 1rem;
   border-radius: 2px;
   overflow-x: auto;
+
   code {
     display: inline-block;
     background-color: inherit;
@@ -129,9 +144,13 @@ code {
   padding: 0.2rem 0.4rem 0.2rem 0.4rem;
 }
 
-a code { text-decoration: underline; }
+a code {
+  text-decoration: underline;
+}
 
-h1 code, h2 code, h3 code {
+h1 code,
+h2 code,
+h3 code {
   font-size: 2.1rem;
 }
 
@@ -143,25 +162,33 @@ blockquote {
   font-style: italic;
 }
 
-th, td {
+th,
+td {
   padding: 1.6rem;
 }
+
 table {
   border-collapse: collapse;
 }
-table td, table th {
+
+table td,
+table th {
   border: 2px solid $alt-fg-color;
 }
+
 table tr:first-child th {
   border-top: 0;
 }
+
 table tr:last-child td {
   border-bottom: 0;
 }
+
 table tr td:first-child,
 table tr th:first-child {
   border-left: 0;
 }
+
 table tr td:last-child,
 table tr th:last-child {
   border-right: 0;
@@ -181,10 +208,10 @@ img {
 
 .container {
   margin: 0 auto;
-  max-width: 90.0rem;
+  max-width: 100.0rem;
   width: 100%;
-  padding-left: 2.0rem;
-  padding-right: 2.0rem;
+  padding-left: 6.0rem;
+  padding-right: 6.0rem;
 }
 
 .fab {

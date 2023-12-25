@@ -1,15 +1,28 @@
 +++
-title = "Projects & Previous Work"
+title = "Projects & Previous Work 💫"
 slug = "projects"
 +++
 
 <!-- #### <i class="fas fa-user-friends"></i> &nbsp;Groups & Communities -->
 
-You can find many of my projects on Github: https://github.com/metachris
+See also https://github.com/metachris
 
 ---
 
-Noteworthy collaborations include:
+Noteworthy collaborations include
+ [Flashbots](https://flashbots.net/),
+ [City of Zion](https://www.cityofzion.io),
+ [One Laptop Per Child (OLPC)](https://web.archive.org/web/20191208213537/https://www.cityofzion.io/),
+ [Metalab Vienna](https://metalab.at/),
+ [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en),
+ [Doctors Without Borders](https://www.msf.org/),
+ [Nash](https://nash.io/),
+ [Red Pulse](https://www.redpulse.com/),
+ [NEO Smart Economy](https://neo.org/contributors),
+ [MeetMe.com](https://www.meetme.com/),
+ [All About Apps](https://allaboutapps.at/)
+
+<!-- Noteworthy collaborations:
 
 * [Flashbots](https://flashbots.net/)
 * [Nash](https://nash.io/)
@@ -21,7 +34,7 @@ Noteworthy collaborations include:
 * [All About Apps](https://allaboutapps.at/)
 * [Metalab Vienna](https://metalab.at/)
 * [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en)
-* [Doctors Without Borders](https://www.msf.org/)
+* [Doctors Without Borders](https://www.msf.org/) -->
 
 <!-- #### <i class="far fa-star"></i> &nbsp;Notable Projects -->
 
@@ -29,7 +42,7 @@ Noteworthy collaborations include:
 
 ## Products and Projects
 
-Some projects and products I find notable, in more or less chronological order (most recent first):
+Some projects and products I built or am involved in. Most recent first:
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
@@ -75,10 +88,11 @@ Some projects and products I find notable, in more or less chronological order (
 
 ---
 
-## Talks, Workshops & Teaching
+## Talks, Podcasts, Workshops & Teaching
 
 More recent:
 
+* [UCC2: An Incomplete Guide to PBS](https://www.ucc2.xyz/podcast/episode/1bb543a8/an-incomplete-guide-to-pbs-with-mike-neuder-and-chris-hager)
 * [Shanghai Debrief w/ Galaxy - What's next for Ethereum?](https://twitter.com/i/spaces/1LyxBqrnanYJN?s=20)
 * [zeroknowledge.fm Episode 243: Dive Back into MEV with Alex Stokes and Chris Hager](https://zeroknowledge.fm/243-2/)
 

@@ -1,9 +1,13 @@
 @import "../../themes/mc2020/assets/scss/variables";
 
+::selection {
+  background: $selection-color;
+}
+
 hr {
   border: 0px;
-  margin-top:3rem;
-  margin-bottom:3rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
 
 .page h1 {
@@ -19,9 +23,11 @@ h5 {
   margin: 2.6rem 0 1.6rem 0;
 }
 
-.subheader {  // ~h3 that shouldn't show in toc
+.subheader {
+  // ~h3 that shouldn't show in toc
   display: block;
-  font-size: 2.2rem;;
+  font-size: 2.2rem;
+  ;
   line-height: 3.2rem;
   margin: 2.4rem 0 1.2rem 0;
 }
@@ -35,16 +41,17 @@ h5 {
 .post-link-external {
   color: #b9b7b7;
   font-size: 1.5rem;
-  padding-left:2px;
+  padding-left: 2px;
 }
 
 .centered .about h2 {
   font-weight: 200;
 }
 
+a:hover,
 a:hover .post-link-external,
 a:focus .post-link-external {
-  color: $link-color;
+  color: $link-color-highlight;
 }
 
 .navigation .navigation-title {
@@ -73,12 +80,17 @@ a.hanchor {
   color: grey !important;
 }
 
-h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
+h2:hover a,
+h3:hover a,
+h4:hover a,
+h5:hover a {
+  visibility: visible
+}
 
 // ---------
 
 .content header {
-  margin-top:3.8rem !important;
+  margin-top: 3.8rem !important;
 }
 
 .utterances {
@@ -86,14 +98,36 @@ h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
 }
 
 .home .about li a:hover {
-  color: #e659ff !important;
+  // color: #e659ff !important;
+}
+
+.content .container {
+  background: white;
+  border: 1px solid #a0a0a0;
+  padding-bottom: 3.0rem;
+  margin-bottom: 6.0rem;
+
+  @media only screen and (max-width : 1024px) {
+    border: 0px solid black;
+    background: $bg-color;
+  }
+}
+
+.content .container.home {
+  border: 0px solid black;
+  background: $bg-color;
+}
+
+body.colorscheme-dark .content .container {
+  background: $bg-color-dark;
+  border: 0px solid black;
 }
 
 /**
  * Post list
  */
 .postlist {
-  margin-top: 6rem;
+  margin-top: 4rem;
 }
 
 .postlist .post-entry {
@@ -115,13 +149,13 @@ h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
 }
 
 .postlist .tags .tag a {
-  color:#b1b1b1 !important;
+  color: #b1b1b1 !important;
   font-size: 1.4rem;
 }
 
 .tinyletter-subscribe {
-  padding:2rem;
-  text-align:center;
+  padding: 2rem;
+  text-align: center;
   margin: 4rem 0rem;
   max-width: 600px;
   margin: auto;
@@ -146,6 +180,7 @@ h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
 
   a:hover {
     text-decoration: none;
+
     .fab {
       color: #212121;
     }
@@ -171,4 +206,9 @@ h2:hover a, h3:hover a, h4:hover a, h5:hover a { visibility: visible}
     font-size: 1.2rem;
     color: #939393;
   }
+}
+
+
+.post-meta .posted-on {
+  color: grey;
 }

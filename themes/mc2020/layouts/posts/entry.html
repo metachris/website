@@ -1,6 +1,5 @@
 <div class="post-entry">
 
-  <div class="date">{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006" ) }}</div>
   <div class="title">
     <a class="title" href="{{ .Params.ExternalLink | default .RelPermalink }}">
       {{ if .Params.ExternalLink }}<i class="fas fa-external-link-alt post-link-external"></i>&nbsp;{{ end }}
@@ -12,6 +11,7 @@
     {{ .Description | default (.Summary | default .Content | htmlUnescape | plainify | truncate 200) }}
     {{ end }}
   </div>
+  <div class="date">{{ .Date.Format "January 2006" }}</div>
   <!-- <div class="tags">
     {{- range .Params.Tags -}}
     <span class="tag">

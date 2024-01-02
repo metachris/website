@@ -15,6 +15,16 @@ hr {
   margin-bottom: 2rem;
 }
 
+h1 #contents {
+  font-size: 2.8rem;
+  line-height: 3.2rem;
+
+  @media only screen and (max-width : 768px) {
+    font-size: 2.6rem;
+    line-height: 3.0rem;
+  }
+}
+
 h4 {
   margin-bottom: 1.5rem;
 }
@@ -54,6 +64,14 @@ a:focus .post-link-external {
   color: $link-color-highlight;
 }
 
+a:hover code {
+  background: #ffff0066;
+}
+
+body.colorscheme-dark a:hover code {
+  background: #0522a566;
+}
+
 .navigation .navigation-title {
   font-size: 2rem;
 }
@@ -61,6 +79,10 @@ a:focus .post-link-external {
 ul {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+li ul {
+  margin-top: 0;
 }
 
 .highlight pre {

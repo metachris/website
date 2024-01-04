@@ -11,8 +11,8 @@ See also https://github.com/metachris
 
 Noteworthy collaborations include
  [Flashbots](https://flashbots.net/),
- [City of Zion](https://www.cityofzion.io),
- [One Laptop Per Child (OLPC)](https://web.archive.org/web/20191208213537/https://www.cityofzion.io/),
+ [City of Zion](https://web.archive.org/web/20191208213537/https://www.cityofzion.io/),
+ [One Laptop Per Child (OLPC)](https://en.wikipedia.org/wiki/One_Laptop_per_Child),
  [Metalab Vienna](https://metalab.at/),
  [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en),
  [Doctors Without Borders](https://www.msf.org/),

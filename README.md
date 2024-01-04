@@ -15,3 +15,37 @@ Internal pages:
 ```
 docker run -p 1313:1313 --rm -it -w /mnt -v $(pwd):/mnt jakejarvis/hugo-extended:0.82.0 serve --bind 0.0.0.0 --buildDrafts
 ```
+
+
+# Writing & Publishing Tips
+
+## For each post
+
+* Add a header image (1200x630px or 1024x540)
+* Possible to add a diagram?
+* Possible to make code run interactively? eg. with jsfiddle.net
+* Reach out to someone?
+
+Image resources
+
+- https://pixabay.com
+- http://www.europeana.eu/portal/en
+- https://unsplash.com/
+- Fontawesome icons: https://fontawesome.com/icons?d=gallery&m=free
+
+
+## Before publishing
+
+Check Post
+
+* Typos
+* Keywords
+* Tags
+* Title (Google search for inspiration and related keywords)
+* OG meta tags in HTML
+
+Check Social Infos
+
+* [Twitter Card Validator](https://cards-dev.twitter.com/validator)
+* [Facebook Debugger](https://developers.facebook.com/tools/debug/)
+* https://search.google.com/structured-data/testing-tool

@@ -59,6 +59,38 @@ Loving the Austrian landscape ([Lower Austria](http://maps.google.com/?q=lunz%20
 
 ---
 
-Mountain landscape here in Austria:
+<style type="text/css">
+    .pics img {
+        border: 1px solid #aaa;
+        border-radius: 3px;
+    }
+</style>
 
-<img src="../images/nature.jpg" style="border-radius:4px; margin-bottom:0px;" alt="alpine nature">
+
+Some impressions from here in Austria:
+
+<div class="pics">
+
+<img src="../images/nature.jpg" alt="alpine nature in summer">
+
+<br>
+<br>
+
+<img src="../images/winter2.jpeg" alt="alpine nature in winter">
+
+<br>
+<br>
+
+<img src="../images/vienna3b.jpg" alt="vienna">
+
+<br>
+<br>
+
+<img src="../images/vienna2b.jpg" alt="vienna">
+
+<br>
+<br>
+
+<img src="../images/donaukanal.webp" alt="vienna">
+
+</div>

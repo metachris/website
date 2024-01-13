@@ -40,20 +40,29 @@
     <div style="height:14px;"></div>
 
     <div style="float: right">
-      {{ with .Page.Params.Categories }}{{ partial " taxonomy/categories.html" . }}{{ end }} {{ if ne .Params.hideTags true }}{{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}{{ end }} </div>
+      {{ with .Page.Params.Categories }}{{ partial " taxonomy/categories.html" . }}{{ end }} {{ if ne .Params.hideTags true }}{{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}{{ end }}
+    </div>
+
+    <div style="clear: both;"></div>
 
     <div class="bottomAbout" style="display: flex;">
-      <div>
+      <div style="flex-grow: 2;">
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a>
+        <br>
+        <a href="https://twitter.com/metachris?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @metachris</a>
+
+      </div>
+
+      <div style="margin-top:-0px;">
         <a href="https://twitter.com/metachris">
           <img src="/images/profile2-round.png" alt="Chris" class="profile" style="max-width:60px;">
         </a>
       </div>
-      <div style="padding-left:20px;" class="me">
-        <a href="https://twitter.com/metachris">Chris Hager
-          <br>
-          <i class="fab fa-twitter"></i></a>
-      </div>
+
     </div>
+
+    <hr>
 
     <div class="bottom-post-links">
       <div class="prev">
@@ -74,6 +83,8 @@
       {{ partial "posts/series.html" . }}
       {{ partial "posts/disqus.html" . }}
       {{ partial "posts/commento.html" . }}
+
+      <a id="comments" name="comments"></a>
       {{ partial "posts/utteranc.html" . }}
     </footer>
   </article>

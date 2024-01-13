@@ -12,10 +12,14 @@ slug = "about"
 Free software advocate, participating in hacker spaces and collaborative collectives.
 Dad of two little kids. -->
 
-Hey there 👋 My name is Chris, aka metachris. I'm a builder, maker, engineer. Interested in all kinds of technology and collaboration, hacker spaces, collectives and communities.
-Dad of two little kids, living in Vienna, Austria.
-
-Mate at Flashbots :zap: :robot: 🏴‍☠️
+Hey there 👋 My name is Chris,
+- aka `metachris`
+- Builder of software
+- Dad of two small kids
+- Mate at [Flashbots](https://www.flashbots.net/) :zap: :robot: 🏴‍☠️
+- Passionate about technology
+- Cautiously optimistic about the future
+- Interested in collaboration and communication
 
 <hr style="overflow:auto;">
 

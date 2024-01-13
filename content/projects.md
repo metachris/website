@@ -5,22 +5,22 @@ slug = "projects"
 
 <!-- #### <i class="fas fa-user-friends"></i> &nbsp;Groups & Communities -->
 
-See also https://github.com/metachris
+**https://github.com/metachris**
 
 ---
 
-Noteworthy collaborations include
+Collaborations:
  [Flashbots](https://flashbots.net/),
- [City of Zion](https://web.archive.org/web/20191208213537/https://www.cityofzion.io/),
  [One Laptop Per Child (OLPC)](https://en.wikipedia.org/wiki/One_Laptop_per_Child),
  [Metalab Vienna](https://metalab.at/),
  [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en),
- [Doctors Without Borders](https://www.msf.org/),
+ [City of Zion](https://web.archive.org/web/20191208213537/https://www.cityofzion.io/),
  [Nash](https://nash.io/),
  [Red Pulse](https://www.redpulse.com/),
  [NEO Smart Economy](https://neo.org/contributors),
  [MeetMe.com](https://www.meetme.com/),
- [All About Apps](https://allaboutapps.at/)
+ [All About Apps](https://allaboutapps.at/),
+ [Doctors Without Borders](https://www.msf.org/)
 
 <!-- Noteworthy collaborations:
 
@@ -42,7 +42,7 @@ Noteworthy collaborations include
 
 ## Products and Projects
 
-Some projects and products I built or am involved in. Most recent first:
+Things I've built or contribute to, in roughly chronological order:
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 

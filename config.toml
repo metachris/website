@@ -130,7 +130,7 @@ enableEmoji = true
             url = "about/"
 
             [[languages.en.menu.main]]
-            name = "Writing"
+            name = "Posts"
             weight = 2
             url = "posts/"
 

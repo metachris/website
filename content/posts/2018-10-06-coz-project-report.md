@@ -3,6 +3,7 @@ date: 2018-10-06
 draft: false
 
 title: "City of Zion Project Report — June to August 2018"
+description: " "
 tags:
 - Blockchain
 - NEO

@@ -120,9 +120,23 @@ h5:hover a {
   max-width: inherit;
 }
 
-.home .about li a:hover {
-  // color: #e659ff !important;
+.home .about {
+  h1 {
+    font-weight: 500;
+  }
+
+  h2 {
+    font-size: 1.9rem;
+    padding-top: 8px;
+    padding-bottom: 0;
+  }
+
+  li {
+    padding-left: 3px;
+    padding-right: 3px;
+  }
 }
+
 
 .content .container {
   background: white;

@@ -209,12 +209,23 @@ img {
   width: 100%;
 }
 
+// MAIN CONTENT CONTAINER
 .container {
   margin: 0 auto;
   max-width: 100.0rem;
   width: 100%;
-  padding-left: 6.0rem;
-  padding-right: 6.0rem;
+  padding-left: 4.0rem;
+  padding-right: 4.0rem;
+
+  // @media only screen and (max-width : 1024px) {
+  //   padding-left: 4.0rem;
+  //   padding-right: 4.0rem;
+  // }
+
+  @media only screen and (max-width : 768px) {
+    padding-left: 2.0rem;
+    padding-right: 2.0rem;
+  }
 }
 
 .fab {

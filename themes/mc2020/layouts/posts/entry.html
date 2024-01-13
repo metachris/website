@@ -7,9 +7,7 @@
     </a>
   </div>
   <div class="description">
-    {{ if not .Params.ExternalLink }}
     {{ .Description | default (.Summary | default .Content | htmlUnescape | plainify | truncate 200) }}
-    {{ end }}
   </div>
   <div class="date">{{ .Date.Format "January 2006" }}</div>
   <!-- <div class="tags">

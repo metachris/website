@@ -3,6 +3,8 @@ date: 2017-11-19
 draft: false
 
 title: "How to build an ICO on NEO with the NEX ICO smart contract template"
+description: " "
+
 tags:
 - Blockchain
 - NEO

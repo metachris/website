@@ -3,6 +3,7 @@ date: 2017-11-23
 draft: false
 
 title: "NEO dApps review - CoZ first dApps competition"
+description: " "
 tags:
 - Blockchain
 - NEO

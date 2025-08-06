@@ -9,18 +9,19 @@ slug = "projects"
 
 ---
 
-Collaborations:
+I worked with
  [Flashbots](https://flashbots.net/),
+ [Nash](https://nash.io/),
+ [NEO Smart Economy](https://neo.org/contributors),
+ [City of Zion](https://web.archive.org/web/20191208213537/https://www.cityofzion.io/),
+ [Red Pulse](https://www.redpulse.com/),
  [One Laptop Per Child (OLPC)](https://en.wikipedia.org/wiki/One_Laptop_per_Child),
  [Metalab Vienna](https://metalab.at/),
  [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en),
- [City of Zion](https://web.archive.org/web/20191208213537/https://www.cityofzion.io/),
- [Nash](https://nash.io/),
- [Red Pulse](https://www.redpulse.com/),
- [NEO Smart Economy](https://neo.org/contributors),
  [MeetMe.com](https://www.meetme.com/),
  [All About Apps](https://allaboutapps.at/),
- [Doctors Without Borders](https://www.msf.org/)
+ [Doctors Without Borders](https://www.msf.org/),
+ and more.
 
 <!-- Noteworthy collaborations:
 
@@ -42,7 +43,7 @@ Collaborations:
 
 ## Products and Projects
 
-Things I've built or contribute to, in roughly chronological order:
+(in roughly chronological order)
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 

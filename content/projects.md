@@ -46,6 +46,7 @@ Things I've built or contribute to, in roughly chronological order:
 
 <!-- * **[ethereum-go-experiments](https://github.com/metachris/ethereum-go-experiments)** - Ethereum data analysis -->
 
+* **[BuilderNet](https://buildernet.org/)** - Ethereum block building network running in TEEs
 * **[SUAVE](https://github.com/flashbots/suave-specs)** - Single Unifying Auction for Value Expression
 * **[MEV-Boost](https://github.com/flashbots/mev-boost)** - MEV-Boost allows Ethereum proposers to outsource block construction
 * **[MEV-Boost Relay](https://github.com/flashbots/mev-boost-relay)** - Mediator between Ethereum proposers and block builders (i.e. [boost-relay.flashbots.net](https://boost-relay.flashbots.net/))

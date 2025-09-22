@@ -35,6 +35,10 @@
 </span></span><span style=display:flex><span>	openssl pkey -pubin -outform der |
 </span></span><span style=display:flex><span>	openssl dgst -sha256 -binary |
 </span></span><span style=display:flex><span>	openssl enc -base64
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># If you want to add extension fields (e.g., subjectAltName) to a CSR or cert, you can either do it with -addext, or</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># using a config file. Here&#39;s an example creating a TLS cert with -addext for subjectAltName:</span>
+</span></span><span style=display:flex><span>openssl req -noenc -x509 -key key.pem -out cert.pem -sha256 -days <span style=color:#ae81ff>365</span> -subj <span style=color:#e6db74>&#34;/O=YourOrg/CN=_DOMAIN_&#34;</span> -addext subjectAltName<span style=color:#f92672>=</span>IP:192.168.100.82
 </span></span></code></pre></div><h2 id=ca-certificates>CA Certificates</h2><p>Now let&rsquo;s dive into CA certificates.
 We will create a root CA cert, an intermediate CA cert, and an end-entity cert signed by the root CA.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># Create private key for CA and intermediate CA</span>
 </span></span><span style=display:flex><span>openssl genrsa -out ca.key <span style=color:#ae81ff>4096</span>

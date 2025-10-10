@@ -110,6 +110,10 @@ h5:hover a {
   visibility: visible
 }
 
+article h2 {
+  margin-top: 3.0rem;
+}
+
 // ---------
 
 .content header {
@@ -248,4 +252,8 @@ body.colorscheme-dark .content .container {
 
 .post-meta .posted-on {
   color: grey;
+}
+
+article header {
+  margin-bottom: 2rem !important;
 }

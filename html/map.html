@@ -126,6 +126,10 @@
   "detectRetina": false,
   "tms": false,
   "opacity": 1,
+  "keepBuffer": 8,
+  "updateWhenIdle": true,
+  "updateWhenZooming": false,
+  "updateInterval": 200,
 }
 
             );
@@ -466,76 +470,126 @@
 
             const postcode = data.address?.postcode || 'N/A';
             const osmWebsite = data.extratags?.website || data.extratags?.['contact:website'] || '';
+            const county = data.address?.county || '';
+            const state = data.address?.state || '';
+            const town = data.address?.town || data.address?.city || '';
+            const population = data.extratags?.population || '';
+            const wikipedia = data.extratags?.wikipedia || '';
+            const phone = data.extratags?.phone || data.extratags?.['contact:phone'] || '';
+            const email = data.extratags?.email || data.extratags?.['contact:email'] || '';
 
-            return { postcode, osmWebsite };
+            return {
+                postcode,
+                osmWebsite,
+                county,
+                state,
+                town,
+                population,
+                wikipedia,
+                phone,
+                email
+            };
         } catch (error) {
             console.error(`Error fetching details for ${name}:`, error);
-            return { postcode: 'N/A', osmWebsite: '' };
+            return { postcode: 'N/A', osmWebsite: '', county: '', state: '', town: '', population: '', wikipedia: '', phone: '', email: '' };
         }
     }
 
     async function searchCommunityWebsites(name, postcode) {
         // Search for community websites using DuckDuckGo HTML scraping via CORS proxy
-        try {
-            const searchQuery = encodeURIComponent(`${name} gemeinde österreich`);
+        const searchQuery = encodeURIComponent(`${name} gemeinde österreich`);
+        const duckduckgoUrl = `https://html.duckduckgo.com/html/?q=${searchQuery}`;
 
-            // Use allorigins.win as CORS proxy to access DuckDuckGo search results
-            const proxyUrl = `https://api.allorigins.win/raw?url=`;
-            const duckduckgoUrl = `https://html.duckduckgo.com/html/?q=${searchQuery}`;
-            const response = await fetch(proxyUrl + encodeURIComponent(duckduckgoUrl));
-            const html = await response.text();
+        // Try multiple CORS proxies in order of reliability
+        const proxies = [
+            'https://corsproxy.io/?',
+            'https://api.allorigins.win/raw?url=',
+            'https://api.codetabs.com/v1/proxy?quest='
+        ];
 
-            // Parse HTML to extract search result URLs
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const websites = [];
-
-            // Find all result links
-            const resultLinks = doc.querySelectorAll('.result__url');
-
-            for (const link of resultLinks) {
-                let url = link.textContent.trim();
-
-                // Clean up the URL
-                if (!url.startsWith('http')) {
-                    url = 'https://' + url;
-                }
-
-                // Filter for relevant Austrian domains
-                if (url.includes('.at') || url.includes('.gv.at') ||
-                    url.toLowerCase().includes('gemeinde') ||
-                    url.toLowerCase().includes(name.toLowerCase())) {
-                    websites.push(url);
-                }
-
-                // Limit to top 5 results
-                if (websites.length >= 5) break;
-            }
-
-            return websites;
-        } catch (error) {
-            console.error(`Error searching for ${name}:`, error);
-
-            // Fallback: try DuckDuckGo instant answer API
+        // Try each proxy until one works
+        for (let i = 0; i < proxies.length; i++) {
             try {
-                const searchQuery = encodeURIComponent(`${name} gemeinde`);
-                const response = await fetch(`https://api.duckduckgo.com/?q=${searchQuery}&format=json&no_redirect=1`);
-                const data = await response.json();
+                const proxyUrl = proxies[i];
+                console.log(`Trying proxy ${i + 1}/${proxies.length}: ${proxyUrl.split('?')[0]}...`);
 
-                const websites = [];
-                if (data.AbstractURL) websites.push(data.AbstractURL);
+                const response = await fetch(proxyUrl + encodeURIComponent(duckduckgoUrl), {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'text/html'
+                    },
+                    signal: AbortSignal.timeout(8000) // 8 second timeout
+                });
 
-                if (data.RelatedTopics && data.RelatedTopics.length > 0) {
-                    for (const topic of data.RelatedTopics.slice(0, 3)) {
-                        if (topic.FirstURL) websites.push(topic.FirstURL);
-                    }
+                if (!response.ok) {
+                    console.log(`Proxy ${i + 1} returned status ${response.status}`);
+                    continue;
                 }
 
-                return websites;
-            } catch (fallbackError) {
-                console.error('Fallback search also failed:', fallbackError);
-                return [];
+                const html = await response.text();
+
+                // Parse HTML to extract search result URLs
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const websites = [];
+
+                // Find all result links
+                const resultLinks = doc.querySelectorAll('.result__url');
+
+                for (const link of resultLinks) {
+                    let url = link.textContent.trim();
+
+                    // Clean up the URL
+                    if (!url.startsWith('http')) {
+                        url = 'https://' + url;
+                    }
+
+                    // Filter for relevant Austrian domains
+                    if (url.includes('.at') || url.includes('.gv.at') ||
+                        url.toLowerCase().includes('gemeinde') ||
+                        url.toLowerCase().includes(name.toLowerCase())) {
+                        websites.push(url);
+                    }
+
+                    // Limit to top 5 results
+                    if (websites.length >= 5) break;
+                }
+
+                if (websites.length > 0) {
+                    console.log(`✓ Proxy ${i + 1} successful, found ${websites.length} websites`);
+                    return websites;
+                }
+
+                console.log(`Proxy ${i + 1} returned no results, trying next...`);
+            } catch (error) {
+                console.log(`Proxy ${i + 1} failed:`, error.message);
+                // Continue to next proxy
             }
+        }
+
+        // All proxies failed, try DuckDuckGo instant answer API as final fallback
+        console.log('All proxies failed, trying DuckDuckGo instant answer API...');
+        try {
+            const searchQuery = encodeURIComponent(`${name} gemeinde`);
+            const response = await fetch(`https://api.duckduckgo.com/?q=${searchQuery}&format=json&no_redirect=1`);
+            const data = await response.json();
+
+            const websites = [];
+            if (data.AbstractURL) websites.push(data.AbstractURL);
+
+            if (data.RelatedTopics && data.RelatedTopics.length > 0) {
+                for (const topic of data.RelatedTopics.slice(0, 3)) {
+                    if (topic.FirstURL) websites.push(topic.FirstURL);
+                }
+            }
+
+            if (websites.length > 0) {
+                console.log(`✓ DuckDuckGo instant answer API found ${websites.length} websites`);
+            }
+            return websites;
+        } catch (fallbackError) {
+            console.error('All search methods failed:', fallbackError);
+            return [];
         }
     }
 
@@ -563,44 +617,65 @@
                     fillOpacity: 0.7
                 }).addTo(mapObj);
 
+                // Add tooltip that shows name on hover
+                marker.bindTooltip(name, {
+                    permanent: false,
+                    direction: 'top',
+                    offset: [0, -10]
+                });
+
                 // Create initial popup content (shown immediately)
-                const getInitialPopup = (plz) => `
-                    <div id="popup-${osmId}" style="min-width: 200px;">
-                        <strong>${name}</strong><br>
-                        <em>${placeType}</em><br>
-                        ${plz !== 'N/A' ? `PLZ: ${plz}<br>` : '<span style="color:#999">PLZ: Loading...</span><br>'}
-                        ${website ? `<a href="${website}" target="_blank">Official Website</a><br>` : ''}
+                const getInitialPopup = (plz, extraDetails = {}) => `
+                    <div id="popup-${osmId}" style="min-width: 220px;">
+                        <strong style="font-size: 15px;">${name}</strong><br>
+                        <em>${placeType}</em>
+                        ${extraDetails.town ? ` · ${extraDetails.town}` : ''}
+                        ${extraDetails.county ? ` · ${extraDetails.county}` : ''}
+                        ${extraDetails.state ? ` · ${extraDetails.state}` : ''}<br>
+                        ${plz !== 'N/A' ? `<span id="plz-${osmId}">PLZ: ${plz}</span><br>` : '<span id="plz-${osmId}" style="color:#999">PLZ: Loading...</span><br>'}
+                        ${extraDetails.population ? `<small>👥 Population: ${parseInt(extraDetails.population).toLocaleString()}</small><br>` : ''}
+                        <div id="contact-${osmId}">
+                            ${extraDetails.phone ? `<small>📞 ${extraDetails.phone}</small><br>` : ''}
+                            ${extraDetails.email ? `<small>✉️ <a href="mailto:${extraDetails.email}">${extraDetails.email}</a></small><br>` : ''}
+                        </div>
+                        ${website ? `<a href="${website}" target="_blank">🔗 Official Website</a><br>` : ''}
+                        ${extraDetails.wikipedia ? `<a href="https://wikipedia.org/wiki/${extraDetails.wikipedia}" target="_blank">📚 Wikipedia</a><br>` : ''}
                         <div id="community-links-${osmId}" style="margin-top: 5px; color:#666;">
                             <small>Searching community websites...</small>
                         </div>
-                        <small style="color:#999;">Lat: ${element.lat.toFixed(4)}, Lon: ${element.lon.toFixed(4)}</small>
+                        <small style="color:#999; margin-top: 5px; display: block;">📍 ${element.lat.toFixed(4)}, ${element.lon.toFixed(4)}</small>
                     </div>
                 `;
 
                 marker.on('click', async function() {
                     let currentPostcode = postcode;
+                    let extraDetails = details;
 
                     // Show popup immediately with available data
-                    this.bindPopup(getInitialPopup(currentPostcode)).openPopup();
+                    this.bindPopup(getInitialPopup(currentPostcode, extraDetails)).openPopup();
 
                     // Fetch missing details in background
                     if (currentPostcode === 'N/A' || (!website && communityWebsites.length === 0)) {
                         // Fetch postal code if missing
                         if (currentPostcode === 'N/A') {
                             fetchDetailsForTown(element.lat, element.lon, name).then(fetchedDetails => {
+                                console.log(`Fetched details for ${name}:`, fetchedDetails);
                                 currentPostcode = fetchedDetails.postcode;
+                                extraDetails = fetchedDetails;
                                 detailsMap[osmId] = {
                                     ...detailsMap[osmId],
-                                    postcode: currentPostcode,
-                                    osmWebsite: fetchedDetails.osmWebsite
+                                    ...fetchedDetails
                                 };
 
-                                // Update popup with fetched postal code
+                                // Update popup with all fetched details
                                 const popupElement = document.getElementById(`popup-${osmId}`);
                                 if (popupElement) {
-                                    popupElement.querySelector('span[style*="color:#999"]').outerHTML =
-                                        currentPostcode !== 'N/A' ? `PLZ: ${currentPostcode}<br>` : '';
+                                    // Regenerate the entire popup content
+                                    popupElement.innerHTML = getInitialPopup(currentPostcode, fetchedDetails).replace(`<div id="popup-${osmId}" style="min-width: 220px;">`, '').replace('</div>', '');
+                                    console.log(`Updated popup for ${name} with PLZ: ${currentPostcode}`);
                                 }
+                            }).catch(err => {
+                                console.error('Error updating popup:', err);
                             });
                         }
 
@@ -741,6 +816,241 @@
         }
     }
 
+    // Districts overlay with separate layers per admin level
+    let districtsLayers = {
+        level6: L.featureGroup(),
+        level7: L.featureGroup(),
+        level8: L.featureGroup()
+    };
+    let districtsLoaded = false;
+    const DISTRICTS_CACHE_KEY = 'districts_data_cache';
+    const DISTRICTS_CACHE_VERSION = 'v1';
+
+    async function loadDistricts() {
+        if (districtsLoaded) return;
+
+        console.log('Loading district boundaries from local file...');
+
+        try {
+            // Try gzipped version first, then fall back to plain JSON
+            let response = await fetch('districts.json.gz');
+            let isGzipped = response.ok;
+
+            if (!isGzipped) {
+                console.log('districts.json.gz not found, trying districts.json...');
+                response = await fetch('districts.json');
+            }
+
+            if (!response.ok) {
+                throw new Error(`Failed to load districts file: ${response.status}`);
+            }
+
+            let data;
+            if (isGzipped) {
+                console.log('Loading gzipped districts file...');
+                const blob = await response.blob();
+                const decompressedStream = blob.stream().pipeThrough(new DecompressionStream('gzip'));
+                const decompressedBlob = await new Response(decompressedStream).blob();
+                const text = await decompressedBlob.text();
+                data = JSON.parse(text);
+                console.log(`✓ Decompressed and loaded ${data.elements.length} administrative boundaries`);
+            } else {
+                console.log('Loading plain JSON districts file...');
+                data = await response.json();
+                console.log(`✓ Loaded ${data.elements.length} administrative boundaries`);
+            }
+
+            processDistrictsData(data);
+            districtsLoaded = true;
+            console.log('Districts loaded successfully');
+        } catch (error) {
+            console.error('Error loading districts from local file:', error);
+            console.log('Make sure districts.json or districts.json.gz exists in the same directory as this HTML file');
+        }
+    }
+
+    function processDistrictsData(data) {
+        // Process each boundary
+        for (const element of data.elements) {
+                if (element.type === 'relation' && element.members) {
+                    const name = element.tags.name || 'Unknown';
+                    const adminLevel = element.tags.admin_level;
+
+                    // Extract coordinates from way members and build GeoJSON
+                    // Separate outer and inner rings based on role
+                    const outerRings = [];
+                    const innerRings = [];
+
+                    for (const member of element.members) {
+                        if (member.type === 'way' && member.geometry) {
+                            // Leaflet uses [lat, lon] order
+                            const wayCoords = member.geometry.map(node => [node.lat, node.lon]);
+                            if (member.role === 'outer' || member.role === '') {
+                                outerRings.push(wayCoords);
+                            } else if (member.role === 'inner') {
+                                innerRings.push(wayCoords);
+                            }
+                        }
+                    }
+
+                    if (outerRings.length > 0) {
+                        // Determine which layer to add to
+                        const targetLayer = adminLevel === '6' ? districtsLayers.level6 :
+                                          adminLevel === '7' ? districtsLayers.level7 :
+                                          districtsLayers.level8;
+
+                        // Create polygon with visible fill and colored border
+                        const baseColor = adminLevel === '6' ? '#0000ff' : adminLevel === '7' ? '#00aaff' : '#008888';
+                        const hoverColor = adminLevel === '6' ? '#3333ff' : adminLevel === '7' ? '#33bbff' : '#00aaaa';
+                        const baseFillOpacity = adminLevel === '6' ? 0.35 : adminLevel === '7' ? 0.2 : 0.3;
+                        const hoverFillOpacity = adminLevel === '6' ? 0.55 : adminLevel === '7' ? 0.4 : 0.5;
+
+                        // Merge all outer rings into one continuous boundary
+                        // Concatenate all coordinate arrays into one big ring
+                        let mergedCoords = [];
+                        for (const ring of outerRings) {
+                            mergedCoords = mergedCoords.concat(ring);
+                        }
+
+                        // Create one single polygon with the merged coordinates
+                        const polygon = L.polygon(mergedCoords, {
+                            color: baseColor,
+                            weight: adminLevel === '6' ? 3 : 2,
+                            opacity: 1,
+                            fillOpacity: baseFillOpacity,
+                            fillColor: baseColor
+                        });
+
+                        // Add hover effects
+                        polygon.on('mouseover', function(e) {
+                            this.setStyle({
+                                fillOpacity: hoverFillOpacity,
+                                fillColor: hoverColor,
+                                weight: adminLevel === '6' ? 4 : 3
+                            });
+                        });
+
+                        polygon.on('mouseout', function(e) {
+                            this.setStyle({
+                                fillOpacity: baseFillOpacity,
+                                fillColor: baseColor,
+                                weight: adminLevel === '6' ? 3 : 2
+                            });
+                        });
+
+                        // Add tooltip that shows anywhere over the polygon
+                        polygon.bindTooltip(name, {
+                            permanent: false,
+                            direction: 'top',
+                            className: 'district-label',
+                            sticky: true,
+                            offset: [0, -10]
+                        });
+
+                        // Add popup on click
+                        polygon.bindPopup(`<strong>${name}</strong><br><em>Admin Level ${adminLevel}</em>`, {
+                            closeButton: true
+                        });
+
+                        polygon.addTo(targetLayer);
+                        console.log(`Added ${name} (admin level ${adminLevel}) - merged ${outerRings.length} rings into ${mergedCoords.length} points`);
+
+                        // Add permanent labels for level 6 and level 8 districts
+                        if (adminLevel === '6' || adminLevel === '8') {
+                            const bounds = polygon.getBounds();
+                            const center = bounds.getCenter();
+
+                            // Different styling for level 6 vs level 8
+                            const fontSize = adminLevel === '6' ? '16px' : '11px';
+                            const fontColor = adminLevel === '6' ? '#0000cc' : '#006666';
+                            const fontWeight = adminLevel === '6' ? 'bold' : 'normal';
+
+                            const label = L.marker(center, {
+                                icon: L.divIcon({
+                                    className: 'district-label-permanent',
+                                    html: `<div style="font-weight: ${fontWeight}; font-size: ${fontSize}; color: ${fontColor}; text-shadow: 1px 1px 2px white, -1px -1px 2px white, 1px -1px 2px white, -1px 1px 2px white; white-space: nowrap; pointer-events: none;">${name}</div>`,
+                                    iconSize: [150, 30]
+                                }),
+                                interactive: false
+                            });
+                            label.addTo(targetLayer);
+                        }
+                    }
+                }
+            }
+
+        // Add all layers to map initially
+        districtsLayers.level6.addTo(mapObj);
+        districtsLayers.level7.addTo(mapObj);
+        districtsLayers.level8.addTo(mapObj);
+    }
+
+    // Add buttons to toggle districts by level
+    const buttonStyle = 'position: fixed; left: 10px; z-index: 9999; padding: 8px; cursor: pointer; background: white; border: 2px solid grey; font-size: 11px;';
+
+    // Main load button
+    const loadDistrictsButton = document.createElement('button');
+    loadDistrictsButton.textContent = 'Load Districts';
+    loadDistrictsButton.style.cssText = buttonStyle + 'bottom: 130px; font-weight: bold;';
+    document.body.appendChild(loadDistrictsButton);
+
+    // Level 6 toggle
+    const toggleLevel6Button = document.createElement('button');
+    toggleLevel6Button.textContent = 'Level 6 (Districts)';
+    toggleLevel6Button.style.cssText = buttonStyle + 'bottom: 100px; background: #e6f0ff;';
+    toggleLevel6Button.disabled = true;
+    document.body.appendChild(toggleLevel6Button);
+
+    // Level 8 toggle
+    const toggleLevel8Button = document.createElement('button');
+    toggleLevel8Button.textContent = 'Level 8 (Municipalities)';
+    toggleLevel8Button.style.cssText = buttonStyle + 'bottom: 70px; background: #e6ffff;';
+    toggleLevel8Button.disabled = true;
+    document.body.appendChild(toggleLevel8Button);
+
+    let levelsVisible = {
+        level6: true,
+        level7: true,
+        level8: true
+    };
+
+    // Load districts button
+    loadDistrictsButton.addEventListener('click', async function() {
+        if (!districtsLoaded) {
+            this.textContent = 'Loading...';
+            this.disabled = true;
+            await loadDistricts();
+            this.textContent = 'Districts Loaded';
+            this.style.background = '#ccffcc';
+            toggleLevel6Button.disabled = false;
+            toggleLevel8Button.disabled = false;
+        }
+    });
+
+    // Level 6 toggle
+    toggleLevel6Button.addEventListener('click', function() {
+        levelsVisible.level6 = !levelsVisible.level6;
+        if (levelsVisible.level6) {
+            mapObj.addLayer(districtsLayers.level6);
+            this.style.background = '#e6f0ff';
+        } else {
+            mapObj.removeLayer(districtsLayers.level6);
+            this.style.background = '#ffcccc';
+        }
+    });
+
+    // Level 8 toggle
+    toggleLevel8Button.addEventListener('click', function() {
+        levelsVisible.level8 = !levelsVisible.level8;
+        if (levelsVisible.level8) {
+            mapObj.addLayer(districtsLayers.level8);
+            this.style.background = '#e6ffff';
+        } else {
+            mapObj.removeLayer(districtsLayers.level8);
+            this.style.background = '#ffcccc';
+        }
+    });
+
     // Add button to toggle towns
     const toggleTownsButton = document.createElement('button');
     toggleTownsButton.textContent = 'Load Towns/Villages';
@@ -748,7 +1058,28 @@
     document.body.appendChild(toggleTownsButton);
 
     let townsVisible = false;
-    toggleTownsButton.addEventListener('click', async function() {
+    toggleTownsButton.addEventListener('click', async function(event) {
+        // Check if Shift key is held
+        if (event.shiftKey && townsLoaded) {
+            // Clear cache and reload
+            console.log('Shift-click detected: clearing towns cache and reloading...');
+            localStorage.removeItem(TOWNS_CACHE_KEY);
+
+            // Remove existing markers
+            townMarkers.forEach(marker => mapObj.removeLayer(marker));
+            townMarkers = [];
+            townsLoaded = false;
+
+            // Reload
+            this.textContent = 'Loading...';
+            this.disabled = true;
+            await loadTownsInArea();
+            this.textContent = 'Hide Towns/Villages';
+            this.disabled = false;
+            townsVisible = true;
+            return;
+        }
+
         if (!townsLoaded) {
             this.textContent = 'Loading...';
             this.disabled = true;
@@ -766,6 +1097,33 @@
                 }
             });
             this.textContent = townsVisible ? 'Hide Towns/Villages' : 'Show Towns/Villages';
+        }
+    });
+
+    // Global keyboard handler: focus search bar on any key press
+    document.addEventListener('keydown', function(e) {
+        const searchInput = document.getElementById('searchInput');
+
+        // Don't interfere if user is already typing in an input field
+        if (document.activeElement.tagName === 'INPUT' ||
+            document.activeElement.tagName === 'TEXTAREA') {
+            return;
+        }
+
+        // Ignore special keys (arrows, ctrl, alt, cmd, etc.)
+        if (e.ctrlKey || e.metaKey || e.altKey ||
+            e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta' ||
+            e.key === 'Tab' || e.key === 'Escape' || e.key === 'Enter' ||
+            e.key.startsWith('Arrow') || e.key.startsWith('F')) {
+            return;
+        }
+
+        // Focus the search input and let the character be typed
+        searchInput.focus();
+
+        // If it's a printable character, clear the field first so the new character starts fresh
+        if (e.key.length === 1) {
+            searchInput.value = '';
         }
     });
 

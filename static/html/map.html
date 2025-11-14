@@ -4,6 +4,7 @@
     
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
@@ -64,7 +65,7 @@
         <div id="searchResults" style="margin-top: 5px; font-size: 12px; color: #666;"></div>
         </div>
 
-        <div style="position: fixed;
+        <div id="controlPanel" style="position: fixed;
                     top: 10px; right: 10px; width: 200px; height: auto;
                     background-color: white; border:2px solid grey; z-index:9999;
                     font-size:14px; padding: 10px">
@@ -88,6 +89,13 @@
         <hr style="margin: 10px 0;">
         <p style="margin: 5px 0 2px 0; font-weight: bold;">Opacity: <span id="opacityValue">10</span>%</p>
         <input type="range" id="opacitySlider" min="0" max="100" value="10" style="width: 100%;">
+
+        <hr style="margin: 10px 0;">
+        <p style="margin: 5px 0 5px 0; font-weight: bold;">Overlays</p>
+        <div id="toggleLevel6Container" style="margin: 5px 0;"></div>
+        <div id="toggleLevel8Container" style="margin: 5px 0;"></div>
+        <div id="toggleTownsContainer" style="margin: 5px 0;"></div>
+        <div id="toggleHeatmapContainer" style="margin: 5px 0;"></div>
         </div>
     
             <div class="folium-map" id="map_8a051018cd638f777eb931e69dbdeb2b" ></div>
@@ -126,6 +134,10 @@
   "detectRetina": false,
   "tms": false,
   "opacity": 1,
+  "keepBuffer": 8,
+  "updateWhenIdle": true,
+  "updateWhenZooming": false,
+  "updateInterval": 200,
 }
 
             );
@@ -466,76 +478,126 @@
 
             const postcode = data.address?.postcode || 'N/A';
             const osmWebsite = data.extratags?.website || data.extratags?.['contact:website'] || '';
+            const county = data.address?.county || '';
+            const state = data.address?.state || '';
+            const town = data.address?.town || data.address?.city || '';
+            const population = data.extratags?.population || '';
+            const wikipedia = data.extratags?.wikipedia || '';
+            const phone = data.extratags?.phone || data.extratags?.['contact:phone'] || '';
+            const email = data.extratags?.email || data.extratags?.['contact:email'] || '';
 
-            return { postcode, osmWebsite };
+            return {
+                postcode,
+                osmWebsite,
+                county,
+                state,
+                town,
+                population,
+                wikipedia,
+                phone,
+                email
+            };
         } catch (error) {
             console.error(`Error fetching details for ${name}:`, error);
-            return { postcode: 'N/A', osmWebsite: '' };
+            return { postcode: 'N/A', osmWebsite: '', county: '', state: '', town: '', population: '', wikipedia: '', phone: '', email: '' };
         }
     }
 
     async function searchCommunityWebsites(name, postcode) {
         // Search for community websites using DuckDuckGo HTML scraping via CORS proxy
-        try {
-            const searchQuery = encodeURIComponent(`${name} gemeinde österreich`);
+        const searchQuery = encodeURIComponent(`${name} gemeinde österreich`);
+        const duckduckgoUrl = `https://html.duckduckgo.com/html/?q=${searchQuery}`;
 
-            // Use allorigins.win as CORS proxy to access DuckDuckGo search results
-            const proxyUrl = `https://api.allorigins.win/raw?url=`;
-            const duckduckgoUrl = `https://html.duckduckgo.com/html/?q=${searchQuery}`;
-            const response = await fetch(proxyUrl + encodeURIComponent(duckduckgoUrl));
-            const html = await response.text();
+        // Try multiple CORS proxies in order of reliability
+        const proxies = [
+            'https://corsproxy.io/?',
+            'https://api.allorigins.win/raw?url=',
+            'https://api.codetabs.com/v1/proxy?quest='
+        ];
 
-            // Parse HTML to extract search result URLs
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const websites = [];
-
-            // Find all result links
-            const resultLinks = doc.querySelectorAll('.result__url');
-
-            for (const link of resultLinks) {
-                let url = link.textContent.trim();
-
-                // Clean up the URL
-                if (!url.startsWith('http')) {
-                    url = 'https://' + url;
-                }
-
-                // Filter for relevant Austrian domains
-                if (url.includes('.at') || url.includes('.gv.at') ||
-                    url.toLowerCase().includes('gemeinde') ||
-                    url.toLowerCase().includes(name.toLowerCase())) {
-                    websites.push(url);
-                }
-
-                // Limit to top 5 results
-                if (websites.length >= 5) break;
-            }
-
-            return websites;
-        } catch (error) {
-            console.error(`Error searching for ${name}:`, error);
-
-            // Fallback: try DuckDuckGo instant answer API
+        // Try each proxy until one works
+        for (let i = 0; i < proxies.length; i++) {
             try {
-                const searchQuery = encodeURIComponent(`${name} gemeinde`);
-                const response = await fetch(`https://api.duckduckgo.com/?q=${searchQuery}&format=json&no_redirect=1`);
-                const data = await response.json();
+                const proxyUrl = proxies[i];
+                console.log(`Trying proxy ${i + 1}/${proxies.length}: ${proxyUrl.split('?')[0]}...`);
 
-                const websites = [];
-                if (data.AbstractURL) websites.push(data.AbstractURL);
+                const response = await fetch(proxyUrl + encodeURIComponent(duckduckgoUrl), {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'text/html'
+                    },
+                    signal: AbortSignal.timeout(8000) // 8 second timeout
+                });
 
-                if (data.RelatedTopics && data.RelatedTopics.length > 0) {
-                    for (const topic of data.RelatedTopics.slice(0, 3)) {
-                        if (topic.FirstURL) websites.push(topic.FirstURL);
-                    }
+                if (!response.ok) {
+                    console.log(`Proxy ${i + 1} returned status ${response.status}`);
+                    continue;
                 }
 
-                return websites;
-            } catch (fallbackError) {
-                console.error('Fallback search also failed:', fallbackError);
-                return [];
+                const html = await response.text();
+
+                // Parse HTML to extract search result URLs
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const websites = [];
+
+                // Find all result links
+                const resultLinks = doc.querySelectorAll('.result__url');
+
+                for (const link of resultLinks) {
+                    let url = link.textContent.trim();
+
+                    // Clean up the URL
+                    if (!url.startsWith('http')) {
+                        url = 'https://' + url;
+                    }
+
+                    // Filter for relevant Austrian domains
+                    if (url.includes('.at') || url.includes('.gv.at') ||
+                        url.toLowerCase().includes('gemeinde') ||
+                        url.toLowerCase().includes(name.toLowerCase())) {
+                        websites.push(url);
+                    }
+
+                    // Limit to top 5 results
+                    if (websites.length >= 5) break;
+                }
+
+                if (websites.length > 0) {
+                    console.log(`✓ Proxy ${i + 1} successful, found ${websites.length} websites`);
+                    return websites;
+                }
+
+                console.log(`Proxy ${i + 1} returned no results, trying next...`);
+            } catch (error) {
+                console.log(`Proxy ${i + 1} failed:`, error.message);
+                // Continue to next proxy
             }
+        }
+
+        // All proxies failed, try DuckDuckGo instant answer API as final fallback
+        console.log('All proxies failed, trying DuckDuckGo instant answer API...');
+        try {
+            const searchQuery = encodeURIComponent(`${name} gemeinde`);
+            const response = await fetch(`https://api.duckduckgo.com/?q=${searchQuery}&format=json&no_redirect=1`);
+            const data = await response.json();
+
+            const websites = [];
+            if (data.AbstractURL) websites.push(data.AbstractURL);
+
+            if (data.RelatedTopics && data.RelatedTopics.length > 0) {
+                for (const topic of data.RelatedTopics.slice(0, 3)) {
+                    if (topic.FirstURL) websites.push(topic.FirstURL);
+                }
+            }
+
+            if (websites.length > 0) {
+                console.log(`✓ DuckDuckGo instant answer API found ${websites.length} websites`);
+            }
+            return websites;
+        } catch (fallbackError) {
+            console.error('All search methods failed:', fallbackError);
+            return [];
         }
     }
 
@@ -546,6 +608,7 @@
                 const name = element.tags.name || 'Unknown';
                 const placeType = element.tags.place || '';
                 const osmId = element.id;
+                const population = element.tags.population || null;
 
                 // Get cached details if available
                 const details = detailsMap[osmId] || {};
@@ -563,44 +626,73 @@
                     fillOpacity: 0.7
                 }).addTo(mapObj);
 
+                // Add tooltip that shows name and population on hover
+                const tooltipText = population
+                    ? `${name} (${parseInt(population).toLocaleString()})`
+                    : name;
+                marker.bindTooltip(tooltipText, {
+                    permanent: false,
+                    direction: 'top',
+                    offset: [0, -10]
+                });
+
                 // Create initial popup content (shown immediately)
-                const getInitialPopup = (plz) => `
-                    <div id="popup-${osmId}" style="min-width: 200px;">
-                        <strong>${name}</strong><br>
-                        <em>${placeType}</em><br>
-                        ${plz !== 'N/A' ? `PLZ: ${plz}<br>` : '<span style="color:#999">PLZ: Loading...</span><br>'}
-                        ${website ? `<a href="${website}" target="_blank">Official Website</a><br>` : ''}
-                        <div id="community-links-${osmId}" style="margin-top: 5px; color:#666;">
-                            <small>Searching community websites...</small>
+                const getInitialPopup = (plz, extraDetails = {}) => {
+                    // Prioritize population from tags over Nominatim data
+                    const displayPopulation = population || extraDetails.population;
+
+                    return `
+                        <div id="popup-${osmId}" style="min-width: 220px;">
+                            <strong style="font-size: 15px;">${name}</strong><br>
+                            <em>${placeType}</em>
+                            ${extraDetails.town ? ` · ${extraDetails.town}` : ''}
+                            ${extraDetails.county ? ` · ${extraDetails.county}` : ''}
+                            ${extraDetails.state ? ` · ${extraDetails.state}` : ''}<br>
+                            ${plz !== 'N/A' ? `<span id="plz-${osmId}">PLZ: ${plz}</span><br>` : '<span id="plz-${osmId}" style="color:#999">PLZ: Loading...</span><br>'}
+                            ${displayPopulation ? `<small>👥 Population: ${parseInt(displayPopulation).toLocaleString()}</small><br>` : ''}
+                            <div id="contact-${osmId}">
+                                ${extraDetails.phone ? `<small>📞 ${extraDetails.phone}</small><br>` : ''}
+                                ${extraDetails.email ? `<small>✉️ <a href="mailto:${extraDetails.email}">${extraDetails.email}</a></small><br>` : ''}
+                            </div>
+                            ${website ? `<a href="${website}" target="_blank">🔗 Official Website</a><br>` : ''}
+                            ${extraDetails.wikipedia ? `<a href="https://wikipedia.org/wiki/${extraDetails.wikipedia}" target="_blank">📚 Wikipedia</a><br>` : ''}
+                            <div id="community-links-${osmId}" style="margin-top: 5px; color:#666;">
+                                <small>Searching community websites...</small>
+                            </div>
+                            <small style="color:#999; margin-top: 5px; display: block;">📍 ${element.lat.toFixed(4)}, ${element.lon.toFixed(4)}</small>
                         </div>
-                        <small style="color:#999;">Lat: ${element.lat.toFixed(4)}, Lon: ${element.lon.toFixed(4)}</small>
-                    </div>
-                `;
+                    `;
+                };
 
                 marker.on('click', async function() {
                     let currentPostcode = postcode;
+                    let extraDetails = details;
 
                     // Show popup immediately with available data
-                    this.bindPopup(getInitialPopup(currentPostcode)).openPopup();
+                    this.bindPopup(getInitialPopup(currentPostcode, extraDetails)).openPopup();
 
                     // Fetch missing details in background
                     if (currentPostcode === 'N/A' || (!website && communityWebsites.length === 0)) {
                         // Fetch postal code if missing
                         if (currentPostcode === 'N/A') {
                             fetchDetailsForTown(element.lat, element.lon, name).then(fetchedDetails => {
+                                console.log(`Fetched details for ${name}:`, fetchedDetails);
                                 currentPostcode = fetchedDetails.postcode;
+                                extraDetails = fetchedDetails;
                                 detailsMap[osmId] = {
                                     ...detailsMap[osmId],
-                                    postcode: currentPostcode,
-                                    osmWebsite: fetchedDetails.osmWebsite
+                                    ...fetchedDetails
                                 };
 
-                                // Update popup with fetched postal code
+                                // Update popup with all fetched details
                                 const popupElement = document.getElementById(`popup-${osmId}`);
                                 if (popupElement) {
-                                    popupElement.querySelector('span[style*="color:#999"]').outerHTML =
-                                        currentPostcode !== 'N/A' ? `PLZ: ${currentPostcode}<br>` : '';
+                                    // Regenerate the entire popup content
+                                    popupElement.innerHTML = getInitialPopup(currentPostcode, fetchedDetails).replace(`<div id="popup-${osmId}" style="min-width: 220px;">`, '').replace('</div>', '');
+                                    console.log(`Updated popup for ${name} with PLZ: ${currentPostcode}`);
                                 }
+                            }).catch(err => {
+                                console.error('Error updating popup:', err);
                             });
                         }
 
@@ -656,37 +748,46 @@
         }
     }
 
-    async function loadTownsInArea() {
+    async function loadTownsInArea(forceAPIFetch = false) {
         if (townsLoaded) return;
 
         console.log('Loading towns and villages...');
 
         let detailsMap = {};
 
-        // Try to load from localStorage first
-        try {
-            const cached = localStorage.getItem(TOWNS_CACHE_KEY);
-            if (cached) {
-                const cacheData = JSON.parse(cached);
-                if (cacheData.version === TOWNS_CACHE_VERSION) {
-                    console.log(`Loading ${cacheData.data.elements.length} settlements from cache`);
-                    detailsMap = cacheData.detailsMap || {};
-                    addTownMarkers(cacheData.data, detailsMap);
+        // If not forcing API fetch, try to load from static file first
+        if (!forceAPIFetch) {
+            try {
+                console.log('Loading towns from static file...');
+                const response = await fetch('towns_villages.json.gz');
+                if (response.ok) {
+                    // Decompress the gzipped data
+                    const stream = response.body.pipeThrough(new DecompressionStream('gzip'));
+                    const decompressedResponse = new Response(stream);
+                    const data = await decompressedResponse.json();
+
+                    console.log(`Loaded ${data.elements.length} settlements from static file`);
+                    addTownMarkers(data, detailsMap);
                     townsLoaded = true;
-                    console.log(`Added ${townMarkers.length} town markers from cache`);
+                    console.log(`Added ${townMarkers.length} town markers from static file`);
                     return;
                 }
+            } catch (e) {
+                console.log('Static file not found, will try API instead');
             }
-        } catch (e) {
-            console.log('Cache read failed, fetching fresh data');
         }
 
-        // Get bounds of the 60-min zone (approximate from Vienna area)
+        // Get current map bounds for API query
         const bounds = mapObj.getBounds();
         const south = bounds.getSouth();
         const west = bounds.getWest();
         const north = bounds.getNorth();
         const east = bounds.getEast();
+
+        // Create a bounds key for caching (rounded to 2 decimal places to allow small movements)
+        const boundsKey = `${south.toFixed(2)},${west.toFixed(2)},${north.toFixed(2)},${east.toFixed(2)}`;
+
+        console.log('Fetching from Overpass API...');
 
         // Overpass API query for towns and villages
         const query = `
@@ -706,15 +807,21 @@
             const data = await response.json();
             console.log(`Found ${data.elements.length} settlements from API`);
 
+            // Print full API response for export
+            console.log('=== FULL API RESPONSE (for export) ===');
+            console.log(JSON.stringify(data, null, 2));
+            console.log('=== END API RESPONSE ===');
+
             // Save to localStorage (initial save without details)
             try {
                 localStorage.setItem(TOWNS_CACHE_KEY, JSON.stringify({
                     version: TOWNS_CACHE_VERSION,
                     data: data,
                     detailsMap: detailsMap,
+                    boundsKey: boundsKey,
                     timestamp: new Date().toISOString()
                 }));
-                console.log('Saved towns data to cache');
+                console.log('Saved towns data to cache with bounds:', boundsKey);
             } catch (e) {
                 console.log('Failed to cache data:', e);
             }
@@ -730,6 +837,7 @@
                     if (cached) {
                         const cacheData = JSON.parse(cached);
                         cacheData.detailsMap = detailsMap;
+                        cacheData.boundsKey = boundsKey;
                         localStorage.setItem(TOWNS_CACHE_KEY, JSON.stringify(cacheData));
                     }
                 } catch (e) {
@@ -741,33 +849,442 @@
         }
     }
 
-    // Add button to toggle towns
-    const toggleTownsButton = document.createElement('button');
-    toggleTownsButton.textContent = 'Load Towns/Villages';
-    toggleTownsButton.style.cssText = 'position: fixed; bottom: 20px; left: 10px; z-index: 9999; padding: 10px; cursor: pointer; background: white; border: 2px solid grey;';
-    document.body.appendChild(toggleTownsButton);
+    // Districts overlay with separate layers per admin level
+    let districtsLayers = {
+        level6: L.featureGroup(),
+        level7: L.featureGroup(),
+        level8: L.featureGroup()
+    };
+    let districtsLoaded = false;
+    const DISTRICTS_CACHE_KEY = 'districts_data_cache';
+    const DISTRICTS_CACHE_VERSION = 'v1';
 
-    let townsVisible = false;
-    toggleTownsButton.addEventListener('click', async function() {
-        if (!townsLoaded) {
-            this.textContent = 'Loading...';
-            this.disabled = true;
-            await loadTownsInArea();
-            this.textContent = 'Hide Towns/Villages';
-            this.disabled = false;
-            townsVisible = true;
-        } else {
-            townsVisible = !townsVisible;
-            townMarkers.forEach(marker => {
-                if (townsVisible) {
-                    mapObj.addLayer(marker);
-                } else {
-                    mapObj.removeLayer(marker);
+    async function loadDistricts() {
+        if (districtsLoaded) return;
+
+        console.log('Loading district boundaries from local file...');
+
+        try {
+            // Try gzipped version first, then fall back to plain JSON
+            let response = await fetch('districts.json.gz');
+            let isGzipped = response.ok;
+
+            if (!isGzipped) {
+                console.log('districts.json.gz not found, trying districts.json...');
+                response = await fetch('districts.json');
+            }
+
+            if (!response.ok) {
+                throw new Error(`Failed to load districts file: ${response.status}`);
+            }
+
+            let data;
+            if (isGzipped) {
+                console.log('Loading gzipped districts file...');
+                const blob = await response.blob();
+                const decompressedStream = blob.stream().pipeThrough(new DecompressionStream('gzip'));
+                const decompressedBlob = await new Response(decompressedStream).blob();
+                const text = await decompressedBlob.text();
+                data = JSON.parse(text);
+                console.log(`✓ Decompressed and loaded ${data.elements.length} administrative boundaries`);
+            } else {
+                console.log('Loading plain JSON districts file...');
+                data = await response.json();
+                console.log(`✓ Loaded ${data.elements.length} administrative boundaries`);
+            }
+
+            processDistrictsData(data);
+            districtsLoaded = true;
+            console.log('Districts loaded successfully');
+        } catch (error) {
+            console.error('Error loading districts from local file:', error);
+            console.log('Make sure districts.json or districts.json.gz exists in the same directory as this HTML file');
+        }
+    }
+
+    function processDistrictsData(data) {
+        // Process each boundary
+        for (const element of data.elements) {
+                if (element.type === 'relation' && element.members) {
+                    const name = element.tags.name || 'Unknown';
+                    const adminLevel = element.tags.admin_level;
+
+                    // Extract coordinates from way members and build GeoJSON
+                    // Separate outer and inner rings based on role
+                    const outerRings = [];
+                    const innerRings = [];
+
+                    for (const member of element.members) {
+                        if (member.type === 'way' && member.geometry) {
+                            // Leaflet uses [lat, lon] order
+                            const wayCoords = member.geometry.map(node => [node.lat, node.lon]);
+                            if (member.role === 'outer' || member.role === '') {
+                                outerRings.push(wayCoords);
+                            } else if (member.role === 'inner') {
+                                innerRings.push(wayCoords);
+                            }
+                        }
+                    }
+
+                    if (outerRings.length > 0) {
+                        // Determine which layer to add to
+                        const targetLayer = adminLevel === '6' ? districtsLayers.level6 :
+                                          adminLevel === '7' ? districtsLayers.level7 :
+                                          districtsLayers.level8;
+
+                        // Create polygon with visible fill and colored border
+                        const baseColor = adminLevel === '6' ? '#0000ff' : adminLevel === '7' ? '#00aaff' : '#008888';
+                        const hoverColor = adminLevel === '6' ? '#3333ff' : adminLevel === '7' ? '#33bbff' : '#00aaaa';
+                        const baseFillOpacity = adminLevel === '6' ? 0.35 : adminLevel === '7' ? 0.2 : 0.3;
+                        const hoverFillOpacity = adminLevel === '6' ? 0.55 : adminLevel === '7' ? 0.4 : 0.5;
+
+                        // Merge all outer rings into one continuous boundary
+                        // Concatenate all coordinate arrays into one big ring
+                        let mergedCoords = [];
+                        for (const ring of outerRings) {
+                            mergedCoords = mergedCoords.concat(ring);
+                        }
+
+                        // Create one single polygon with the merged coordinates
+                        const polygon = L.polygon(mergedCoords, {
+                            color: baseColor,
+                            weight: adminLevel === '6' ? 3 : 2,
+                            opacity: 1,
+                            fillOpacity: baseFillOpacity,
+                            fillColor: baseColor
+                        });
+
+                        // Add hover effects
+                        polygon.on('mouseover', function(e) {
+                            this.setStyle({
+                                fillOpacity: hoverFillOpacity,
+                                fillColor: hoverColor,
+                                weight: adminLevel === '6' ? 4 : 3
+                            });
+                        });
+
+                        polygon.on('mouseout', function(e) {
+                            this.setStyle({
+                                fillOpacity: baseFillOpacity,
+                                fillColor: baseColor,
+                                weight: adminLevel === '6' ? 3 : 2
+                            });
+                        });
+
+                        // Add tooltip that shows anywhere over the polygon
+                        polygon.bindTooltip(name, {
+                            permanent: false,
+                            direction: 'top',
+                            className: 'district-label',
+                            sticky: true,
+                            offset: [0, -10]
+                        });
+
+                        // Add popup on click
+                        polygon.bindPopup(`<strong>${name}</strong><br><em>Admin Level ${adminLevel}</em>`, {
+                            closeButton: true
+                        });
+
+                        polygon.addTo(targetLayer);
+                        console.log(`Added ${name} (admin level ${adminLevel}) - merged ${outerRings.length} rings into ${mergedCoords.length} points`);
+
+                        // Add permanent labels for level 6 and level 8 districts
+                        if (adminLevel === '6' || adminLevel === '8') {
+                            const bounds = polygon.getBounds();
+                            const center = bounds.getCenter();
+
+                            // Different styling for level 6 vs level 8
+                            const fontSize = adminLevel === '6' ? '16px' : '11px';
+                            const fontColor = adminLevel === '6' ? '#0000cc' : '#006666';
+                            const fontWeight = adminLevel === '6' ? 'bold' : 'normal';
+
+                            const label = L.marker(center, {
+                                icon: L.divIcon({
+                                    className: 'district-label-permanent',
+                                    html: `<div style="font-weight: ${fontWeight}; font-size: ${fontSize}; color: ${fontColor}; text-shadow: 1px 1px 2px white, -1px -1px 2px white, 1px -1px 2px white, -1px 1px 2px white; white-space: nowrap; pointer-events: none;">${name}</div>`,
+                                    iconSize: [150, 30]
+                                }),
+                                interactive: false
+                            });
+                            label.addTo(targetLayer);
+                        }
+                    }
                 }
-            });
-            this.textContent = townsVisible ? 'Hide Towns/Villages' : 'Show Towns/Villages';
+            }
+
+        // Don't add layers to map initially - let checkboxes control them
+        // districtsLayers.level6.addTo(mapObj);
+        // districtsLayers.level7.addTo(mapObj);
+        // districtsLayers.level8.addTo(mapObj);
+    }
+
+    // Add Level 6 (Districts) toggle to control panel
+    const level6Container = document.getElementById('toggleLevel6Container');
+    const level6Checkbox = document.createElement('input');
+    level6Checkbox.type = 'checkbox';
+    level6Checkbox.id = 'toggleLevel6';
+    level6Checkbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
+
+    const level6Label = document.createElement('label');
+    level6Label.htmlFor = 'toggleLevel6';
+    level6Label.textContent = 'Districts';
+    level6Label.style.cssText = 'cursor: pointer; user-select: none;';
+
+    level6Container.appendChild(level6Checkbox);
+    level6Container.appendChild(level6Label);
+
+    // Add Level 8 (Municipalities) toggle to control panel
+    const level8Container = document.getElementById('toggleLevel8Container');
+    const level8Checkbox = document.createElement('input');
+    level8Checkbox.type = 'checkbox';
+    level8Checkbox.id = 'toggleLevel8';
+    level8Checkbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
+
+    const level8Label = document.createElement('label');
+    level8Label.htmlFor = 'toggleLevel8';
+    level8Label.textContent = 'Municipalities';
+    level8Label.style.cssText = 'cursor: pointer; user-select: none;';
+
+    level8Container.appendChild(level8Checkbox);
+    level8Container.appendChild(level8Label);
+
+    // Level 6 checkbox event listener
+    level6Checkbox.addEventListener('change', async function() {
+        if (this.checked) {
+            if (!districtsLoaded) {
+                level6Label.textContent = 'Districts (Loading...)';
+                level8Label.textContent = 'Municipalities (Loading...)';
+                this.disabled = true;
+                level8Checkbox.disabled = true;
+                await loadDistricts();
+                this.disabled = false;
+                level8Checkbox.disabled = false;
+                level6Label.textContent = 'Districts';
+                level8Label.textContent = 'Municipalities';
+            }
+            // Always add the layer when checked (after loading if needed)
+            mapObj.addLayer(districtsLayers.level6);
+        } else {
+            mapObj.removeLayer(districtsLayers.level6);
         }
     });
+
+    // Level 8 checkbox event listener
+    level8Checkbox.addEventListener('change', async function() {
+        if (this.checked) {
+            if (!districtsLoaded) {
+                level6Label.textContent = 'Districts (Loading...)';
+                level8Label.textContent = 'Municipalities (Loading...)';
+                this.disabled = true;
+                level6Checkbox.disabled = true;
+                await loadDistricts();
+                this.disabled = false;
+                level6Checkbox.disabled = false;
+                level6Label.textContent = 'Districts';
+                level8Label.textContent = 'Municipalities';
+            }
+            // Always add the layer when checked (after loading if needed)
+            mapObj.addLayer(districtsLayers.level8);
+        } else {
+            mapObj.removeLayer(districtsLayers.level8);
+        }
+    });
+
+    // Add Towns/Villages toggle to control panel
+    const townsContainer = document.getElementById('toggleTownsContainer');
+    const townsCheckbox = document.createElement('input');
+    townsCheckbox.type = 'checkbox';
+    townsCheckbox.id = 'toggleTowns';
+    townsCheckbox.checked = true; // Enable by default
+    townsCheckbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
+
+    const townsLabel = document.createElement('label');
+    townsLabel.htmlFor = 'toggleTowns';
+    townsLabel.textContent = 'Towns/Villages';
+    townsLabel.style.cssText = 'cursor: pointer; user-select: none;';
+
+    townsContainer.appendChild(townsCheckbox);
+    townsContainer.appendChild(townsLabel);
+
+    // Towns checkbox event listener
+    townsCheckbox.addEventListener('change', async function(event) {
+        if (this.checked) {
+            if (!townsLoaded) {
+                townsLabel.textContent = 'Towns/Villages (Loading...)';
+                this.disabled = true;
+                await loadTownsInArea(); // Load from static file by default
+                this.disabled = false;
+                townsLabel.textContent = 'Towns/Villages';
+            } else {
+                townMarkers.forEach(marker => mapObj.addLayer(marker));
+            }
+        } else {
+            townMarkers.forEach(marker => mapObj.removeLayer(marker));
+        }
+    });
+
+    // Add Shift+Click support for fetching from API
+    townsLabel.addEventListener('click', async function(event) {
+        if (event.shiftKey) {
+            event.preventDefault();
+            console.log('Shift-click detected: fetching from API...');
+
+            // Remove existing markers if any
+            if (townsLoaded) {
+                townMarkers.forEach(marker => mapObj.removeLayer(marker));
+                townMarkers = [];
+                townsLoaded = false;
+            }
+
+            // Reload from API
+            townsLabel.textContent = 'Towns/Villages (Loading from API...)';
+            townsCheckbox.disabled = true;
+            townsCheckbox.checked = true;
+            await loadTownsInArea(true); // Force API fetch
+            townsCheckbox.disabled = false;
+            townsLabel.textContent = 'Towns/Villages';
+            townMarkers.forEach(marker => mapObj.addLayer(marker));
+        }
+    });
+
+    // Add Population Heatmap toggle to control panel
+    const heatmapContainer = document.getElementById('toggleHeatmapContainer');
+    const heatmapCheckbox = document.createElement('input');
+    heatmapCheckbox.type = 'checkbox';
+    heatmapCheckbox.id = 'toggleHeatmap';
+    heatmapCheckbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
+
+    const heatmapLabel = document.createElement('label');
+    heatmapLabel.htmlFor = 'toggleHeatmap';
+    heatmapLabel.textContent = 'Population Heatmap';
+    heatmapLabel.style.cssText = 'cursor: pointer; user-select: none;';
+
+    heatmapContainer.appendChild(heatmapCheckbox);
+    heatmapContainer.appendChild(heatmapLabel);
+
+    // Population density heatmap
+    let heatmapLayer = null;
+
+    heatmapCheckbox.addEventListener('change', async function() {
+        if (this.checked) {
+            if (!heatmapLayer) {
+                // Load heatmap from static population grid file
+                heatmapLabel.textContent = 'Population Heatmap (Loading...)';
+                this.disabled = true;
+
+                try {
+                    console.log('Loading population grid data...');
+
+                    // Try gzipped version first, then fall back to plain JSON
+                    let response = await fetch('austria_population_grid.json.gz');
+                    let isGzipped = response.ok;
+
+                    if (!isGzipped) {
+                        console.log('austria_population_grid.json.gz not found, trying austria_population_grid.json...');
+                        response = await fetch('austria_population_grid.json');
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to load population grid: ${response.status}`);
+                    }
+
+                    let data;
+                    if (isGzipped) {
+                        console.log('Loading gzipped population grid...');
+                        const blob = await response.blob();
+                        const decompressedStream = blob.stream().pipeThrough(new DecompressionStream('gzip'));
+                        const decompressedBlob = await new Response(decompressedStream).blob();
+                        const text = await decompressedBlob.text();
+                        data = JSON.parse(text);
+                    } else {
+                        console.log('Loading plain JSON population grid...');
+                        data = await response.json();
+                    }
+
+                    console.log(`✓ Loaded ${data.cells.length} population points`);
+
+                    // Convert to heatmap data format
+                    const heatmapData = data.cells.map(cell => {
+                        // Use log scale for better visualization, but boost the intensity
+                        const logPop = Math.log10(cell.population + 1);
+                        // Scale from log(10) to log(2M): 1.0 to 6.3
+                        // Normalize and boost small towns
+                        const intensity = Math.pow(logPop / 6.3, 0.7); // Power < 1 boosts lower values
+                        return [cell.lat, cell.lon, Math.min(1.0, intensity * 1.5)];
+                    });
+
+                    // Create heatmap layer with increased visibility
+                    heatmapLayer = L.heatLayer(heatmapData, {
+                        radius: 30,           // Increased from 25
+                        blur: 25,             // Decreased from 35 for sharper edges
+                        maxZoom: 17,          // Increased from 13 to stay visible when zoomed
+                        max: 0.6,             // Decreased from 1.0 to make colors more intense
+                        minOpacity: 0.3,      // Minimum opacity to ensure visibility
+                        gradient: {
+                            0.0: 'rgba(0,0,255,0)',      // Transparent blue for very low
+                            0.2: '#4169E1',               // Royal blue
+                            0.4: '#00CED1',               // Dark turquoise
+                            0.5: '#00FF7F',               // Spring green
+                            0.6: '#FFD700',               // Gold
+                            0.75: '#FF8C00',              // Dark orange
+                            0.9: '#FF4500',               // Orange red
+                            1.0: '#DC143C'                // Crimson
+                        }
+                    });
+
+                    heatmapLayer.addTo(mapObj);
+                    this.disabled = false;
+                    heatmapLabel.textContent = 'Population Heatmap';
+
+                    console.log('✓ Population heatmap created successfully');
+                } catch (error) {
+                    console.error('Error creating heatmap:', error);
+                    heatmapLabel.textContent = 'Population Heatmap (Error)';
+                    this.checked = false;
+                    this.disabled = false;
+                    alert('Failed to load population heatmap. Make sure austria_population_grid.json.gz or austria_population_grid.json exists in the same directory.');
+                }
+            } else {
+                mapObj.addLayer(heatmapLayer);
+            }
+        } else {
+            if (heatmapLayer) {
+                mapObj.removeLayer(heatmapLayer);
+            }
+        }
+    });
+
+    // Global keyboard handler: focus search bar on any key press
+    document.addEventListener('keydown', function(e) {
+        const searchInput = document.getElementById('searchInput');
+
+        // Don't interfere if user is already typing in an input field
+        if (document.activeElement.tagName === 'INPUT' ||
+            document.activeElement.tagName === 'TEXTAREA') {
+            return;
+        }
+
+        // Ignore special keys (arrows, ctrl, alt, cmd, etc.)
+        if (e.ctrlKey || e.metaKey || e.altKey ||
+            e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta' ||
+            e.key === 'Tab' || e.key === 'Escape' || e.key === 'Enter' ||
+            e.key.startsWith('Arrow') || e.key.startsWith('F')) {
+            return;
+        }
+
+        // Focus the search input and let the character be typed
+        searchInput.focus();
+
+        // If it's a printable character, clear the field first so the new character starts fresh
+        if (e.key.length === 1) {
+            searchInput.value = '';
+        }
+    });
+
+    // Auto-load towns on page load since checkbox is enabled by default
+    (async function() {
+        await loadTownsInArea();
+    })();
 
 </script>
 </html>

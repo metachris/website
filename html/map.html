@@ -4,6 +4,7 @@
     
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
@@ -64,7 +65,7 @@
         <div id="searchResults" style="margin-top: 5px; font-size: 12px; color: #666;"></div>
         </div>
 
-        <div style="position: fixed;
+        <div id="controlPanel" style="position: fixed;
                     top: 10px; right: 10px; width: 200px; height: auto;
                     background-color: white; border:2px solid grey; z-index:9999;
                     font-size:14px; padding: 10px">
@@ -88,6 +89,13 @@
         <hr style="margin: 10px 0;">
         <p style="margin: 5px 0 2px 0; font-weight: bold;">Opacity: <span id="opacityValue">10</span>%</p>
         <input type="range" id="opacitySlider" min="0" max="100" value="10" style="width: 100%;">
+
+        <hr style="margin: 10px 0;">
+        <p style="margin: 5px 0 5px 0; font-weight: bold;">Overlays</p>
+        <div id="toggleLevel6Container" style="margin: 5px 0;"></div>
+        <div id="toggleLevel8Container" style="margin: 5px 0;"></div>
+        <div id="toggleTownsContainer" style="margin: 5px 0;"></div>
+        <div id="toggleHeatmapContainer" style="margin: 5px 0;"></div>
         </div>
     
             <div class="folium-map" id="map_8a051018cd638f777eb931e69dbdeb2b" ></div>
@@ -600,6 +608,7 @@
                 const name = element.tags.name || 'Unknown';
                 const placeType = element.tags.place || '';
                 const osmId = element.id;
+                const population = element.tags.population || null;
 
                 // Get cached details if available
                 const details = detailsMap[osmId] || {};
@@ -617,35 +626,43 @@
                     fillOpacity: 0.7
                 }).addTo(mapObj);
 
-                // Add tooltip that shows name on hover
-                marker.bindTooltip(name, {
+                // Add tooltip that shows name and population on hover
+                const tooltipText = population
+                    ? `${name} (${parseInt(population).toLocaleString()})`
+                    : name;
+                marker.bindTooltip(tooltipText, {
                     permanent: false,
                     direction: 'top',
                     offset: [0, -10]
                 });
 
                 // Create initial popup content (shown immediately)
-                const getInitialPopup = (plz, extraDetails = {}) => `
-                    <div id="popup-${osmId}" style="min-width: 220px;">
-                        <strong style="font-size: 15px;">${name}</strong><br>
-                        <em>${placeType}</em>
-                        ${extraDetails.town ? ` · ${extraDetails.town}` : ''}
-                        ${extraDetails.county ? ` · ${extraDetails.county}` : ''}
-                        ${extraDetails.state ? ` · ${extraDetails.state}` : ''}<br>
-                        ${plz !== 'N/A' ? `<span id="plz-${osmId}">PLZ: ${plz}</span><br>` : '<span id="plz-${osmId}" style="color:#999">PLZ: Loading...</span><br>'}
-                        ${extraDetails.population ? `<small>👥 Population: ${parseInt(extraDetails.population).toLocaleString()}</small><br>` : ''}
-                        <div id="contact-${osmId}">
-                            ${extraDetails.phone ? `<small>📞 ${extraDetails.phone}</small><br>` : ''}
-                            ${extraDetails.email ? `<small>✉️ <a href="mailto:${extraDetails.email}">${extraDetails.email}</a></small><br>` : ''}
+                const getInitialPopup = (plz, extraDetails = {}) => {
+                    // Prioritize population from tags over Nominatim data
+                    const displayPopulation = population || extraDetails.population;
+
+                    return `
+                        <div id="popup-${osmId}" style="min-width: 220px;">
+                            <strong style="font-size: 15px;">${name}</strong><br>
+                            <em>${placeType}</em>
+                            ${extraDetails.town ? ` · ${extraDetails.town}` : ''}
+                            ${extraDetails.county ? ` · ${extraDetails.county}` : ''}
+                            ${extraDetails.state ? ` · ${extraDetails.state}` : ''}<br>
+                            ${plz !== 'N/A' ? `<span id="plz-${osmId}">PLZ: ${plz}</span><br>` : '<span id="plz-${osmId}" style="color:#999">PLZ: Loading...</span><br>'}
+                            ${displayPopulation ? `<small>👥 Population: ${parseInt(displayPopulation).toLocaleString()}</small><br>` : ''}
+                            <div id="contact-${osmId}">
+                                ${extraDetails.phone ? `<small>📞 ${extraDetails.phone}</small><br>` : ''}
+                                ${extraDetails.email ? `<small>✉️ <a href="mailto:${extraDetails.email}">${extraDetails.email}</a></small><br>` : ''}
+                            </div>
+                            ${website ? `<a href="${website}" target="_blank">🔗 Official Website</a><br>` : ''}
+                            ${extraDetails.wikipedia ? `<a href="https://wikipedia.org/wiki/${extraDetails.wikipedia}" target="_blank">📚 Wikipedia</a><br>` : ''}
+                            <div id="community-links-${osmId}" style="margin-top: 5px; color:#666;">
+                                <small>Searching community websites...</small>
+                            </div>
+                            <small style="color:#999; margin-top: 5px; display: block;">📍 ${element.lat.toFixed(4)}, ${element.lon.toFixed(4)}</small>
                         </div>
-                        ${website ? `<a href="${website}" target="_blank">🔗 Official Website</a><br>` : ''}
-                        ${extraDetails.wikipedia ? `<a href="https://wikipedia.org/wiki/${extraDetails.wikipedia}" target="_blank">📚 Wikipedia</a><br>` : ''}
-                        <div id="community-links-${osmId}" style="margin-top: 5px; color:#666;">
-                            <small>Searching community websites...</small>
-                        </div>
-                        <small style="color:#999; margin-top: 5px; display: block;">📍 ${element.lat.toFixed(4)}, ${element.lon.toFixed(4)}</small>
-                    </div>
-                `;
+                    `;
+                };
 
                 marker.on('click', async function() {
                     let currentPostcode = postcode;
@@ -731,37 +748,46 @@
         }
     }
 
-    async function loadTownsInArea() {
+    async function loadTownsInArea(forceAPIFetch = false) {
         if (townsLoaded) return;
 
         console.log('Loading towns and villages...');
 
         let detailsMap = {};
 
-        // Try to load from localStorage first
-        try {
-            const cached = localStorage.getItem(TOWNS_CACHE_KEY);
-            if (cached) {
-                const cacheData = JSON.parse(cached);
-                if (cacheData.version === TOWNS_CACHE_VERSION) {
-                    console.log(`Loading ${cacheData.data.elements.length} settlements from cache`);
-                    detailsMap = cacheData.detailsMap || {};
-                    addTownMarkers(cacheData.data, detailsMap);
+        // If not forcing API fetch, try to load from static file first
+        if (!forceAPIFetch) {
+            try {
+                console.log('Loading towns from static file...');
+                const response = await fetch('towns_villages.json.gz');
+                if (response.ok) {
+                    // Decompress the gzipped data
+                    const stream = response.body.pipeThrough(new DecompressionStream('gzip'));
+                    const decompressedResponse = new Response(stream);
+                    const data = await decompressedResponse.json();
+
+                    console.log(`Loaded ${data.elements.length} settlements from static file`);
+                    addTownMarkers(data, detailsMap);
                     townsLoaded = true;
-                    console.log(`Added ${townMarkers.length} town markers from cache`);
+                    console.log(`Added ${townMarkers.length} town markers from static file`);
                     return;
                 }
+            } catch (e) {
+                console.log('Static file not found, will try API instead');
             }
-        } catch (e) {
-            console.log('Cache read failed, fetching fresh data');
         }
 
-        // Get bounds of the 60-min zone (approximate from Vienna area)
+        // Get current map bounds for API query
         const bounds = mapObj.getBounds();
         const south = bounds.getSouth();
         const west = bounds.getWest();
         const north = bounds.getNorth();
         const east = bounds.getEast();
+
+        // Create a bounds key for caching (rounded to 2 decimal places to allow small movements)
+        const boundsKey = `${south.toFixed(2)},${west.toFixed(2)},${north.toFixed(2)},${east.toFixed(2)}`;
+
+        console.log('Fetching from Overpass API...');
 
         // Overpass API query for towns and villages
         const query = `
@@ -781,15 +807,21 @@
             const data = await response.json();
             console.log(`Found ${data.elements.length} settlements from API`);
 
+            // Print full API response for export
+            console.log('=== FULL API RESPONSE (for export) ===');
+            console.log(JSON.stringify(data, null, 2));
+            console.log('=== END API RESPONSE ===');
+
             // Save to localStorage (initial save without details)
             try {
                 localStorage.setItem(TOWNS_CACHE_KEY, JSON.stringify({
                     version: TOWNS_CACHE_VERSION,
                     data: data,
                     detailsMap: detailsMap,
+                    boundsKey: boundsKey,
                     timestamp: new Date().toISOString()
                 }));
-                console.log('Saved towns data to cache');
+                console.log('Saved towns data to cache with bounds:', boundsKey);
             } catch (e) {
                 console.log('Failed to cache data:', e);
             }
@@ -805,6 +837,7 @@
                     if (cached) {
                         const cacheData = JSON.parse(cached);
                         cacheData.detailsMap = detailsMap;
+                        cacheData.boundsKey = boundsKey;
                         localStorage.setItem(TOWNS_CACHE_KEY, JSON.stringify(cacheData));
                     }
                 } catch (e) {
@@ -979,124 +1012,245 @@
                 }
             }
 
-        // Add all layers to map initially
-        districtsLayers.level6.addTo(mapObj);
-        districtsLayers.level7.addTo(mapObj);
-        districtsLayers.level8.addTo(mapObj);
+        // Don't add layers to map initially - let checkboxes control them
+        // districtsLayers.level6.addTo(mapObj);
+        // districtsLayers.level7.addTo(mapObj);
+        // districtsLayers.level8.addTo(mapObj);
     }
 
-    // Add buttons to toggle districts by level
-    const buttonStyle = 'position: fixed; left: 10px; z-index: 9999; padding: 8px; cursor: pointer; background: white; border: 2px solid grey; font-size: 11px;';
+    // Add Level 6 (Districts) toggle to control panel
+    const level6Container = document.getElementById('toggleLevel6Container');
+    const level6Checkbox = document.createElement('input');
+    level6Checkbox.type = 'checkbox';
+    level6Checkbox.id = 'toggleLevel6';
+    level6Checkbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
 
-    // Main load button
-    const loadDistrictsButton = document.createElement('button');
-    loadDistrictsButton.textContent = 'Load Districts';
-    loadDistrictsButton.style.cssText = buttonStyle + 'bottom: 130px; font-weight: bold;';
-    document.body.appendChild(loadDistrictsButton);
+    const level6Label = document.createElement('label');
+    level6Label.htmlFor = 'toggleLevel6';
+    level6Label.textContent = 'Districts';
+    level6Label.style.cssText = 'cursor: pointer; user-select: none;';
 
-    // Level 6 toggle
-    const toggleLevel6Button = document.createElement('button');
-    toggleLevel6Button.textContent = 'Level 6 (Districts)';
-    toggleLevel6Button.style.cssText = buttonStyle + 'bottom: 100px; background: #e6f0ff;';
-    toggleLevel6Button.disabled = true;
-    document.body.appendChild(toggleLevel6Button);
+    level6Container.appendChild(level6Checkbox);
+    level6Container.appendChild(level6Label);
 
-    // Level 8 toggle
-    const toggleLevel8Button = document.createElement('button');
-    toggleLevel8Button.textContent = 'Level 8 (Municipalities)';
-    toggleLevel8Button.style.cssText = buttonStyle + 'bottom: 70px; background: #e6ffff;';
-    toggleLevel8Button.disabled = true;
-    document.body.appendChild(toggleLevel8Button);
+    // Add Level 8 (Municipalities) toggle to control panel
+    const level8Container = document.getElementById('toggleLevel8Container');
+    const level8Checkbox = document.createElement('input');
+    level8Checkbox.type = 'checkbox';
+    level8Checkbox.id = 'toggleLevel8';
+    level8Checkbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
 
-    let levelsVisible = {
-        level6: true,
-        level7: true,
-        level8: true
-    };
+    const level8Label = document.createElement('label');
+    level8Label.htmlFor = 'toggleLevel8';
+    level8Label.textContent = 'Municipalities';
+    level8Label.style.cssText = 'cursor: pointer; user-select: none;';
 
-    // Load districts button
-    loadDistrictsButton.addEventListener('click', async function() {
-        if (!districtsLoaded) {
-            this.textContent = 'Loading...';
-            this.disabled = true;
-            await loadDistricts();
-            this.textContent = 'Districts Loaded';
-            this.style.background = '#ccffcc';
-            toggleLevel6Button.disabled = false;
-            toggleLevel8Button.disabled = false;
-        }
-    });
+    level8Container.appendChild(level8Checkbox);
+    level8Container.appendChild(level8Label);
 
-    // Level 6 toggle
-    toggleLevel6Button.addEventListener('click', function() {
-        levelsVisible.level6 = !levelsVisible.level6;
-        if (levelsVisible.level6) {
+    // Level 6 checkbox event listener
+    level6Checkbox.addEventListener('change', async function() {
+        if (this.checked) {
+            if (!districtsLoaded) {
+                level6Label.textContent = 'Districts (Loading...)';
+                level8Label.textContent = 'Municipalities (Loading...)';
+                this.disabled = true;
+                level8Checkbox.disabled = true;
+                await loadDistricts();
+                this.disabled = false;
+                level8Checkbox.disabled = false;
+                level6Label.textContent = 'Districts';
+                level8Label.textContent = 'Municipalities';
+            }
+            // Always add the layer when checked (after loading if needed)
             mapObj.addLayer(districtsLayers.level6);
-            this.style.background = '#e6f0ff';
         } else {
             mapObj.removeLayer(districtsLayers.level6);
-            this.style.background = '#ffcccc';
         }
     });
 
-    // Level 8 toggle
-    toggleLevel8Button.addEventListener('click', function() {
-        levelsVisible.level8 = !levelsVisible.level8;
-        if (levelsVisible.level8) {
+    // Level 8 checkbox event listener
+    level8Checkbox.addEventListener('change', async function() {
+        if (this.checked) {
+            if (!districtsLoaded) {
+                level6Label.textContent = 'Districts (Loading...)';
+                level8Label.textContent = 'Municipalities (Loading...)';
+                this.disabled = true;
+                level6Checkbox.disabled = true;
+                await loadDistricts();
+                this.disabled = false;
+                level6Checkbox.disabled = false;
+                level6Label.textContent = 'Districts';
+                level8Label.textContent = 'Municipalities';
+            }
+            // Always add the layer when checked (after loading if needed)
             mapObj.addLayer(districtsLayers.level8);
-            this.style.background = '#e6ffff';
         } else {
             mapObj.removeLayer(districtsLayers.level8);
-            this.style.background = '#ffcccc';
         }
     });
 
-    // Add button to toggle towns
-    const toggleTownsButton = document.createElement('button');
-    toggleTownsButton.textContent = 'Load Towns/Villages';
-    toggleTownsButton.style.cssText = 'position: fixed; bottom: 20px; left: 10px; z-index: 9999; padding: 10px; cursor: pointer; background: white; border: 2px solid grey;';
-    document.body.appendChild(toggleTownsButton);
+    // Add Towns/Villages toggle to control panel
+    const townsContainer = document.getElementById('toggleTownsContainer');
+    const townsCheckbox = document.createElement('input');
+    townsCheckbox.type = 'checkbox';
+    townsCheckbox.id = 'toggleTowns';
+    townsCheckbox.checked = true; // Enable by default
+    townsCheckbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
 
-    let townsVisible = false;
-    toggleTownsButton.addEventListener('click', async function(event) {
-        // Check if Shift key is held
-        if (event.shiftKey && townsLoaded) {
-            // Clear cache and reload
-            console.log('Shift-click detected: clearing towns cache and reloading...');
-            localStorage.removeItem(TOWNS_CACHE_KEY);
+    const townsLabel = document.createElement('label');
+    townsLabel.htmlFor = 'toggleTowns';
+    townsLabel.textContent = 'Towns/Villages';
+    townsLabel.style.cssText = 'cursor: pointer; user-select: none;';
 
-            // Remove existing markers
-            townMarkers.forEach(marker => mapObj.removeLayer(marker));
-            townMarkers = [];
-            townsLoaded = false;
+    townsContainer.appendChild(townsCheckbox);
+    townsContainer.appendChild(townsLabel);
 
-            // Reload
-            this.textContent = 'Loading...';
-            this.disabled = true;
-            await loadTownsInArea();
-            this.textContent = 'Hide Towns/Villages';
-            this.disabled = false;
-            townsVisible = true;
-            return;
-        }
-
-        if (!townsLoaded) {
-            this.textContent = 'Loading...';
-            this.disabled = true;
-            await loadTownsInArea();
-            this.textContent = 'Hide Towns/Villages';
-            this.disabled = false;
-            townsVisible = true;
+    // Towns checkbox event listener
+    townsCheckbox.addEventListener('change', async function(event) {
+        if (this.checked) {
+            if (!townsLoaded) {
+                townsLabel.textContent = 'Towns/Villages (Loading...)';
+                this.disabled = true;
+                await loadTownsInArea(); // Load from static file by default
+                this.disabled = false;
+                townsLabel.textContent = 'Towns/Villages';
+            } else {
+                townMarkers.forEach(marker => mapObj.addLayer(marker));
+            }
         } else {
-            townsVisible = !townsVisible;
-            townMarkers.forEach(marker => {
-                if (townsVisible) {
-                    mapObj.addLayer(marker);
-                } else {
-                    mapObj.removeLayer(marker);
+            townMarkers.forEach(marker => mapObj.removeLayer(marker));
+        }
+    });
+
+    // Add Shift+Click support for fetching from API
+    townsLabel.addEventListener('click', async function(event) {
+        if (event.shiftKey) {
+            event.preventDefault();
+            console.log('Shift-click detected: fetching from API...');
+
+            // Remove existing markers if any
+            if (townsLoaded) {
+                townMarkers.forEach(marker => mapObj.removeLayer(marker));
+                townMarkers = [];
+                townsLoaded = false;
+            }
+
+            // Reload from API
+            townsLabel.textContent = 'Towns/Villages (Loading from API...)';
+            townsCheckbox.disabled = true;
+            townsCheckbox.checked = true;
+            await loadTownsInArea(true); // Force API fetch
+            townsCheckbox.disabled = false;
+            townsLabel.textContent = 'Towns/Villages';
+            townMarkers.forEach(marker => mapObj.addLayer(marker));
+        }
+    });
+
+    // Add Population Heatmap toggle to control panel
+    const heatmapContainer = document.getElementById('toggleHeatmapContainer');
+    const heatmapCheckbox = document.createElement('input');
+    heatmapCheckbox.type = 'checkbox';
+    heatmapCheckbox.id = 'toggleHeatmap';
+    heatmapCheckbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
+
+    const heatmapLabel = document.createElement('label');
+    heatmapLabel.htmlFor = 'toggleHeatmap';
+    heatmapLabel.textContent = 'Population Heatmap';
+    heatmapLabel.style.cssText = 'cursor: pointer; user-select: none;';
+
+    heatmapContainer.appendChild(heatmapCheckbox);
+    heatmapContainer.appendChild(heatmapLabel);
+
+    // Population density heatmap
+    let heatmapLayer = null;
+
+    heatmapCheckbox.addEventListener('change', async function() {
+        if (this.checked) {
+            if (!heatmapLayer) {
+                // Load heatmap from static population grid file
+                heatmapLabel.textContent = 'Population Heatmap (Loading...)';
+                this.disabled = true;
+
+                try {
+                    console.log('Loading population grid data...');
+
+                    // Try gzipped version first, then fall back to plain JSON
+                    let response = await fetch('austria_population_grid.json.gz');
+                    let isGzipped = response.ok;
+
+                    if (!isGzipped) {
+                        console.log('austria_population_grid.json.gz not found, trying austria_population_grid.json...');
+                        response = await fetch('austria_population_grid.json');
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to load population grid: ${response.status}`);
+                    }
+
+                    let data;
+                    if (isGzipped) {
+                        console.log('Loading gzipped population grid...');
+                        const blob = await response.blob();
+                        const decompressedStream = blob.stream().pipeThrough(new DecompressionStream('gzip'));
+                        const decompressedBlob = await new Response(decompressedStream).blob();
+                        const text = await decompressedBlob.text();
+                        data = JSON.parse(text);
+                    } else {
+                        console.log('Loading plain JSON population grid...');
+                        data = await response.json();
+                    }
+
+                    console.log(`✓ Loaded ${data.cells.length} population points`);
+
+                    // Convert to heatmap data format
+                    const heatmapData = data.cells.map(cell => {
+                        // Use log scale for better visualization, but boost the intensity
+                        const logPop = Math.log10(cell.population + 1);
+                        // Scale from log(10) to log(2M): 1.0 to 6.3
+                        // Normalize and boost small towns
+                        const intensity = Math.pow(logPop / 6.3, 0.7); // Power < 1 boosts lower values
+                        return [cell.lat, cell.lon, Math.min(1.0, intensity * 1.5)];
+                    });
+
+                    // Create heatmap layer with increased visibility
+                    heatmapLayer = L.heatLayer(heatmapData, {
+                        radius: 30,           // Increased from 25
+                        blur: 25,             // Decreased from 35 for sharper edges
+                        maxZoom: 17,          // Increased from 13 to stay visible when zoomed
+                        max: 0.6,             // Decreased from 1.0 to make colors more intense
+                        minOpacity: 0.3,      // Minimum opacity to ensure visibility
+                        gradient: {
+                            0.0: 'rgba(0,0,255,0)',      // Transparent blue for very low
+                            0.2: '#4169E1',               // Royal blue
+                            0.4: '#00CED1',               // Dark turquoise
+                            0.5: '#00FF7F',               // Spring green
+                            0.6: '#FFD700',               // Gold
+                            0.75: '#FF8C00',              // Dark orange
+                            0.9: '#FF4500',               // Orange red
+                            1.0: '#DC143C'                // Crimson
+                        }
+                    });
+
+                    heatmapLayer.addTo(mapObj);
+                    this.disabled = false;
+                    heatmapLabel.textContent = 'Population Heatmap';
+
+                    console.log('✓ Population heatmap created successfully');
+                } catch (error) {
+                    console.error('Error creating heatmap:', error);
+                    heatmapLabel.textContent = 'Population Heatmap (Error)';
+                    this.checked = false;
+                    this.disabled = false;
+                    alert('Failed to load population heatmap. Make sure austria_population_grid.json.gz or austria_population_grid.json exists in the same directory.');
                 }
-            });
-            this.textContent = townsVisible ? 'Hide Towns/Villages' : 'Show Towns/Villages';
+            } else {
+                mapObj.addLayer(heatmapLayer);
+            }
+        } else {
+            if (heatmapLayer) {
+                mapObj.removeLayer(heatmapLayer);
+            }
         }
     });
 
@@ -1126,6 +1280,11 @@
             searchInput.value = '';
         }
     });
+
+    // Auto-load towns on page load since checkbox is enabled by default
+    (async function() {
+        await loadTownsInArea();
+    })();
 
 </script>
 </html>

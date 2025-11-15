@@ -51,6 +51,41 @@
         .leaflet-container {
             font-size: 1rem;
         }
+
+        /* Permanent district labels */
+        .district-label-permanent {
+            background-color: rgba(255, 255, 255, 0.85);
+            border: 2px solid #0000ff;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #0000ff;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            white-space: nowrap;
+        }
+
+        .district-label-permanent::before {
+            display: none;
+        }
+
+        /* Permanent town/village labels */
+        .town-label-permanent {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 1px solid #666;
+            border-radius: 3px;
+            padding: 2px 6px;
+            font-size: 11px;
+            color: #333;
+            text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+        }
+
+        .town-label-permanent::before {
+            display: none;
+        }
     </style>
 
     <style>
@@ -98,34 +133,40 @@
                     top: 10px; right: 10px; width: 200px; height: auto;
                     background-color: white; border:2px solid grey; z-index:9999;
                     font-size:14px; padding: 10px">
-        <p style="margin: 0 0 10px 0; font-weight: bold;">Travel Time (by car)</p>
-        <div data-layer="3" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
-            <input type="checkbox" style="margin-right: 5px;">
-            <span style="background-color:#88ff00; padding: 3px 10px; margin-right: 5px;"></span>20 min
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+            <p style="margin: 0; font-weight: bold;">Travel Time (by car)</p>
+            <button id="toggleControlPanel" style="background: none; border: none; cursor: pointer; font-size: 18px; padding: 0; line-height: 1;">−</button>
         </div>
-        <div data-layer="2" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
-            <input type="checkbox" checked style="margin-right: 5px;">
-            <span style="background-color:#00ff00; padding: 3px 10px; margin-right: 5px;"></span>30 min
-        </div>
-        <div data-layer="1" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
-            <input type="checkbox" checked style="margin-right: 5px;">
-            <span style="background-color:#ffff00; padding: 3px 10px; margin-right: 5px;"></span>45 min
-        </div>
-        <div data-layer="0" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
-            <input type="checkbox" checked style="margin-right: 5px;">
-            <span style="background-color:#ff0000; padding: 3px 10px; margin-right: 5px;"></span>60 min
-        </div>
-        <hr style="margin: 10px 0;">
-        <p style="margin: 5px 0 2px 0; font-weight: bold;">Opacity: <span id="opacityValue">10</span>%</p>
-        <input type="range" id="opacitySlider" min="0" max="100" value="10" style="width: 100%;">
+        <div id="controlPanelContent">
+            <div data-layer="3" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
+                <input type="checkbox" style="margin-right: 5px;">
+                <span style="background-color:#88ff00; padding: 3px 10px; margin-right: 5px;"></span>20 min
+            </div>
+            <div data-layer="2" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
+                <input type="checkbox" checked style="margin-right: 5px;">
+                <span style="background-color:#00ff00; padding: 3px 10px; margin-right: 5px;"></span>30 min
+            </div>
+            <div data-layer="1" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
+                <input type="checkbox" checked style="margin-right: 5px;">
+                <span style="background-color:#ffff00; padding: 3px 10px; margin-right: 5px;"></span>45 min
+            </div>
+            <div data-layer="0" style="margin: 5px 0; cursor: pointer; user-select: none;" class="layer-toggle">
+                <input type="checkbox" checked style="margin-right: 5px;">
+                <span style="background-color:#ff0000; padding: 3px 10px; margin-right: 5px;"></span>60 min
+            </div>
+            <hr style="margin: 10px 0;">
+            <p style="margin: 5px 0 2px 0; font-weight: bold;">Opacity: <span id="opacityValue">10</span>%</p>
+            <input type="range" id="opacitySlider" min="0" max="100" value="10" style="width: 100%;">
 
-        <hr style="margin: 10px 0;">
-        <p style="margin: 5px 0 5px 0; font-weight: bold;">Overlays</p>
-        <div id="toggleLevel6Container" style="margin: 5px 0;"></div>
-        <div id="toggleLevel8Container" style="margin: 5px 0;"></div>
-        <div id="toggleTownsContainer" style="margin: 5px 0;"></div>
-        <div id="toggleHeatmapContainer" style="margin: 5px 0;"></div>
-        <div id="toggleLightPollutionContainer" style="margin: 5px 0;"></div>
+            <hr style="margin: 10px 0;">
+            <p style="margin: 5px 0 5px 0; font-weight: bold;">Overlays</p>
+            <div id="toggleLevel6Container" style="margin: 5px 0;"></div>
+            <div id="toggleLevel8Container" style="margin: 5px 0;"></div>
+            <div id="toggleTownsContainer" style="margin: 5px 0;"></div>
+            <div id="toggleHeatmapContainer" style="margin: 5px 0;"></div>
+            <div id="toggleLightPollutionContainer" style="margin: 5px 0;"></div>
+            <div id="toggleWorldAtlasContainer" style="margin: 5px 0;"></div>
+        </div>
     </div>
 
     <div class="folium-map" id="map_8a051018cd638f777eb931e69dbdeb2b"></div>
@@ -175,6 +216,12 @@
 
     tile_layer_4600930ef1680ef71150bde5e10b8284.addTo(map_8a051018cd638f777eb931e69dbdeb2b);
 
+    // Function to get Google Maps place URL
+    function getGoogleMapsNavUrl(targetLat, targetLng, targetName = '') {
+        // Format: https://www.google.com/maps/place/NAME/@LAT,LNG,ZOOM
+        const placeName = targetName ? encodeURIComponent(targetName) : '';
+        return `https://www.google.com/maps/place/${placeName}/@${targetLat},${targetLng},14z`;
+    }
 
     function geo_json_c31f1c4aab60173bc5e2c7d21cbfd016_styler(feature) {
         switch (feature.properties.group_index) {
@@ -670,6 +717,7 @@
                 const getInitialPopup = (plz, extraDetails = {}) => {
                     // Prioritize population from tags over Nominatim data
                     const displayPopulation = population || extraDetails.population;
+                    const navUrl = getGoogleMapsNavUrl(element.lat, element.lon, name);
 
                     return `
                         <div id="popup-${osmId}" style="min-width: 220px;">
@@ -678,18 +726,18 @@
                             ${extraDetails.town ? ` · ${extraDetails.town}` : ''}
                             ${extraDetails.county ? ` · ${extraDetails.county}` : ''}
                             <br>
-                            ${plz !== 'N/A' ? `<span id="plz-${osmId}">📪 plz: ${plz}</span><br>` : '<span id="plz-${osmId}" style="color:#999">PLZ: Loading...</span><br>'}
-                            ${displayPopulation ? `<small>👥 Population: ${parseInt(displayPopulation).toLocaleString()}</small><br>` : ''}
+                            ${plz !== 'N/A' ? `<span id="plz-${osmId}">plz: ${plz}</span>` : '<span id="plz-${osmId}" style="color:#999">PLZ: Loading...</span>'}
+                            ${displayPopulation ? `&middot; Population: ${parseInt(displayPopulation).toLocaleString()}<br>` : ''}
                             <div id="contact-${osmId}">
                                 ${extraDetails.phone ? `<small>📞 ${extraDetails.phone}</small><br>` : ''}
                                 ${extraDetails.email ? `<small>✉️ <a href="mailto:${extraDetails.email}">${extraDetails.email}</a></small><br>` : ''}
                             </div>
+                            <small style="color:#999; margin-top: 4px; display: block;"><a href="${navUrl}" target="_blank" title="View on Google Maps">📍 ${element.lat.toFixed(4)}, ${element.lon.toFixed(4)}</a></small>
                             ${website ? `<a href="${website}" target="_blank">🔗 Official Website</a><br>` : ''}
                             ${extraDetails.wikipedia ? `<a href="https://wikipedia.org/wiki/${extraDetails.wikipedia}" target="_blank">📚 Wikipedia</a><br>` : ''}
                             <div id="community-links-${osmId}" style="margin-top: 5px; color:#666;">
                                 <small>Searching community websites...</small>
                             </div>
-                            <small style="color:#999; margin-top: 5px; display: block;">📍 ${element.lat.toFixed(4)}, ${element.lon.toFixed(4)}</small>
                         </div>
                     `;
                 };
@@ -733,7 +781,7 @@
                                 const linksDiv = document.getElementById(`community-links-${osmId}`);
                                 if (linksDiv) {
                                     if (foundUrls.length > 0) {
-                                        let linksHtml = '<small><strong>Found Websites:</strong><br>';
+                                        let linksHtml = '<small><strong>Websites:</strong><br>';
                                         foundUrls.forEach(url => {
                                             const displayUrl = url.replace('https://', '').replace('http://', '').replace('www.', '');
                                             linksHtml += `<a href="${url}" target="_blank" style="font-size:11px;">${displayUrl}</a><br>`;
@@ -1010,9 +1058,53 @@
                         offset: [0, -10]
                     });
 
-                    // Add popup on click
-                    polygon.bindPopup(`<strong>${name}</strong><br><em>Admin Level ${adminLevel}</em>`, {
+                    // Add popup on click with async community links
+                    const linkId = `links-${adminLevel}-${name.replace(/\s+/g, '-').replace(/[()]/g, '')}`;
+
+                    // Get center coordinates for this polygon
+                    const bounds = L.polygon(mergedCoords).getBounds();
+                    const center = bounds.getCenter();
+                    const navUrl = getGoogleMapsNavUrl(center.lat, center.lng, name);
+
+                    const popupContent = `
+                        <div style="min-width: 180px;">
+                            <strong>${name}</strong> <a href="${navUrl}" target="_blank" title="View on Google Maps">🗺️</a><br>
+                            <em>Admin Level ${adminLevel}</em>
+                            <div id="${linkId}" style="margin-top: 8px;">
+                                <small style="color:#666;">Searching community websites...</small>
+                            </div>
+                        </div>
+                    `;
+
+                    polygon.bindPopup(popupContent, {
                         closeButton: true
+                    });
+
+                    // Fetch community links when popup opens
+                    polygon.on('click', async function () {
+                        const linksDiv = document.getElementById(linkId);
+                        if (linksDiv && linksDiv.innerHTML.includes('Searching')) {
+                            try {
+                                const prefix = adminLevel === '6' ? 'Bezirk' : adminLevel === '8' ? 'Gemeinde' : '';
+                                const searchTerm = prefix ? `${prefix} ${name}` : name;
+                                const foundUrls = await searchCommunityWebsites(searchTerm, '');
+
+                                if (foundUrls && foundUrls.length > 0) {
+                                    let linksHtml = '<small><strong>Found Websites:</strong><br>';
+                                    foundUrls.forEach(url => {
+                                        const displayUrl = url.replace('https://', '').replace('http://', '').replace('www.', '');
+                                        linksHtml += `<a href="${url}" target="_blank" style="font-size:11px;">${displayUrl}</a><br>`;
+                                    });
+                                    linksHtml += '</small>';
+                                    linksDiv.innerHTML = linksHtml;
+                                } else {
+                                    linksDiv.innerHTML = '<small style="color:#999;">No websites found</small>';
+                                }
+                            } catch (error) {
+                                console.error('Error fetching community links:', error);
+                                linksDiv.innerHTML = '<small style="color:#999;">Could not load links</small>';
+                            }
+                        }
                     });
 
                     polygon.addTo(targetLayer);
@@ -1036,7 +1128,16 @@
                             }),
                             interactive: false
                         });
-                        label.addTo(targetLayer);
+
+                        // Store reference to label for later toggling
+                        if (adminLevel === '8') {
+                            if (!window.level8Labels) window.level8Labels = [];
+                            window.level8Labels.push(label);
+                            // Don't add level 8 labels by default - let toggle button control them
+                        } else {
+                            // Add level 6 labels by default
+                            label.addTo(targetLayer);
+                        }
                     }
                 }
             }
@@ -1046,6 +1147,163 @@
         // districtsLayers.level6.addTo(mapObj);
         // districtsLayers.level7.addTo(mapObj);
         // districtsLayers.level8.addTo(mapObj);
+    }
+
+    // New function to load Level 6 districts from Overpass API
+    let level6Loaded = false;
+    async function loadLevel6FromAPI() {
+        if (level6Loaded) return;
+
+        console.log('Loading Level 6 districts from Overpass API...');
+
+        const bounds = mapObj.getBounds();
+        const south = bounds.getSouth();
+        const west = bounds.getWest();
+        const north = bounds.getNorth();
+        const east = bounds.getEast();
+
+        // Overpass QL query for admin_level=6 in Austria
+        const query = `
+            [out:json][timeout:60];
+            (
+                relation["boundary"="administrative"]["admin_level"="6"](${south},${west},${north},${east});
+            );
+            out geom;
+        `;
+
+        try {
+            const response = await fetch('https://overpass-api.de/api/interpreter', {
+                method: 'POST',
+                body: query
+            });
+
+            if (!response.ok) {
+                throw new Error(`Overpass API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(`✓ Loaded ${data.elements.length} Level 6 districts from API`);
+
+            // Process only level 6 data
+            for (const element of data.elements) {
+                if (element.type === 'relation' && element.members) {
+                    const name = element.tags?.name || 'Unknown District';
+                    const adminLevel = element.tags?.admin_level;
+
+                    if (adminLevel !== '6') continue;
+
+                    // Extract coordinates from way members
+                    const outerRings = [];
+
+                    for (const member of element.members) {
+                        if (member.type === 'way' && member.geometry) {
+                            const wayCoords = member.geometry.map(node => [node.lat, node.lon]);
+                            if (member.role === 'outer' || member.role === '') {
+                                outerRings.push(wayCoords);
+                            }
+                        }
+                    }
+
+                    if (outerRings.length > 0) {
+                        // Merge all outer rings
+                        let mergedCoords = [];
+                        for (const ring of outerRings) {
+                            mergedCoords = mergedCoords.concat(ring);
+                        }
+
+                        // Create polygon
+                        const polygon = L.polygon(mergedCoords, {
+                            color: '#0000ff',
+                            weight: 3,
+                            opacity: 1,
+                            fillOpacity: 0.35,
+                            fillColor: '#0000ff'
+                        });
+
+                        // Add hover effects
+                        polygon.on('mouseover', function () {
+                            this.setStyle({
+                                fillOpacity: 0.55,
+                                fillColor: '#3333ff',
+                                weight: 4
+                            });
+                        });
+
+                        polygon.on('mouseout', function () {
+                            this.setStyle({
+                                fillOpacity: 0.35,
+                                fillColor: '#0000ff',
+                                weight: 3
+                            });
+                        });
+
+                        // Add permanent label
+                        polygon.bindTooltip(name, {
+                            permanent: true,
+                            direction: 'center',
+                            className: 'district-label-permanent',
+                            opacity: 0.9
+                        });
+
+                        // Add popup with async community links
+                        const linkId = `links-6-${name.replace(/\s+/g, '-').replace(/[()]/g, '')}`;
+
+                        // Get center coordinates for navigation
+                        const bounds = polygon.getBounds();
+                        const center = bounds.getCenter();
+                        const navUrl = getGoogleMapsNavUrl(center.lat, center.lng, name);
+
+                        const popupContent = `
+                            <div style="min-width: 180px;">
+                                <strong>${name}</strong> <a href="${navUrl}" target="_blank" title="View on Google Maps">🗺️</a><br>
+                                <em>District (Admin Level 6)</em>
+                                <div id="${linkId}" style="margin-top: 8px;">
+                                    <small style="color:#666;">Searching community websites...</small>
+                                </div>
+                            </div>
+                        `;
+
+                        polygon.bindPopup(popupContent);
+
+                        // Fetch community links when popup opens
+                        polygon.on('click', async function () {
+                            const linksDiv = document.getElementById(linkId);
+                            if (linksDiv && linksDiv.innerHTML.includes('Searching')) {
+                                try {
+                                    const searchTerm = `Bezirk ${name}`;
+                                    const foundUrls = await searchCommunityWebsites(searchTerm, '');
+
+                                    if (foundUrls && foundUrls.length > 0) {
+                                        let linksHtml = '<small><strong>Found Websites:</strong><br>';
+                                        foundUrls.forEach(url => {
+                                            const displayUrl = url.replace('https://', '').replace('http://', '').replace('www.', '');
+                                            linksHtml += `<a href="${url}" target="_blank" style="font-size:11px;">${displayUrl}</a><br>`;
+                                        });
+                                        linksHtml += '</small>';
+                                        linksDiv.innerHTML = linksHtml;
+                                    } else {
+                                        linksDiv.innerHTML = '<small style="color:#999;">No websites found</small>';
+                                    }
+                                } catch (error) {
+                                    console.error('Error fetching community links:', error);
+                                    linksDiv.innerHTML = '<small style="color:#999;">Could not load links</small>';
+                                }
+                            }
+                        });
+
+                        // Add to level 6 layer
+                        districtsLayers.level6.addLayer(polygon);
+                    }
+                }
+            }
+
+            level6Loaded = true;
+            console.log('✓ Level 6 districts processed successfully');
+
+        } catch (error) {
+            console.error('Error loading Level 6 districts from API:', error);
+            throw error;
+        }
     }
 
     // Add Level 6 (Districts) toggle to control panel
@@ -1075,22 +1333,33 @@
     level8Label.textContent = 'Municipalities';
     level8Label.style.cssText = 'cursor: pointer; user-select: none;';
 
+    // Add label toggle icon button for municipalities
+    const level8LabelToggleBtn = document.createElement('button');
+    level8LabelToggleBtn.innerHTML = '🏷️';
+    level8LabelToggleBtn.title = 'Toggle municipality labels visibility';
+    level8LabelToggleBtn.style.cssText = 'margin-left: 8px; cursor: pointer; border: 1px solid #ccc; background: #f5f5f5; padding: 2px 6px; border-radius: 3px; font-size: 14px;';
+
+    let level8LabelsVisible = false; // Track municipality label state
+
     level8Container.appendChild(level8Checkbox);
     level8Container.appendChild(level8Label);
+    level8Container.appendChild(level8LabelToggleBtn);
 
-    // Level 6 checkbox event listener
+    // Level 6 checkbox event listener - uses Overpass API
     level6Checkbox.addEventListener('change', async function () {
         if (this.checked) {
-            if (!districtsLoaded) {
+            if (!level6Loaded) {
                 level6Label.textContent = 'Districts (Loading...)';
-                level8Label.textContent = 'Municipalities (Loading...)';
                 this.disabled = true;
-                level8Checkbox.disabled = true;
-                await loadDistricts();
+                try {
+                    await loadLevel6FromAPI();
+                    level6Label.textContent = 'Districts';
+                } catch (error) {
+                    level6Label.textContent = 'Districts (Error)';
+                    this.checked = false;
+                    // alert('Failed to load districts from API. Please try again.');
+                }
                 this.disabled = false;
-                level8Checkbox.disabled = false;
-                level6Label.textContent = 'Districts';
-                level8Label.textContent = 'Municipalities';
             }
             // Always add the layer when checked (after loading if needed)
             mapObj.addLayer(districtsLayers.level6);
@@ -1099,24 +1368,55 @@
         }
     });
 
-    // Level 8 checkbox event listener
+    // Level 8 checkbox event listener - uses local file
     level8Checkbox.addEventListener('change', async function () {
         if (this.checked) {
             if (!districtsLoaded) {
-                level6Label.textContent = 'Districts (Loading...)';
                 level8Label.textContent = 'Municipalities (Loading...)';
                 this.disabled = true;
-                level6Checkbox.disabled = true;
-                await loadDistricts();
+                try {
+                    await loadDistricts();
+                    level8Label.textContent = 'Municipalities';
+                } catch (error) {
+                    level8Label.textContent = 'Municipalities (Error)';
+                    this.checked = false;
+                    alert('Failed to load municipalities from local file.');
+                }
                 this.disabled = false;
-                level6Checkbox.disabled = false;
-                level6Label.textContent = 'Districts';
-                level8Label.textContent = 'Municipalities';
             }
             // Always add the layer when checked (after loading if needed)
             mapObj.addLayer(districtsLayers.level8);
         } else {
             mapObj.removeLayer(districtsLayers.level8);
+        }
+    });
+
+    // Municipality label toggle button click handler
+    level8LabelToggleBtn.addEventListener('click', function () {
+        level8LabelsVisible = !level8LabelsVisible;
+
+        // Update button appearance
+        level8LabelToggleBtn.style.background = level8LabelsVisible ? '#ddeeff' : '#f5f5f5';
+        level8LabelToggleBtn.style.borderColor = level8LabelsVisible ? '#4488cc' : '#ccc';
+
+        // Toggle all level 8 label markers
+        if (window.level8Labels && window.level8Labels.length > 0) {
+            window.level8Labels.forEach(labelMarker => {
+                if (level8LabelsVisible) {
+                    // Show labels by adding them to the layer if not already there
+                    if (!districtsLayers.level8.hasLayer(labelMarker)) {
+                        districtsLayers.level8.addLayer(labelMarker);
+                    }
+                } else {
+                    // Hide labels by removing them from the layer
+                    if (districtsLayers.level8.hasLayer(labelMarker)) {
+                        districtsLayers.level8.removeLayer(labelMarker);
+                    }
+                }
+            });
+            console.log(`Municipality labels ${level8LabelsVisible ? 'shown' : 'hidden'} (${window.level8Labels.length} labels)`);
+        } else {
+            console.log('No municipality labels loaded yet');
         }
     });
 
@@ -1293,7 +1593,7 @@
 
     const lightPollutionLabel = document.createElement('label');
     lightPollutionLabel.htmlFor = 'toggleLightPollution';
-    lightPollutionLabel.textContent = 'Light Pollution (VIIRS 24)';
+    lightPollutionLabel.textContent = 'Light Pollution (VIIRS)';
     lightPollutionLabel.style.cssText = 'cursor: pointer; user-select: none;';
 
     lightPollutionContainer.appendChild(lightPollutionCheckbox);
@@ -1319,6 +1619,61 @@
             if (lightPollutionLayer) {
                 mapObj.removeLayer(lightPollutionLayer);
             }
+        }
+    });
+
+    // Add World Atlas 2015 overlay toggle to control panel
+    const worldAtlasContainer = document.getElementById('toggleWorldAtlasContainer');
+    const worldAtlasCheckbox = document.createElement('input');
+    worldAtlasCheckbox.type = 'checkbox';
+    worldAtlasCheckbox.id = 'toggleWorldAtlas';
+    worldAtlasCheckbox.style.cssText = 'margin-right: 5px; cursor: pointer;';
+
+    const worldAtlasLabel = document.createElement('label');
+    worldAtlasLabel.htmlFor = 'toggleWorldAtlas';
+    worldAtlasLabel.textContent = 'Light pollution (WA)';
+    worldAtlasLabel.style.cssText = 'cursor: pointer; user-select: none;';
+
+    worldAtlasContainer.appendChild(worldAtlasCheckbox);
+    worldAtlasContainer.appendChild(worldAtlasLabel);
+
+    // World Atlas overlay layer from local tiles
+    let worldAtlasLayer = null;
+
+    worldAtlasCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            if (!worldAtlasLayer) {
+                // Create World Atlas tile layer using local tiles
+                worldAtlasLayer = L.tileLayer('world_atlas_tiles/{z}/{x}/{y}.png', {
+                    attribution: 'Light pollution: World Atlas 2015',
+                    minZoom: 6,
+                    maxZoom: 12,
+                    opacity: 0.6,
+                    tms: true
+                });
+            }
+            worldAtlasLayer.addTo(mapObj);
+        } else {
+            if (worldAtlasLayer) {
+                mapObj.removeLayer(worldAtlasLayer);
+            }
+        }
+    });
+
+    // Control panel minimize/maximize toggle
+    const toggleButton = document.getElementById('toggleControlPanel');
+    const controlPanelContent = document.getElementById('controlPanelContent');
+    let isPanelMinimized = false;
+
+    toggleButton.addEventListener('click', function () {
+        isPanelMinimized = !isPanelMinimized;
+
+        if (isPanelMinimized) {
+            controlPanelContent.style.display = 'none';
+            toggleButton.textContent = '+';
+        } else {
+            controlPanelContent.style.display = 'block';
+            toggleButton.textContent = '−';
         }
     });
 

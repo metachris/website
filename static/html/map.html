@@ -940,6 +940,9 @@
     async function loadDistricts() {
         if (districtsLoaded) return;
 
+        // Clear and initialize level 8 labels array to prevent duplicates
+        window.level8Labels = [];
+
         console.log('Loading district boundaries from local file...');
 
         try {
@@ -1345,19 +1348,19 @@
     level8Container.appendChild(level8Label);
     level8Container.appendChild(level8LabelToggleBtn);
 
-    // Level 6 checkbox event listener - uses Overpass API
+    // Level 6 checkbox event listener - uses local file by default
     level6Checkbox.addEventListener('change', async function () {
         if (this.checked) {
-            if (!level6Loaded) {
-                level6Label.textContent = 'Districts (Loading...)';
+            if (!districtsLoaded) {
+                level6Label.textContent = 'Districts (Loading from file...)';
                 this.disabled = true;
                 try {
-                    await loadLevel6FromAPI();
+                    await loadDistricts(); // Load from local file (includes both level 6 and 8)
                     level6Label.textContent = 'Districts';
                 } catch (error) {
                     level6Label.textContent = 'Districts (Error)';
                     this.checked = false;
-                    // alert('Failed to load districts from API. Please try again.');
+                    alert('Failed to load districts from local file.');
                 }
                 this.disabled = false;
             }
@@ -1365,6 +1368,32 @@
             mapObj.addLayer(districtsLayers.level6);
         } else {
             mapObj.removeLayer(districtsLayers.level6);
+        }
+    });
+
+    // Add Shift+Click support for loading Level 6 from API
+    level6Label.addEventListener('click', async function (event) {
+        if (event.shiftKey) {
+            event.preventDefault();
+            console.log('Shift-click detected: fetching Level 6 districts from API...');
+
+            // Clear existing level 6 data if any
+            districtsLayers.level6.clearLayers();
+            level6Loaded = false;
+
+            // Load from API
+            level6Label.textContent = 'Districts (Loading from API...)';
+            level6Checkbox.disabled = true;
+            level6Checkbox.checked = true;
+            try {
+                await loadLevel6FromAPI();
+                level6Label.textContent = 'Districts';
+                mapObj.addLayer(districtsLayers.level6);
+            } catch (error) {
+                level6Label.textContent = 'Districts (API Error)';
+                level6Checkbox.checked = false;
+            }
+            level6Checkbox.disabled = false;
         }
     });
 

@@ -9,7 +9,7 @@ url: /2015/11/python-tools-for-string-unicode-encoding-decoding-printing/
 
 String encoding and decoding as well as encoding detection can be a
 headache, more so in Python 2 than in Python 3. Here are two little helpers
-which are used in [PDFx](https://www.metachris.com/pdfx), the
+which are used in [PDFx](https://www.metachris.dev/pdfx), the
 PDF metadata and reference extractor:
 
 * `make_compat_str` - decode any kind of bytes/str into an unicode object

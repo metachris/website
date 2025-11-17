@@ -1,4 +1,4 @@
-https://www.metachris.com/
+https://www.metachris.dev/
 
 https://github.com/metachris/website
 

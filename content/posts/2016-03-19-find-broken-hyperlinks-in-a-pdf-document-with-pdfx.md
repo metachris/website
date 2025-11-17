@@ -12,9 +12,9 @@ twitterTags: None
 url: /2016/03/find-broken-hyperlinks-in-a-pdf-document-with-pdfx/
 ---
 
-[PDFx](https://www.metachris.com/pdfx/) is a free command-line tool to extract references, links and metadata from PDF files. You can also use it to **find broken links in a PDF file**, using `pdfx -c`:
+[PDFx](https://www.metachris.dev/pdfx/) is a free command-line tool to extract references, links and metadata from PDF files. You can also use it to **find broken links in a PDF file**, using `pdfx -c`:
 
-![PDFx Link Checker](https://www.metachris.com/pdfx/images/pdfx-links-check-broken.gif)
+![PDFx Link Checker](https://www.metachris.dev/pdfx/images/pdfx-links-check-broken.gif)
 
 For each URL and PDF reference, pdfx performs a HEAD request and checks the status code. It there are broken links, PDFx print the link with the page number where the link was found in the original pdf:
 
@@ -55,7 +55,7 @@ usage: pdfx [-h] [-d OUTPUT_DIRECTORY] [-c] [-j] [-v] [-t] [-o OUTPUT_FILE]
             pdf
 
 Extract metadata and references from a PDF, and optionally download all
-referenced PDFs. Visit https://www.metachris.com/pdfx for more information.
+referenced PDFs. Visit https://www.metachris.dev/pdfx for more information.
 
 positional arguments:
   pdf                   Filename or URL of a PDF file
@@ -73,7 +73,7 @@ optional arguments:
   --version             show program's version number and exit
 {{< / highlight >}}
 
-For more examples and infos, take a look at the [PDFx project page](https://www.metachris.com/pdfx/).
+For more examples and infos, take a look at the [PDFx project page](https://www.metachris.dev/pdfx/).
 You can find the code on [Github](https://github.com/metachris/pdfx), the code is released under the Apache license.
 
 <hr class="spaced">

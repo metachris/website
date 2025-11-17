@@ -39,7 +39,7 @@ $ pdfx -h
 usage: pdfx [-h] [-d OUTPUT_DIRECTORY] [-j] [-v] [--debug] [--version] pdf
 
 Get infos and links from a PDF, and optionallydownload all referenced PDFs.
-See http://www.metachris.com/pdfx for more information.
+See http://www.metachris.dev/pdfx for more information.
 
 positional arguments:
   pdf                   Filename or URL of a PDF file
@@ -109,6 +109,6 @@ References
 
 * [https://pypi.python.org/pypi/pdfx](https://pypi.python.org/pypi/pdfx)
 * [https://github.com/metachris/pdfx](https://github.com/metachris/pdfx)
-* [http://www.metachris.com/pdfx](http://www.metachris.com/pdfx)
+* [http://www.metachris.dev/pdfx](http://www.metachris.dev/pdfx)
 
 ---

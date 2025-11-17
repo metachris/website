@@ -86,7 +86,7 @@ $ pdfx -h
 usage: pdfx [-h] [-d OUTPUT_DIRECTORY] [-c] [-j] [-v] [-t] [-o OUTPUT_FILE] [--version] pdf
 
 Extract metadata and references from a PDF, and optionally download all referenced PDFs. Visit
-https://www.metachris.com/pdfx for more information.
+https://www.metachris.dev/pdfx for more information.
 
 positional arguments:
   pdf                   Filename or URL of a PDF file

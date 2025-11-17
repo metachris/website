@@ -1,4 +1,4 @@
-baseurl = "https://www.metachris.com"
+baseurl = "https://www.metachris.dev"
 title = "Chris Hager"
 
 theme = "mc2020"
@@ -20,81 +20,81 @@ summaryLength = 70
 enableEmoji = true
 
 [permalinks]
-  posts = "/:year/:month/:title/"
-  # posts = "/blog/:title/"
+posts = "/:year/:month/:title/"
+# posts = "/blog/:title/"
 
 [params]
-    author = "Chris Hager"
-    info = "Builder, Maker, Engineer"
-    description = "Builder, Maker, Engineer"
-    images = ["images/profile2-round.png"]  # OG & Twitter meta tags on homepage
-    avatarurl = "images/profile2-round.png"
+author = "Chris Hager"
+info = "Builder, Maker, Engineer"
+description = "Builder, Maker, Engineer"
+images = ["images/profile2-round.png"]   # OG & Twitter meta tags on homepage
+avatarurl = "images/profile2-round.png"
 
-    favicon_32 = "images/favicon-32px.png"
-    favicon_16 = "images/favicon-16px.png"
+favicon_32 = "images/favicon-32px.png"
+favicon_16 = "images/favicon-16px.png"
 
-    # footercontent = "Nice going."
+# footercontent = "Nice going."
 
-    dateformat = "January 2, 2006"
+dateformat = "January 2, 2006"
 
-    hideCopyright = true
-    hideCredits = false
-    since = 2016
+hideCopyright = true
+hideCredits = false
+since = 2016
 
-    rtl = false
+rtl = false
 
-    # Specify light/dark colorscheme
-    # Supported values:
-    # "auto" (use preference set by browser)
-    # "dark" (dark background, light foreground)
-    # "light" (light background, dark foreground) (default)
-    colorscheme = "auto"
+# Specify light/dark colorscheme
+# Supported values:
+# "auto" (use preference set by browser)
+# "dark" (dark background, light foreground)
+# "light" (light background, dark foreground) (default)
+colorscheme = "auto"
 
-    # Series see also post count
-    maxSeeAlsoItems = 5
+# Series see also post count
+maxSeeAlsoItems = 5
 
-    # Custom CSS
-    custom_css = []
+# Custom CSS
+custom_css = []
 
-    # Custom JS
-    custom_js = ['js/custom.js']
+# Custom JS
+custom_js = ['js/custom.js']
 
-    # Custom SCSS
-    custom_scss = ["scss/custom.scss"]
+# Custom SCSS
+custom_scss = ["scss/custom.scss"]
 
 [params.utteranc]
-    repo = "metachris/metachris.com-comments"
-    theme = "preferred-color-scheme"
-    issueTerm = "og:title"
+repo = "metachris/metachris.dev-comments"
+theme = "preferred-color-scheme"
+issueTerm = "og:title"
 
 [markup]
-  [markup.tableOfContents]
-    endLevel = 2
+[markup.tableOfContents]
+endLevel = 2
 
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+[markup.goldmark]
+[markup.goldmark.renderer]
+unsafe = true
 
 [taxonomies]
-  category = "categories"
-  series = "series"
-  tag = "tags"
+category = "categories"
+series = "series"
+tag = "tags"
 
 [[params.social]]
-    name = "Github"
-    icon = "fab fa-github"
-    weight = 3
-    url = "https://github.com/metachris/"
+name = "Github"
+icon = "fab fa-github"
+weight = 3
+url = "https://github.com/metachris/"
 #[[params.social]]
 #    name = "Gitlab"
 #    icon = "fab fa-gitlab"
 #    weight = 3
 #    url = "https://gitlab.com/metachris/"
 [[params.social]]
-    name = "Twitter"
-    icon = "fab fa-twitter"
-    weight = 1
-    url = "https://twitter.com/metachris/"
+name = "Twitter"
+icon = "fab fa-twitter"
+weight = 1
+url = "https://twitter.com/metachris/"
 #[[params.social]]
 #    name = "Telegram"
 #    icon = "fab fa-telegram"
@@ -111,31 +111,30 @@ enableEmoji = true
 #    weight = 5
 #    url = "https://medium.com/@metachris"
 [[params.social]]
-    name = "RSS"
-    icon = "fas fa-rss"
-    weight = 6
-    url = "https://metachris.com/index.xml"
-    rel = "alternate"
-    type = "application/rss+xml"
+name = "RSS"
+icon = "fas fa-rss"
+weight = 6
+url = "https://metachris.dev/index.xml"
+rel = "alternate"
+type = "application/rss+xml"
 
 
 [languages]
-    [languages.en]
-        languagename = "English"
+[languages.en]
+languagename = "English"
 
-        [languages.en.menu]
-            [[languages.en.menu.main]]
-            name = "About"
-            weight = 1
-            url = "about/"
+[languages.en.menu]
+[[languages.en.menu.main]]
+name = "About"
+weight = 1
+url = "about/"
 
-            [[languages.en.menu.main]]
-            name = "Posts"
-            weight = 2
-            url = "posts/"
+[[languages.en.menu.main]]
+name = "Posts"
+weight = 2
+url = "posts/"
 
-            [[languages.en.menu.main]]
-            name = "Projects"
-            weight = 3
-            url = "projects/"
-
+[[languages.en.menu.main]]
+name = "Projects"
+weight = 3
+url = "projects/"

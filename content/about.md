@@ -1,4 +1,5 @@
 +++
+title = "About"
 slug = "about"
 +++
 
@@ -6,13 +7,19 @@ slug = "about"
     <img src="/images/profile2-round.png" alt="profile pic" />
 </div>
 
-Hey there 👋 I'm Chris (aka `metachris`) - a software builder, collaborator, and dad of two small kids, working remotely from Austria.
+Hey there 👋
+I'm Chris, aka metachris - a software builder, collaborator, and dad of two, working remotely from Austria.
 
-I'm endlessly curious about what's possible when technology meets great teamwork. Over the years, I've learned that the best solutions emerge not from solitary coding sessions, but from clear communication, tight feedback loops, and teams that ship fast while maintaining high quality.
+I build high-performance systems and the teams that bring them to life.
+I'm passionate about what's possible when technology meets great teamwork.
+
+The best solutions don't come from solitary coding sessions - they emerge from aligned, motivated teams where people trust each other and ship autonomously. I focus on getting both the technical foundations and the team dynamics right.
+
+This means: designing systems that make sense to everyone, fostering clear communication, establishing tight feedback loops, and creating space for teams to move fast without cutting corners.
 
 ## What I'm About
 
-Currently building at [Flashbots](https://www.flashbots.net/), where I work on blockchain infrastructure and tooling that helps create more transparent and efficient systems. I love the remote-first culture that lets distributed teams collaborate effectively across time zones.
+Currently I'm at [Flashbots](https://www.flashbots.net/), where I work on blockchain infrastructure and tooling that helps create more transparent and efficient systems. I love the remote-first culture that lets distributed teams collaborate effectively across time zones.
 
 I'm particularly energized by:
 
@@ -28,11 +35,11 @@ I'm particularly energized by:
 
 I'm a free software advocate who's spent time in hacker spaces and collaborative collectives. I find as much joy in a well-architected system as I do in helping a teammate unstick a problem or improving team processes.
 
-When I'm not at the keyboard, I'm usually with my kids exploring the Austrian Alps, or thinking about how we can build technology that makes the world a bit better. I'm cautiously optimistic about the future - realistic about challenges, and excited about what we can create together.
+When I'm not at the keyboard, I'm usually with my kids exploring the Austrian Alps, or thinking about building technology that makes the world a bit better. I'm cautiously optimistic about the future - realistic about challenges, and excited about what we can create together.
 
 ---
 
-**Let's connect:**
+**I'd love to hear from you** - whether you want to discuss collaboration, exchange ideas about remote work and team building, or just say hi:
 
 * [chris@linuxuser.at](mailto:chris@linuxuser.at)
 * [github.com/metachris](https://github.com/metachris)

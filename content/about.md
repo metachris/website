@@ -1,65 +1,45 @@
 +++
-title = "About Me 🥸"
+title = "About"
 slug = "about"
-# hideHeader = true
 +++
 
 <div class="avatar" style="float: right; margin-left: 30px; margin-top:4px;">
     <img src="/images/profile2-round.png" alt="profile pic" />
 </div>
 
-<!-- I am fascinated by technology and collaboration, endlessly curious about what is possible.
-Free software advocate, participating in hacker spaces and collaborative collectives.
-Dad of two little kids. -->
+Hey there 👋 I'm Chris (aka `metachris`) - a software builder, collaborator, and dad of two small kids, working remotely from Austria.
 
-Hey there 👋 My name is Chris,
-- aka `metachris`
-- Builder of software
-- Dad of two small kids
-- Mate at [Flashbots](https://www.flashbots.net/) :zap: :robot: 🏴‍☠️
-- Passionate about technology
-- Cautiously optimistic about the future
-- Interested in collaboration and communication
+I'm endlessly curious about what's possible when technology meets great teamwork. Over the years, I've learned that the best solutions emerge not from solitary coding sessions, but from clear communication, tight feedback loops, and teams that ship fast while maintaining high quality.
 
-<hr style="overflow:auto;">
+## What I'm About
 
-**Reach out:**
+Currently building at [Flashbots](https://www.flashbots.net/), where I work on blockchain infrastructure and tooling that helps create more transparent and efficient systems. I love the remote-first culture that lets distributed teams collaborate effectively across time zones.
 
-* [chris@linuxuser.at](mailto:chris@linuxuser.at)
-* [twitter.com/metachris](https://twitter.com/metachris)
-* [github.com/metachris](https://github.com/metachris)
-* [tg.me/metachris](https://t.me/metachris)
+I'm particularly energized by:
 
- <!--
-**Things I'm doing:**
+**Collaboration & Communication** – I believe the hardest problems in software aren't technical, they're human. Clear communication, trust, and psychological safety unlock team potential more than any framework or tool.
 
-* Blockchain tooling, infrastructure, smart contracts
-* Backend services, APIs, distributed systems
-* Web, mobile, desktop, embedded
-* Technical planning, building teams
-* Workshops, teaching, speaking
+**Shipping Fast, Shipping Well** – There's a special satisfaction in rapidly iterating toward production-quality solutions. Small PRs, tight feedback loops, and incremental improvements beat big-bang releases every time.
 
-I keep learning driven by deep curiosity.
+**Growth Mindset** – I'm drawn to environments where people learn out loud, share knowledge generously, and view mistakes as opportunities. Whether it's mentoring teammates, writing documentation, or pair programming, I believe in growing together.
+
+**Remote Work Done Right** – Remote work isn't just about Slack and Zoom; it's about intentional communication, async-first documentation, and building connection despite the distance. When done well, it unlocks access to amazing people worldwide.
+
+## Beyond the Code
+
+I'm a free software advocate who's spent time in hacker spaces and collaborative collectives. I find as much joy in a well-architected system as I do in helping a teammate unstick a problem or improving team processes.
+
+When I'm not at the keyboard, I'm usually with my kids exploring the Austrian Alps, or thinking about how we can build technology that makes the world a bit better. I'm cautiously optimistic about the future - realistic about challenges, and excited about what we can create together.
 
 ---
 
-**Feel free to reach out:**
+**Let's connect:**
 
 * [chris@linuxuser.at](mailto:chris@linuxuser.at)
-* [twitter.com/metachris](https://twitter.com/metachris)
 * [github.com/metachris](https://github.com/metachris)
+* [twitter.com/metachris](https://twitter.com/metachris)
 * [linkedin.com/in/metachris](https://www.linkedin.com/in/metachris/)
-
-<!--
-
-Sharing a studio with <a href="https://twitter.com/overflo">Flo Bittner</a>, in the [west of Vienna](https://www.google.com/maps/place/Kauergasse,+1150+Wien/@48.1589133,16.1941559,11.69z/data=!4m5!3m4!1s0x476da804a323a76d:0xc1e13233e0100b73!8m2!3d48.1914738!4d16.3236574):
-
-<img src="../images/spacebar.pano.jpg" style="border-radius:4px;" alt="the office">
-
-Loving the Austrian landscape ([Lower Austria](http://maps.google.com/?q=lunz%20am%20see,%20lower%20austria) in this picture):
-
-
--->
+* [t.me/metachris](https://t.me/metachris)
 
 ---
 
@@ -71,7 +51,7 @@ Loving the Austrian landscape ([Lower Austria](http://maps.google.com/?q=lunz%20
 </style>
 
 
-Some impressions from here in Austria:
+Some impressions from around here:
 
 <div class="pics">
 

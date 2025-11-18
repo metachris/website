@@ -4,35 +4,43 @@
       {{ .Site.Title }}
     </a>
     <input type="checkbox" id="menu-toggle" />
-    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <label class="menu-button float-right" for="menu-toggle">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+      </svg>
+    </label>
     <ul class="navigation-list">
       {{ with .Site.Menus.main}}
-        {{ range sort . }}
-          <li class="navigation-item">
-            <a class="navigation-link" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
-          </li>
-        {{ end }}
+      {{ range sort . }}
+      <li class="navigation-item">
+        <a class="navigation-link" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
+      </li>
+      {{ end }}
       {{ end }}
       {{ if .Site.IsMultiLingual }}
-        {{ $node := . }}
-        {{ .Scratch.Set "separator" true }}
-        {{ range .Site.Home.AllTranslations }}
-          {{ if ne $.Site.Language .Language }}
-            {{ if $node.Scratch.Get "separator" }}
-              <li class="navigation-item menu-separator">
-                <span>|</span>
-              </li>
-              {{ $node.Scratch.Set "separator" false }}
-            {{ end }}
-            <li class="navigation-item">
-              <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
-            </li>
-          {{ end }}
-        {{ end }}
+      {{ $node := . }}
+      {{ .Scratch.Set "separator" true }}
+      {{ range .Site.Home.AllTranslations }}
+      {{ if ne $.Site.Language .Language }}
+      {{ if $node.Scratch.Get "separator" }}
+      <li class="navigation-item menu-separator">
+        <span>|</span>
+      </li>
+      {{ $node.Scratch.Set "separator" false }}
+      {{ end }}
+      <li class="navigation-item">
+        <a href="{{ .Permalink }}">{{ .Language.LanguageName }}</a>
+      </li>
+      {{ end }}
+      {{ end }}
       {{ end }}
 
       <li class="navigation-item">
-        <a id="dark-mode-toggle" class="colorscheme-toggle"><i class="fa fa-adjust fa-fw"></i></a>
+        <a id="dark-mode-toggle" class="colorscheme-toggle" title="Toggle light/dark theme" style="cursor:pointer;">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+        </a>
       </li>
     </ul>
   </section>

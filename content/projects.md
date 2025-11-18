@@ -3,8 +3,6 @@ title = "Projects & Previous Work 💫"
 slug = "projects"
 +++
 
-<!-- #### <i class="fas fa-user-friends"></i> &nbsp;Groups & Communities -->
-
 **https://github.com/metachris**
 
 ---
@@ -36,8 +34,6 @@ I worked with
 * [Metalab Vienna](https://metalab.at/)
 * [Google Summer of Code](https://developers.google.com/open-source/gsoc/2008/?hl=en)
 * [Doctors Without Borders](https://www.msf.org/) -->
-
-<!-- #### <i class="far fa-star"></i> &nbsp;Notable Projects -->
 
 ---
 

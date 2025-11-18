@@ -5,8 +5,8 @@ $text-font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell
 // medium: $text-font-family: charter, Georgia, Cambria, "Times New Roman", Times, serif;
 
 
-$heading-font-family: Lato, Helvetica, sans-serif;
-$code-font-family: 'Source Code Pro', 'Lucida Console', monospace;
+$heading-font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$code-font-family: ui-monospace, "SF Mono", Monaco, "Cascadia Code", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", Courier, monospace;
 
 // Colors
 $bg-color: #FAFAFA !default;

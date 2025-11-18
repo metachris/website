@@ -10,6 +10,15 @@ hr {
   margin-bottom: 3rem;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 500;
+}
+
 .page h1 {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -145,6 +154,10 @@ article h2 {
   }
 }
 
+.navigation-list a,
+a.navigation-title {
+  font-weight: 500;
+}
 
 .content .container {
   background: white;

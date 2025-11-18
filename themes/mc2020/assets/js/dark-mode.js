@@ -1,5 +1,6 @@
 const body = document.body;
 const darkModeToggle = document.getElementById('dark-mode-toggle');
+const themeIcon = document.getElementById('theme-icon');
 const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
 // Check if user preference is set, if not check value of body class for light or dark else it means that colorsheme = auto
@@ -25,4 +26,9 @@ function setTheme(theme) {
   localStorage.setItem('colorscheme', theme);
   body.classList.remove('colorscheme-' + inverse);
   body.classList.add('colorscheme-' + theme);
+
+  // Update icon: show moon when in light mode (to switch to dark), sun when in dark mode (to switch to light)
+  if (themeIcon) {
+    themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
 }

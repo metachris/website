@@ -104,9 +104,80 @@ li ul {
   // margin-bottom: 0 !important;
 }
 
-.highlight pre {
-  border: 1px solid #676767;
+.highlight {
+  position: relative;
+
+  pre {
+    border: 1px solid #676767;
+    border-radius: 4px;
+  }
+}
+
+/* Copy button for code blocks */
+.copy-code-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #d0d0d0;
   border-radius: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out, background 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    color: #333;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: #999;
+  }
+
+  &.copied {
+    background: #4caf50;
+    border-color: #4caf50;
+
+    svg {
+      color: white;
+    }
+  }
+}
+
+.highlight:hover .copy-code-button {
+  opacity: 1;
+}
+
+/* Dark mode support */
+body.colorscheme-dark {
+  .copy-code-button {
+    background: rgba(40, 40, 40, 0.9);
+    border-color: #555;
+
+    svg {
+      color: #e5e5e5;
+    }
+
+    &:hover {
+      background: rgba(60, 60, 60, 1);
+      border-color: #777;
+    }
+
+    &.copied {
+      background: #4caf50;
+      border-color: #4caf50;
+
+      svg {
+        color: white;
+      }
+    }
+  }
 }
 
 /**

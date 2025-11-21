@@ -12,7 +12,7 @@ canonifyurls = true
 # Syntax highlighting
 # - https://gohugo.io/content-management/syntax-highlighting
 # - https://gohugo.io/quick-reference/syntax-highlighting-styles
-pygmentsstyle = "RPGLE"
+pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
@@ -70,7 +70,7 @@ issueTerm = "og:title"
 
 [markup]
 [markup.tableOfContents]
-endLevel = 2
+endLevel = 3
 
 [markup.goldmark]
 [markup.goldmark.renderer]

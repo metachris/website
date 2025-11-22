@@ -1,22 +1,30 @@
 +++
-date = "2025-11-15"
-#title = "Sandbox Your AI Devtools"
-# title = "Isolate Your AI Dev Tools: A Quick Guide to Lima VM"
+date = "2025-11-22"
 title = "Running AI Dev Tools Safely: A Practical VM Sandboxing Guide"
-# description = "Development tools that can run arbitrary commands pose serious security issues, as they leak any and all data on your machine. This guide shows how to quickly and easily sandbox AI tools as well as Node.js/npm/yarn and Python/pip, and run them in a secure and isolated VM environment using Lima VM."
 description = "AI coding assistants and npm/pip can steal your credentials and data. Here's how to run them safely in isolated VMs using Lima on macOS/Linux."
-images = ["/images/posts/20251010-ghapi.jpg"]  # 1200 x 630 px
-tags = ["AI", "VM"]
+images = ["/images/posts/ai-sandbox/cover.jpg"]  # 1200 x 675 px
+tags = ["AI", "VM", "Security"]
 hideTags = true
-draft = true
 +++
 
 {{< load-photoswipe >}}
 
-AI coding assistants, npm, pip, and similar dev tools can run arbitrary code on your machine - stealing SSH keys, API tokens, wallet keys, and sensitive credentials without you noticing.
+AI coding assistants, npm, pip, and similar dev tools can run arbitrary code on your machine, and steal SSH keys, API tokens, wallet keys, sensitive credentials and other private data without you noticing.
 
-This guide shows you how to sandbox these tools in isolated VMs using [Lima](https://github.com/lima-vm/lima), so you can develop with AI freely without risking your data.
-[Jump straight to the guide](#lima-vm-introduction) or read on for context.
+This guide shows you how to sandbox these tools in isolated VMs using [Lima](https://github.com/lima-vm/lima), to develop freely without risking your data.
+[Jump straight to the guide](#lima-vm-introduction), or read on for a bit of personal context.
+
+
+<style type="text/css">
+    .fig1-wrap img {
+        border: 1px solid #b5b5b5;
+        border-radius: 3px;
+    }
+</style>
+
+<center class="fig1-wrap" style="max-width: 800px; margin:auto; margin-top: 3.5rem;">
+{{< figure src="/images/posts/ai-sandbox/cover.jpg" alt="Cooperation flow for creating a signature" caption="" class="fig1" >}}
+</center>
 
 ---
 
@@ -553,7 +561,7 @@ Anthropic provides [documentation for using Claude in VS Code](https://code.clau
 
 You can install the Claude extension in the VM through the Remote-SSH session window:
 
-{{< figure link="/images/posts/ai-sandbox/vs-code-ssh5.png" width="" alt="Clicking on Open shows a list of available directories" >}}
+{{< figure link="/images/posts/ai-sandbox/vs-code-ssh5.jpg" width="" alt="Clicking on Open shows a list of available directories" >}}
 
 For some reason, the authentication flow doesn't work for me through the user interface :( To work around that issue, I manually get a Claude API key and set it as an environment variable in the VM:
 

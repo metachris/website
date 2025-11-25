@@ -1,7 +1,7 @@
 +++
-date = "2025-11-22"
-title = "Running AI Dev Tools Safely: A Practical VM Sandboxing Guide"
-description = "AI coding assistants and npm/pip can steal your credentials and data. Here's how to run them safely in isolated VMs using Lima on macOS/Linux."
+date = "2025-11-25"
+title = "Sandbox Your AI Dev Tools: A Practical Guide for VMs and Lima"
+description = "AI coding assistants and other devtools can steal your credentials and data. Here's how to run them safely in isolated VMs using Lima on macOS/Linux."
 images = ["/images/posts/ai-sandbox/cover.jpg"]  # 1200 x 675 px
 tags = ["AI", "VM", "Security"]
 hideTags = true
@@ -9,9 +9,9 @@ hideTags = true
 
 {{< load-photoswipe >}}
 
-AI coding assistants, npm, pip, and similar dev tools can run arbitrary code on your machine, and steal SSH keys, API tokens, wallet keys, sensitive credentials and other private data without you noticing.
+AI coding assistants, npm, pip, and other development tools can run arbitrary code and scripts on your machine, potentially stealing SSH keys, API tokens, wallet keys, sensitive credentials and other private data without you noticing.
 
-This guide shows you how to sandbox these tools in isolated VMs using [Lima](https://github.com/lima-vm/lima), to develop freely without risking your data.
+This guide shows you how to sandbox these tools in isolated VMs using [Lima](https://github.com/lima-vm/lima), so you can experiment and develop freely without putting your sensitive data at risk.
 [Jump straight to the guide](#lima-vm-introduction), or read on for a bit of personal context.
 
 
@@ -34,19 +34,19 @@ This guide shows you how to sandbox these tools in isolated VMs using [Lima](htt
 
 ---
 
-## Personal Context
+## Personal context
 
 I've been having quite a bit of fun with AI assisted coding recently.
 
-I use it for a wide range of things, including discussing architecture, design choices, learning about new tools and libraries I wasn't previously aware of, to quickly cranking out dirty prototypes.
+I use LLMs for a wide range of things, including discussing architecture, design choices, learning about new tools and libraries I wasn't previously aware of, to reviewing PRs and quickly cranking out dirty prototypes.
 
-Especially for hobby projects that are not meant to ever go into production, I'm playing with AI tools fast and loose, producing results quickly and not getting slowed down by annoying things such as reading code before running it 🤣.
+Especially for hobby projects that are not meant to ever go into production, I enjoy playing with AI tools fast and loose, producing results quickly and not getting slowed down by annoying things such as reading code before running it 🤣.
 
 And yeah... that's obviously unsafe, unless it's all contained in a sandbox!
 
 You should never run potentially dangerous, experimental code on your main machine, since it could steal your passwords, API keys, environment variables, private keys, access to your communication tools, install services, and do all sorts of other nefarious things.
 
-I've learned to isolate all my devtools in a VM, and wanted to put together a guide that shows how to do this. Hope it'll be useful to you, too!
+Nowadays I isolate all my devtools in VMs, and thought it might be useful to others if I put together a guide to shows how to do it. Well, here it is, and I hope it'll be useful to you, too!
 
 You'll want to run the entire development environment, including the AI tool itself, inside a sandbox. This way it's safe to install dependencies and to execute code, and unlocks other fun features like snapshots before running sketchy code, and reverting if something goes wrong.
 
@@ -57,13 +57,13 @@ And it's not just AI-generated code. Node.js/npm/yarn and Python/pip are particu
 
 ## Why VMs over Docker?
 
-There are two practical methods for isolating development tools from your host operating system: Docker and Virtual Machines (VMs). VMs provide much stronger protection and more flexibility overall, and are better suited for co-developing with AIs.
+Virtual Machines (VMs) and Containers (i.e. Docker, Podman, containerd) are the two most practical methods for isolating development tools from your host operating system. VMs provide much stronger protection and more flexibility overall, and are better suited for co-developing with AIs.
 
-Docker containers share the host operating system's kernel, which means they're fundamentally running on the same system as your main machine, just with isolated namespaces and resource limits. This creates several security concerns:
+Container runtimes share the host operating system's kernel, which means they're fundamentally running on the same system as your main machine, just with isolated namespaces and resource limits. This creates several security concerns:
 
 - **Kernel vulnerabilities**: If malicious code finds a kernel exploit, it can potentially escape the container and access the host system. These exploits are discovered regularly, and you're betting that your kernel is fully patched and has no zero-days.
 - **Shared resources**: Containers share the same kernel, which means they're accessing the same system calls, device drivers, and kernel modules. This expanded attack surface has led to numerous container escape vulnerabilities over the years.
-- **Limited isolation**: While Docker provides process and filesystem isolation, it's more of a convenience boundary than a true security barrier. Tools like `docker run --privileged` or mounting host directories can easily weaken or bypass these protections, and AI-generated code might do exactly that without you noticing.
+- **Limited isolation**: While containers provide process and filesystem isolation, it's more of a convenience boundary than a true security barrier. Tools like `docker run --privileged` or mounting host directories can easily weaken or bypass these protections, and AI-generated code might do exactly that without you noticing.
 
 In contrast, a VM runs its own complete operating system with its own kernel. The hypervisor (like QEMU/KVM) creates a much stronger isolation boundary. Even if malicious code completely compromises the VM, it would need to exploit the hypervisor itself to reach your host, a significantly harder target.
 
@@ -72,7 +72,7 @@ Furthermore, a VM enables better concurrency. It can run Docker containers, data
 
 ---
 
-## Lima VM Introduction
+## Lima VM introduction
 
 In this guide, we use [Lima VM](https://lima-vm.io) to sandbox AI and devtools. Lima is a delightful, lightweight virtual machine manager for Linux and macOS which provides easy and quick ways to create and manage VMs.
 
@@ -145,7 +145,7 @@ curl -fsSL "https://github.com/lima-vm/lima/releases/download/${VERSION}/lima-${
 curl -fsSL "https://github.com/lima-vm/lima/releases/download/${VERSION}/lima-additional-guestagents-${VERSION:1}-$(uname -s)-$(uname -m).tar.gz" | tar Cxzvm /usr/local
 ```
 
-Ensure you have an up-to-date version!
+Now ensure your Lima version is up-to-date:
 
 ```bash
 $ limactl --version
@@ -156,11 +156,11 @@ limactl version 2.0.1
 
 ## Getting started
 
-Next, we will:
+In this section, we will:
 
-- prepare a shared directory
-- setup VM defaults
-- kick off our first VM
+1. Prepare a shared directory
+1. Setup VM defaults
+1. Start a first VM instance
 
 Let's dive right in!
 
@@ -174,13 +174,16 @@ Let's create `~/VM-Shared` on the host, which we later mount into the VM at `~/S
 mkdir ~/VM-Shared
 ```
 
+You can use that directory to easily copy files between the host and the VM, and to share project directories from the host with the VM.
+
 ### Setup VM defaults
 
 Defaults for all VMs can be defined in `~/.lima/_config/default.yaml`.
 
 Let's enable the following:
 1. Mount `~/VM-Shared` from the host (on `~/Shared` inside the VM).
-2. Forward ports from the VM to the host (i.e. the range from 8000 to 9000). Note that after the host machine suspends, port forwarding may stop working and needs a VM restart.
+2. Forward ports from the VM to the host (i.e. the range from 8000 to 9000).
+3. CPUs and memory the VM is allowed to use (defaults: [4 CPUs](https://github.com/lima-vm/lima/blob/53b7efe0902e768d09bb1e1cadd66d2debaa199a/templates/default.yaml#L25-L26) and [4 GiB RAM](https://github.com/lima-vm/lima/blob/53b7efe0902e768d09bb1e1cadd66d2debaa199a/templates/default.yaml#L29-L30), 100GiB disk space)
 
 Let's create the default YAML file:
 
@@ -194,10 +197,18 @@ mounts:
 portForwards:
 - guestPortRange: [8000, 9000]
   hostPortRange: [8000, 9000]
+
+# Adjust these based on your system and preferences
+cpus: 6
+memory: 16GiB
+
 EOF
 ```
 
-Note: You could also mount other existing project directories from your host if/as useful.
+Notes:
+- You can also adjust all these settings per instance. Either edit  the config when starting a VM, or update the instance configuration in `~/.lima/<vm_name>/lima.yaml` after the VM started, and reboot it afterwards.
+- Port forwarding might stop working after the host machine suspends, and reactivating may need a VM restart.
+
 
 ### Prepare easy SSH access
 
@@ -223,18 +234,18 @@ Great! After creating a new VM, we can now simply create a symlink to the Lima-g
 ### Start a VM
 
 Let's start an Ubuntu 25.10 VM instance, named `dev`.
-
-To disable the automatic home directory sharing, we use the [`_images/ubuntu-25.10.yaml` template](https://raw.githubusercontent.com/lima-vm/lima/refs/heads/master/templates/_images/ubuntu-25.10.yaml):
+We use the internal [`_images/ubuntu-25.10.yaml` template](https://raw.githubusercontent.com/lima-vm/lima/refs/heads/master/templates/_images/ubuntu-25.10.yaml) because it doesn't include the automatic home directory sharing:
 
 ```bash
 limactl start --name dev -y template:_images/ubuntu-25.10.yaml
 ```
 
-Note: You can also manually disable home directory sharing by editing the template when starting the VM or afterwards in `~/.lima/<vm_name>/lima.yaml`.
+Notes:
+- Using the `-y` flag automatically starts the VM without asking first whether you want to edit the instance configuration.
+- Instead of using an internal template, you can also manually disable home directory sharing, by editing the template when starting the VM or afterwards by editing `~/.lima/<vm_name>/lima.yaml`.
 
 <details>
-<summary>Expand for a few useful commands to manage the VM lifecycle.</summary>
-
+<summary>Useful commands to manage the VM lifecycle (click to expand).</summary>
 
 ```bash
 # Restart the VM
@@ -252,6 +263,13 @@ limactl delete dev -f
 
 </details>
 
+### Share project-specific directories
+
+You can share additional project-specific directories between host and VM in several ways:
+
+1. Edit the instance configuration before starting it (by not using the `-y` flag) and adjust the [`mounts` section](https://github.com/lima-vm/lima/blob/53b7efe0902e768d09bb1e1cadd66d2debaa199a/templates/default.yaml#L36-L43).
+2. Edit the instance configuration after it's started by editing `~/.lima/<vm_name>/lima.yaml` and rebooting the instance.
+3. Creating a custom template and launching the instance based on that (more complex but could be useful for repeated use cases).
 
 ### SSH into the VM
 
@@ -289,7 +307,7 @@ drwxr-xr-x 3 metachris metachris   96 Nov 19 09:55 Shared
 🎉 Success!
 
 
-### Update Services and Setup Bash
+### Update services and setup bash
 
 Let's update the services on the instance, and configure git:
 
@@ -297,18 +315,20 @@ Let's update the services on the instance, and configure git:
 # Update the system
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt-get install -y vim screen htop iotop sysstat smem ccze jq build-essential ca-certificates
+sudo apt-get install -y vim screen htop iotop sysstat smem ccze jq build-essential ca-certificates pkg-config libssl-dev
 
 # Setup git author info
-git config --global core.editor "vim"
 git config --global user.name "Your Name"
 git config --global user.email "you@domain.net"
+# git config --global core.editor "vim"  # optional
 
 # Create a .bash_profile file that loads .bashrc (SSH sessions use it)
 echo 'if [ -f ~/.bashrc ]; then . ~/.bashrc; fi' >> ~/.bash_profile
 ```
 
-Now add a few lines to `/etc/bash.bashrc` which drastically improve the bash experience:
+
+<details>
+<summary>I like to add a few opinionated goodies to <tt>/etc/bash.bashrc</tt> which drastically improve the bash experience (click to expand).</summary>
 
 ```bash
 sudo tee -a /etc/bash.bashrc > /dev/null << 'EOF'
@@ -344,55 +364,72 @@ alias gl='git log --pretty=format:"%h %ad | %s%d [%an]" --graph --date=short'
 alias ggo="git checkout"
 alias gds='git diff --staged'
 alias gca="git commit -a --amend"
+
 EOF
 ```
 
-### Test Port Forwarding
+</details>
+
+### Test port forwarding
 
 Let's confirm that port forwarding works. We do this using a one-liner Python HTTP server (on port 7777) inside the VM, and accessing it from the host:
 
 ```bash
-# In the VM
+# In the VM, start the HTTP server
 metachris@lima-default:~$ python3 -m http.server 7777
 Serving HTTP on 0.0.0.0 port 7777 (http://0.0.0.0:7777/) ...
 
-# On the host
+# On the host, make a HTTP request to the server
 $ curl localhost:7777
 <!DOCTYPE HTML>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Directory listing for /</title>
-</head>
-<body>
-<h1>Directory listing for /</h1>
-<hr>
-<ul>
-<li><a href=".bashrc">.bashrc</a></li>
-<li><a href=".cache/">.cache/</a></li>
-<li><a href=".config/">.config/</a></li>
-<li><a href=".local/">.local/</a></li>
-<li><a href=".profile">.profile</a></li>
-<li><a href=".ssh/">.ssh/</a></li>
-<li><a href=".zshrc">.zshrc</a></li>
-<li><a href="Shared/">Shared/</a></li>
-</ul>
-<hr>
-</body>
-</html>
+...
 ```
 
-Everything works so far! 🎉
+Everything works, yay! 🎉
 
 ---
 
-## Other Developer Tools
+## Install tools and languages
 
-Optionally, install a few other development tools:
+This section guides you through installing several other languages and development tools, including Golang, Node.js, Python, Rust, Docker.
+
+We can accomplish that either by installing each tool according to it's documentation, or by using a version manager such as [`mise` ("mise-en-place", 22k stars on Github)](https://github.com/jdx/mise?tab=readme-ov-file) which can install [hundreds of tools](https://mise.jdx.dev/registry.html#tools) via a simple command-line interface.
+
+### Using Mise-En-Place
+
+First, we install [`mise` ("mise-en-place", 22k stars on Github)](https://github.com/jdx/mise?tab=readme-ov-file) and make bash support it:
+
+```bash
+# Install mise
+curl https://mise.run | sh
+
+# Make bash know about it
+echo 'eval "$(~/.local/bin/mise activate bash)"' >> ~/.bashrc
+```
+
+You use `mise latest <tool>` to see the latest versions it knows about:
+
+```bash
+$ mise latest node
+25.2.1
+$ mise latest go
+1.25.4
+$ mise latest rust
+1.91.1
+$ mise latest python
+3.14.0
+```
+
+Now you can install all the tools you want in a single command:
+
+```bash
+mise use --global nodejs go rust cargo
+```
 
 ### Golang
 
-To install the latest version of Golang in the VM, we download the latest release and extract into `/usr/local/go`:
+To manually install (or update) Golang in the VM, download the latest release and extract into `/usr/local/go`:
 
 ```bash
 # Download latest release
@@ -415,7 +452,7 @@ go version go1.25.4 linux/arm64
 
 ### Node.js
 
-A good way to install a current version of Node.js in Ubuntu is by using [nvm, a modern node version manager](https://github.com/nvm-sh/nvm):
+A good way to install a current version of Node.js in Ubuntu is by using [nvm, a modern node version manager](https://github.com/nvm-sh/nvm) (90k stars on GitHub):
 
 ```bash
 # Install nvm
@@ -440,7 +477,21 @@ metachris@lima-default:~$ npm -v
 
 ### Docker
 
-The quickest way to install [Docker](https://docs.docker.com/get-started/get-docker/) is their official [`get-docker.sh`](https://get.docker.com/) script:
+Perhaps you don't even need Docker, since Lima includes [containerd](https://containerd.io/) and [`nerdctl`](https://github.com/containerd/nerdctl) by default. This is a Docker-compatible runtime and command-line interface that can also run images from Docker Hub:
+
+```bash
+# List running containers
+$ nerdctl ps
+CONTAINER ID    IMAGE    COMMAND    CREATED    STATUS    PORTS    NAMES
+
+# Start a container from an image from Docker Hub (i.e. https://hub.docker.com/_/nginx)
+$ nerdctl run nginx
+
+# nerdctl is also compatible with docker-compose
+$ nerdctl compose up
+```
+
+If you do want to install Docker, the [quickest way to install](https://docs.docker.com/get-started/get-docker/) it by using their official [`get-docker.sh`](https://get.docker.com/) script:
 
 ```bash
 # Download and execute the installation script
@@ -685,9 +736,104 @@ Drop your favorite tools in the comments below!
 
 ---
 
-I hope this guide helped you get started quickly and right-footed.
+## VM cloning and snapshots
 
+It's useful to save a VM after all the initial setup is complete. This allows you to quickly spin up new, fresh VMs for specific projects or experiments.
 
+Lima offers several ways to take VM snapshots and/or clone VMs.
+
+- The command `limactl clone` to clone a VM.
+- The command `limactl snapshot`, but it's currently unimplemented for macOS.
+- Manual backup of important files inside `~/.lima/<vm_name>/` (`basedisk` and `diffdisk`)
+
+### `limactl clone`
+
+You can use `limactl clone` to make a copy of an existing VM instance (which needs to be stopped first):
+
+```bash
+# Stop the instance
+$ limactl stop dev
+
+# Create a copy called dev2
+$ limactl clone dev dev2
+
+# Show the help output
+$ limactl clone -h
+```
+
+---
+
+## Multi-VM workflows
+
+For maximum security and flexibility, consider using multiple VMs for different purposes and trust levels. This approach provides better isolation and lets you tailor each environment to specific needs.
+
+Here are some suggested VM configurations:
+
+- **dev-trusted** - For known-safe projects with vetted dependencies. This VM can have slightly relaxed restrictions and potentially access to some credentials for deploying to staging environments.
+- **dev-experiments** - For AI-generated code experiments and trying out new tools. This is where you let AI assistants run wild without worrying about the consequences.
+- **dev-dirty** - For testing sketchy dependencies, unknown packages, or code from untrusted sources. Consider this VM completely compromised and never put any real data or credentials in it.
+
+You can quickly clone your base VM setup to create new instances for different projects using `limactl clone`, as described in the [VM cloning section](#vm-cloning-and-snapshots) above.
+
+### One VM per project
+
+For sensitive or production projects, consider dedicating a separate VM to each project. This prevents potential cross-contamination between projects and allows you to mount only the specific project directories you need.
+
+When creating project-specific VMs, you can customize the mounted directories by editing the instance configuration. Either adjust the `mounts` section before starting the VM (by not using the `-y` flag), or edit `~/.lima/<vm_name>/lima.yaml` after creation and restart the instance.
+
+This approach also makes it easier to share VM configurations with team members. Instead of sharing entire disk images, you can distribute just the Lima template YAML file, which team members can use to spin up identical environments on their machines.
+
+For automated setup, Lima supports [provisioning scripts](https://github.com/lima-vm/lima/blob/master/templates/default.yaml#L187-L197) that run during VM creation. For more complex setups, consider using idempotent provisioning tools like Ansible to ensure consistent environments across your team.
+
+---
+
+## Creating custom templates
+
+If you find yourself repeatedly creating VMs with similar configurations, consider creating custom Lima templates. Templates are YAML files that define VM settings, and they can include other templates.
+
+Custom templates are useful for:
+- Standardizing VM configurations across your team
+- Pre-installing specific tools and dependencies
+- Setting up project-specific mount points and port forwards
+- Defining different security profiles (trusted vs. experimental)
+
+You can create a custom template by copying and modifying an existing one from [Lima's template directory](https://github.com/lima-vm/lima/tree/master/templates). Save your custom templates in `~/.lima/_templates/` and reference them when creating new VMs:
+
+```bash
+limactl start --name myvm ~/.lima/_templates/my-custom-template.yaml
+```
+
+See the [Lima templates documentation](https://github.com/lima-vm/lima/blob/master/templates/README.md) for more details on template syntax and available options.
+
+---
+
+## Best practices
+
+Here are some important security best practices to follow when using VMs for development:
+
+**✅ DO:**
+- Use separate VMs for different trust levels (production, experiments, untrusted code)
+- Take snapshots before risky operations or installing unknown dependencies
+- Keep your VM software and tools updated regularly
+- Mount only the specific directories you need, not your entire home directory
+- Use the shared directory (`~/VM-Shared`) for transferring files between host and VM
+
+**❌ DON'T:**
+- Store real credentials, API keys, or SSH keys in experimental VMs
+- Mount your entire home directory into the VM (Lima's default behavior)
+- Give VMs access to sensitive files or directories on your host
+- Authorize AI tools with access to private repositories unless you accept the risks
+- Run untrusted code on your host machine, even "just to test quickly"
+
+Remember: The whole point of using VMs is isolation. When in doubt, create a new VM for risky experiments and delete it afterwards.
+
+---
+
+I hope this guide helps you get started quickly and right-footed!
 As always, please leave feedback, questions and ideas in the comments below.
 
 Have fun coding! 🛠️
+
+---
+
+Special thanks to [Ilya Lukyanov](https://github.com/ilyaluk) and [Overflo](https://overflo.info/) for reviewing drafts of this post and making great suggestions. 🙏

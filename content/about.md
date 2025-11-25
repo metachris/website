@@ -8,12 +8,12 @@ slug = "about"
 </div>
 
 Hey there 👋
-I'm Chris, aka metachris - a software builder, collaborator, and dad of two, working remotely from Austria.
+I'm Chris, aka metachris - a software builder who loves collaborating, dad of two, working remotely from Austria.
 
-I build high-performance systems and the teams that bring them to life.
+I work on building high-performance systems and enjoy helping teams bring them to life.
 I'm passionate about what's possible when technology meets great teamwork.
 
-The best solutions don't come from solitary coding sessions - they emerge from aligned, motivated teams where people trust each other and ship autonomously. I focus on getting both the technical foundations and the team dynamics right.
+In my experience, the best solutions emerge from aligned, motivated teams where people trust each other and ship autonomously. I try to focus on getting both the technical foundations and the team dynamics right.
 
 This means: designing systems that make sense to everyone, fostering clear communication, establishing tight feedback loops, and creating space for teams to move fast without cutting corners.
 
@@ -23,9 +23,9 @@ Currently I'm at [Flashbots](https://www.flashbots.net/), where I work on blockc
 
 I'm particularly energized by:
 
-**Collaboration & Communication** – I believe the hardest problems in software aren't technical, they're human. Clear communication, trust, and psychological safety unlock team potential more than any framework or tool.
+**Collaboration & Communication** – I've found that many of the hardest problems in software are human rather than technical. Clear communication, trust, and psychological safety can unlock team potential in ways that frameworks and tools alone cannot.
 
-**Shipping Fast, Shipping Well** – There's a special satisfaction in rapidly iterating toward production-quality solutions. Small PRs, tight feedback loops, and incremental improvements beat big-bang releases every time.
+**Shipping Fast, Shipping Well** – There's a special satisfaction in rapidly iterating toward production-quality solutions. Small PRs, tight feedback loops, and incremental improvements tend to work better than big-bang releases.
 
 **Growth Mindset** – I'm drawn to environments where people learn out loud, share knowledge generously, and view mistakes as opportunities. Whether it's mentoring teammates, writing documentation, or pair programming, I believe in growing together.
 

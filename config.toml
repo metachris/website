@@ -9,19 +9,20 @@ defaultcontentlanguage = "en"
 paginate = 25
 canonifyurls = true
 
+# Syntax highlighting
+# - https://gohugo.io/content-management/syntax-highlighting
+# - https://gohugo.io/quick-reference/syntax-highlighting-styles
 pygmentsstyle = "monokai"
 pygmentscodefences = true
 pygmentscodefencesguesssyntax = true
 
 summaryLength = 70
-# disqusShortname = "yourdiscussshortname"
 
 # enableGitInfo = true
 enableEmoji = true
 
 [permalinks]
 posts = "/:year/:month/:title/"
-# posts = "/blog/:title/"
 
 [params]
 author = "Chris Hager"
@@ -69,7 +70,7 @@ issueTerm = "og:title"
 
 [markup]
 [markup.tableOfContents]
-endLevel = 2
+endLevel = 3
 
 [markup.goldmark]
 [markup.goldmark.renderer]

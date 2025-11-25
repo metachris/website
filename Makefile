@@ -12,7 +12,7 @@ serve-drafts: ## serve (with drafts)
 	hugo server --buildDrafts
 
 build: ## build blog (prod)
-	hugo --minify
+	hugo --minify --gc --baseURL=/
 
 ping-searchengines:
 	curl -s http://www.google.com/webmasters/sitemaps/ping?sitemap=https://www.metachris.dev/sitemap.xml -o /dev/null

@@ -1,20 +1,29 @@
 <div class="post-entry">
-
-  <div class="title">
-    <a class="title" href="{{ .Params.ExternalLink | default .RelPermalink }}">
-      {{ .Title }}
-      {{ if .Params.ExternalLink }}&nbsp;<small>🔗</small> {{ end }}
+  {{ if .Params.images }}
+  <div class="thumbnail">
+    <a href="{{ .Params.ExternalLink | default .RelPermalink }}">
+      <img src="{{ index .Params.images 0 }}" alt="{{ .Title }}">
     </a>
   </div>
-  <div class="description">
-    {{ .Description | default (.Summary | default .Content | htmlUnescape | plainify | truncate 200) }}
+  {{ end }}
+
+  <div class="content-wrapper">
+    <div class="title">
+      <a class="title" href="{{ .Params.ExternalLink | default .RelPermalink }}">
+        {{ .Title }}
+        {{ if .Params.ExternalLink }}&nbsp;<small>🔗</small> {{ end }}
+      </a>
+    </div>
+    <div class="description">
+      {{ .Description | default (.Summary | default .Content | htmlUnescape | plainify | truncate 200) }}
+    </div>
+    <div class="date">{{ .Date.Format "January 2006" }}</div>
+    <!-- <div class="tags">
+      {{- range .Params.Tags -}}
+      <span class="tag">
+        <a href="{{ ( printf "tags/%s/" ( . | urlize ) ) | relLangURL }}">#{{ . | lower }}</a>
+      </span>
+      {{ end }}
+    </div> -->
   </div>
-  <div class="date">{{ .Date.Format "January 2006" }}</div>
-  <!-- <div class="tags">
-    {{- range .Params.Tags -}}
-    <span class="tag">
-      <a href="{{ ( printf "tags/%s/" ( . | urlize ) ) | relLangURL }}">#{{ . | lower }}</a>
-    </span>
-    {{ end }}
-  </div> -->
 </div>

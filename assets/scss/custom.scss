@@ -279,6 +279,30 @@ body.colorscheme-dark .content .container {
 
 .postlist .post-entry {
   margin-top: 3rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.postlist .post-entry .thumbnail {
+  flex-shrink: 0;
+  width: 200px;
+  order: 2;
+}
+
+.postlist .post-entry .thumbnail img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  display: block;
+}
+
+.postlist .post-entry .content-wrapper {
+  flex: 1;
+  min-width: 0;
+  order: 1;
 }
 
 .postlist .post-entry .date {
@@ -288,11 +312,21 @@ body.colorscheme-dark .content .container {
 .postlist .post-entry a.title {
   font-size: 2.6rem;
   font-weight: 500;
-
 }
 
-.postlist .post-entry img {
-  display: none;
+@media only screen and (max-width: 768px) {
+  .postlist .post-entry {
+    flex-direction: column;
+  }
+
+  .postlist .post-entry .thumbnail {
+    width: 100%;
+    order: 1;
+  }
+
+  .postlist .post-entry .content-wrapper {
+    order: 2;
+  }
 }
 
 .postlist .tags .tag a {

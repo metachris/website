@@ -7,9 +7,29 @@
     <div class="post-title">
       <h1 class="title">Posts</h1>
     </div>
+    <div class="view-toggle">
+      <button id="view-list" class="view-btn active" title="List view">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="8" y1="6" x2="21" y2="6"></line>
+          <line x1="8" y1="12" x2="21" y2="12"></line>
+          <line x1="8" y1="18" x2="21" y2="18"></line>
+          <line x1="3" y1="6" x2="3.01" y2="6"></line>
+          <line x1="3" y1="12" x2="3.01" y2="12"></line>
+          <line x1="3" y1="18" x2="3.01" y2="18"></line>
+        </svg>
+      </button>
+      <button id="view-grid" class="view-btn" title="Grid view">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+      </button>
+    </div>
   </header>
 
-  <div class="postlist">
+  <div class="postlist" data-view="list">
     {{- range .Paginator.Pages -}}
     {{ if not .Params.hideInPostlist }}
     {{- .Render "entry" -}}
@@ -23,6 +43,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  // Make post entries clickable
   document.querySelectorAll('.post-entry').forEach(function(entry) {
     entry.addEventListener('click', function(e) {
       // Don't navigate if clicking on a link directly
@@ -36,6 +57,37 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
+
+  // View toggle functionality
+  const postlist = document.querySelector('.postlist');
+  const viewListBtn = document.getElementById('view-list');
+  const viewGridBtn = document.getElementById('view-grid');
+
+  // Load saved preference or default to 'list'
+  const savedView = localStorage.getItem('postListView') || 'list';
+  setView(savedView);
+
+  viewListBtn.addEventListener('click', function() {
+    setView('list');
+  });
+
+  viewGridBtn.addEventListener('click', function() {
+    setView('grid');
+  });
+
+  function setView(view) {
+    postlist.setAttribute('data-view', view);
+    localStorage.setItem('postListView', view);
+
+    // Update button states
+    if (view === 'grid') {
+      viewGridBtn.classList.add('active');
+      viewListBtn.classList.remove('active');
+    } else {
+      viewListBtn.classList.add('active');
+      viewGridBtn.classList.remove('active');
+    }
+  }
 });
 </script>
 {{ end }}

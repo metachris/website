@@ -334,8 +334,8 @@ body.colorscheme-dark .content .container {
 }
 
 .postlist .post-entry:hover {
-  background-color: rgba(0, 0, 0, 0.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: rgba(92, 92, 92, 0.02);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
 .postlist .post-entry .thumbnail {
@@ -353,6 +353,12 @@ body.colorscheme-dark .content .container {
   object-fit: cover;
   aspect-ratio: 16 / 9;
   display: block;
+  opacity: 0.85;
+  transition: opacity 0.3s ease;
+}
+
+.postlist .post-entry:hover .thumbnail img {
+  opacity: 1;
 }
 
 .postlist .post-entry .content-wrapper {

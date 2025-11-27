@@ -107,7 +107,7 @@ To highlight code (for example JavaScript) which is either hardcoded in a templa
 <pre v-highlightjs><code class="javascript">{{ sourcecode }}</code></pre>
 {{< / highlight >}}
 
-#### Reacting to code updates
+### Reacting to code updates
 
 `highlight.js` replaces the content of the &lt;code&gt; block. If using the directive as shown above, updating the source-code after the initial highlighting does not work anymore. To be able to update the code and highlight it again after an update, pass the variable directly into the `v-highlightjs` directive like this:
 

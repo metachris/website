@@ -20,4 +20,22 @@
 
   {{ partial "pagination.html" . }}
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.post-entry').forEach(function(entry) {
+    entry.addEventListener('click', function(e) {
+      // Don't navigate if clicking on a link directly
+      if (e.target.tagName === 'A' || e.target.closest('a')) {
+        return;
+      }
+
+      const href = this.getAttribute('data-href');
+      if (href) {
+        window.location.href = href;
+      }
+    });
+  });
+});
+</script>
 {{ end }}

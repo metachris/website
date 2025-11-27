@@ -320,6 +320,7 @@ sudo apt-get install -y vim screen htop iotop sysstat smem ccze jq build-essenti
 # Setup git author info
 git config --global user.name "Your Name"
 git config --global user.email "you@domain.net"
+git config --global core.untrackedCache false
 # git config --global core.editor "vim"  # optional
 
 # Create a .bash_profile file that loads .bashrc (SSH sessions use it)

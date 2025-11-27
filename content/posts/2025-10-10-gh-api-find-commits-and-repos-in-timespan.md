@@ -6,6 +6,7 @@ images = ["/images/posts/20251010-ghapi.jpg"]  # 1200 x 630 px
 tags = ["API", "GitHub"]
 keywords = ["GitHub", "API", "Contributions", "Timeframe", "Query"]
 hideTags = true
+readingTime = 5
 +++
 
 {{< load-photoswipe >}}

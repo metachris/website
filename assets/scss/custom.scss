@@ -282,12 +282,25 @@ body.colorscheme-dark .content .container {
   display: flex;
   gap: 2rem;
   align-items: flex-start;
+  padding: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.postlist .post-entry:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .postlist .post-entry .thumbnail {
   flex-shrink: 0;
   width: 200px;
   order: 2;
+  overflow: hidden;
+  border-radius: 8px;
 }
 
 .postlist .post-entry .thumbnail img {
@@ -297,6 +310,11 @@ body.colorscheme-dark .content .container {
   object-fit: cover;
   aspect-ratio: 16 / 9;
   display: block;
+  transition: transform 0.3s ease;
+}
+
+.postlist .post-entry:hover .thumbnail img {
+  transform: scale(1.05);
 }
 
 .postlist .post-entry .content-wrapper {

@@ -33,6 +33,67 @@
     }
   }
 
+  .centered {
+    .error {
+      background: #161c28;
+      border-color: #252f3f;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.3);
+      .eyebrow {
+        background: rgba($link-color-dark, 0.12);
+        color: $link-color-dark;
+      }
+      .error-lead {
+        color: #cfd6e4;
+      }
+      .error-button {
+        &.primary {
+          background: $link-color-dark;
+          box-shadow: 0 8px 18px rgba(60, 164, 255, 0.26);
+          &:hover,
+          &:focus {
+            background: lighten($link-color-dark, 6%);
+          }
+        }
+        &.ghost {
+          background: #111827;
+          border-color: #252f3f;
+          color: $fg-color-dark;
+          &:hover,
+          &:focus {
+            border-color: $link-color-dark;
+            color: $link-color-dark;
+          }
+        }
+      }
+      .error-section {
+        background: #111827;
+        border-color: #252f3f;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.28);
+      }
+      .section-title {
+        color: #d7dce6;
+      }
+      .error-list {
+        li {
+          .date {
+            color: #9aa5b8;
+          }
+          .title {
+            color: $fg-color-dark;
+            &:hover,
+            &:focus {
+              color: $link-color-dark;
+            }
+          }
+          .badge {
+            background: rgba($link-color-dark, 0.18);
+            color: $link-color-dark;
+          }
+        }
+      }
+    }
+  }
+
   .infobox1 {
     background: #3c3c3c;
     color: inherit;

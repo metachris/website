@@ -1,7 +1,45 @@
 <section class="container centered">
-  <div class="error">
-    <h1>404</h1>
-    <h2>{{ i18n "page_not_found" }}</h2>
-    <p>{{ i18n "page_does_not_exist" }}<br />{{ i18n "head_back" .Site.BaseURL | safeHTML }}</p>
+  <div class="error error-card">
+    {{ $posts := where .Site.RegularPages.ByDate.Reverse "Type" "posts" }}
+    {{ $featured := where $posts ".Params.featured" true }}
+
+    <div class="eyebrow">404</div>
+    <h1>Lost in the woods?</h1>
+    <p class="error-lead">
+      This page is off the trail. Let's point you to something worth reading.
+    </p>
+    <div class="error-actions">
+      <a class="error-button ghost" href="{{ .Site.BaseURL }}">← Back to homepage</a>
+      <a class="error-button ghost" href="/posts/">Browse all posts</a>
+    </div>
+
+    <div class=" error-grid">
+      <div class="error-section">
+        <div class="section-title">Recent posts</div>
+        <ul class="error-list">
+          {{ range first 5 $posts }}
+          <li>
+            <span class="date">{{ .Date.Format "January 2006" }}</span>
+            <a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+
+      {{ if gt (len $featured) 0 }}
+      <div class="error-section">
+        <div class="section-title">Featured</div>
+        <ul class="error-list">
+          {{ range first 3 $featured }}
+          <li>
+            <span class="badge">Featured</span>
+            <a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+
+    </div>
   </div>
 </section>

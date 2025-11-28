@@ -411,9 +411,19 @@ body.colorscheme-dark .content .container {
   border: 1px solid #e9e9e9;
 }
 
+body.colorscheme-dark .postlist[data-view="grid"] .post-entry {
+  background: inherit;
+  border: 1px solid #7d7d7d;
+}
+
 .postlist[data-view="grid"] .post-entry:hover {
   background: white;
   border-color: #d0d0d0;
+}
+
+body.colorscheme-dark .postlist[data-view="grid"] .post-entry:hover {
+  background: inherit;
+  border: 1px solid #c0c0c0;
 }
 
 .postlist[data-view="grid"] .post-entry .thumbnail {
@@ -542,7 +552,7 @@ body.colorscheme-dark .content .container {
 }
 
 
-.post-meta .posted-on {
+.post-meta {
   color: grey;
 }
 

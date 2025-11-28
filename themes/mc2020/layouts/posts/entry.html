@@ -16,7 +16,7 @@
     <div class="description">
       {{ .Description | default (.Summary | default .Content | htmlUnescape | plainify | truncate 200) }}
     </div>
-    <div class="date">{{ .Date.Format "January 2006" }} · {{ i18n "reading_time" (.Params.readingTime | default .ReadingTime) }}</div>
+    <div class="date">{{ .Date.Format "January 2006" }} &nbsp;·&nbsp; {{ i18n "reading_time" (.Params.readingTime | default .ReadingTime) }}</div>
     <!-- <div class="tags">
       {{- range .Params.Tags -}}
       <span class="tag">

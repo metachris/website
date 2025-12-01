@@ -206,6 +206,7 @@ EOF
 ```
 
 Notes:
+- As part of these defaults, you may want to share additional project directories.
 - You can also adjust all these settings per instance. Either edit  the config when starting a VM, or update the instance configuration in `~/.lima/<vm_name>/lima.yaml` after the VM started, and reboot it afterwards.
 - Port forwarding might stop working after the host machine suspends, and reactivating may need a VM restart.
 
@@ -542,7 +543,16 @@ Only authorize it with `gh auth login` for private repo access if you accept the
 
 ## Visual Studio Code - Remote-SSH Session
 
-If you prefer an IDE like VS Code, you can use Remote-SSH to start a session inside the instance:
+If you prefer an IDE like VS Code, you can use Remote-SSH to start a session inside the instance.
+
+Please note that this is **potentially unsafe**, as explained in the [Remote-SSH README](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh):
+
+> Security Note
+Using Remote-SSH opens a connection between your local machine and the remote. Only use Remote-SSH to connect to secure remote machines that you trust and that are owned by a party whom you trust. **A compromised remote could use the VS Code Remote connection to execute code on your local machine.**
+
+See also [this discussion on GitHub](https://github.com/microsoft/vscode-remote-release/issues/6608) for more context and information.
+
+If you want to connect anyway:
 
 1. Press `Shift + cmd + P` to open the command palette
 1. Type `ssh` and choose `Remote-SSH: Connect to Host...`
@@ -589,9 +599,11 @@ Start Claude:
 claude
 ```
 
-On first start, Claude asks you to authorize it. I chose "Anthropic Console account", opened the link in the browser, authorized it, and pasted the auth code into the cli. Alternatively, you can set an Anthropic API key in the `ANTHROPIC_API_KEY` environment variable (in `.bashrc`).
+On first start, Claude asks you to authorize it.
 
-Claude Code CLI is now working in the VM! 🎉
+The docs mention support for an `ANTHROPIC_API_KEY` environment variable (i.e. set in `.bashrc`), but that did not work when I tried it; `claude` CLI didn't let me skip the login process. Only after the login was done it notified me about the existing environment variable, and whether I'd prefer to use that one.
+
+After the login, Claude Code CLI is ready to be ued in the VM! 🎉
 
 {{< figure link="/images/posts/ai-sandbox/claude1.png" alt="Claude CLI" >}}
 
@@ -615,9 +627,9 @@ You can install the Claude extension in the VM through the Remote-SSH session wi
 
 {{< figure link="/images/posts/ai-sandbox/vs-code-ssh5.jpg" width="" alt="Clicking on Open shows a list of available directories" >}}
 
-For some reason, the authentication flow doesn't work for me through the user interface :( To work around that issue, I manually get a Claude API key and set it as an environment variable in the VM:
+In contrast to the CLI tool, the authentication flow did not work through the user interface, and I had to set the `ANTHROPIC_API_KEY` environment variable:
 
-- Add a new key via https://console.anthropic.com/settings/keys
+- Create a new key via https://console.anthropic.com/settings/keys
 - Edit `.bashrc` and set the env var:
 
 ```bash

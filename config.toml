@@ -88,15 +88,15 @@ languagename = "English"
 [languages.en.menu]
 [[languages.en.menu.main]]
 name = "About"
-weight = 1
+weight = 3
 url = "about/"
 
 [[languages.en.menu.main]]
 name = "Posts"
-weight = 2
+weight = 1
 url = "posts/"
 
 [[languages.en.menu.main]]
 name = "Projects"
-weight = 3
+weight = 2
 url = "projects/"

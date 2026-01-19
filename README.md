@@ -55,3 +55,9 @@ Check Social Infos
 * [Twitter Card Validator](https://cards-dev.twitter.com/validator)
 * [Facebook Debugger](https://developers.facebook.com/tools/debug/)
 * https://search.google.com/structured-data/testing-tool
+
+## Inspiration
+
+Nice blogs
+
+- https://www.seangoedecke.com

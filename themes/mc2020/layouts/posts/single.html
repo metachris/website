@@ -32,21 +32,20 @@
     <hr> -->
     {{ end }}
 
-    <div style="height:14px;"></div>
-
     <div style="float: right">
       {{ with .Page.Params.Categories }}{{ partial " taxonomy/categories.html" . }}{{ end }} {{ if ne .Params.hideTags true }}{{ with .Page.Params.Tags }}{{ partial "taxonomy/tags.html" . }}{{ end }}{{ end }}
     </div>
 
     <div style="clear: both;"></div>
 
-    <div class="bottomAbout" style="display: flex;">
-      <div style="flex-grow: 2;">
-        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        <a href="https://twitter.com/share" class="twitter-share-button" data-show-count="false">Tweet</a>
-        <br>
-        <a href="https://twitter.com/metachris" class="twitter-follow-button" data-show-count="false">Follow @metachris</a>
-
+    <!--
+    <div class="bottomAbout" style="display: flex; align-items: center;">
+      <div style="flex-grow: 2; ">
+        <a href="https://buttondown.com/metachris" target="_blank" rel="noopener noreferrer">Subscribe</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/about">About</a>
+        &nbsp;&middot;&nbsp;
+        <a href="/index.xml">RSS</a>
       </div>
 
       <div style="margin-top:-0px;">
@@ -54,25 +53,44 @@
           <img src="/images/profile2-round.png" alt="Chris" class="profile" style="max-width:60px;">
         </a>
       </div>
+    </div>
+    -->
+
+    <!-- <div style="margin-top:-0px; float:right;">
+      <a href="https://twitter.com/metachris">
+        <img src="/images/profile2-round.png" alt="Chris" class="profile" style="max-width:60px;">
+      </a>
+    </div> -->
+
+    <div style="text-align: center;">
+      <a href="https://buttondown.com/metachris" target="_blank" rel="noopener noreferrer">Subscribe</a>
+      &nbsp;&middot;&nbsp;
+      <a href="/about">About</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://bsky.app/profile/metachris.bsky.social" title="Follow me on Bluesky" target="_blank" rel="noopener noreferrer">Bsky</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://x.com/metachris/" title="Follow me on X" target="_blank" rel="noopener noreferrer">X</a>
+      &nbsp;&middot;&nbsp;
+      <a href="/index.xml">RSS</a>
 
     </div>
-
-    <hr>
 
     <div class="bottom-post-links">
       <div class="prev">
         {{ if .PrevInSection }}
-        <span class="title">OLDER POST</span><br>
+        <span class="title">PREVIOUS POST</span><br>
         <a href="{{.PrevInSection.Permalink}}">{{ .PrevInSection.Title }}</a>
         {{ end }}
       </div>
       <div class="next">
         {{ if .NextInSection }}
-        <span class="title">NEWER POST</span><br>
+        <span class="title">NEXT POST</span><br>
         <a href="{{.NextInSection.Permalink}}">{{ .NextInSection.Title }}</a>
         {{ end }}
       </div>
     </div>
+
+    <hr>
 
     <footer>
       {{ partial "posts/series.html" . }}
@@ -80,6 +98,7 @@
       {{ partial "posts/commento.html" . }}
 
       <a id="comments" name="comments"></a>
+      <h2>Comments</h2>
       {{ partial "posts/utteranc.html" . }}
     </footer>
   </article>

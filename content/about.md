@@ -1,6 +1,7 @@
 +++
 title = "About"
 slug = "about"
+# note: previous full version was this: https://github.com/metachris/website/blob/d3ffcc53d535fb5c9c9317eb095596fcfc68d7ec/content/about.md
 +++
 
 <div class="avatar" style="float: right; margin-left: 30px; margin-top:4px;">
@@ -8,43 +9,29 @@ slug = "about"
 </div>
 
 Hey there 👋
-I'm Chris, aka metachris - a software builder who loves collaborating, dad of two, working remotely from Austria.
-
-I work on building high-performance systems and enjoy helping teams bring them to life.
-I'm passionate about what's possible when technology meets great teamwork.
-
-In my experience, the best solutions emerge from aligned, motivated teams where people trust each other and ship autonomously. I try to focus on getting both the technical foundations and the team dynamics right.
-
-This means: designing systems that make sense to everyone, fostering clear communication, establishing tight feedback loops, and creating space for teams to move fast without cutting corners.
-
-## What I'm About
-
-Currently I'm at [Flashbots](https://www.flashbots.net/), where I work on blockchain infrastructure and tooling that helps create more transparent and efficient systems. I love the remote-first culture that lets distributed teams collaborate effectively across time zones.
-
-I'm particularly energized by:
-
-**Collaboration & Communication** – I've found that many of the hardest problems in software are human rather than technical. Clear communication, trust, and psychological safety can unlock team potential in ways that frameworks and tools alone cannot.
-
-**Shipping Fast, Shipping Well** – There's a special satisfaction in rapidly iterating toward production-quality solutions. Small PRs, tight feedback loops, and incremental improvements tend to work better than big-bang releases.
-
-**Growth Mindset** – I'm drawn to environments where people learn out loud, share knowledge generously, and view mistakes as opportunities. Whether it's mentoring teammates, writing documentation, or pair programming, I believe in growing together.
-
-**Remote Work Done Right** – Remote work isn't just about Slack and Zoom; it's about intentional communication, async-first documentation, and building connection despite the distance. When done well, it unlocks access to amazing people worldwide.
-
-## Beyond the Code
-
-I'm a free software advocate who's spent time in hacker spaces and collaborative collectives. I find as much joy in a well-architected system as I do in helping a teammate unstick a problem or improving team processes.
-
-When I'm not at the keyboard, I'm usually with my kids exploring the Austrian Alps, or thinking about building technology that makes the world a bit better. I'm cautiously optimistic about the future - realistic about challenges, and excited about what we can create together.
+I'm Chris - aka metachris - a software builder who loves collaborating, dad of two, and living in Austria. I mostly write about software engineering, and occasionally bits about life.
 
 ---
 
-**I'd love to hear from you** - whether you want to discuss collaboration, exchange ideas about remote work and team building, or just say hi:
+Currently I'm at [Flashbots](https://www.flashbots.net/), where I contribute to engineering leadership and lead work on [BuilderNet](https://buildernet.org/) and [MEV-Boost](https://github.com/flashbots/mev-boost), amongst doing a bunch of other things.
+
+BuilderNet is a distributed, low-latency, TEE-based Ethereum block building network, which has been full of interesting challenges. Nowadays it builds about 30% of all Ethereum blocks.
+MEV-Boost allows Ethereum validators to outsource block building to a competitive marketplace of specialized builders, enabling validators to capture MEV (maximal extractable value).
+
+What draws me to Flashbots is the combination of amazing people, a mission I care about (keeping Ethereum decentralized by mitigating the negative externalities of MEV), and the open, collaborative nature of the org. Much of what we do is open source software, open research and open standards, heavily collaborating across the industry and ecosystem.
+
+---
+
+For over two decades I've been part of open source communities across Europe - from one of the first hackerspaces here in Vienna (Metalab), to collaborating with the Chaos Computer Club and attending the Chaos Communication Congress, to being a key member of One Laptop per Child, working with Doctors Without Borders, and mentoring Google Summer of Code projects.
+
+When I'm not at the keyboard I'm usually having quality time with my kids and partner, and am often out exploring the Austrian Alps.
+
+---
+
+I'd love to hear from you! Feel free to say hi:
 
 * [chris@linuxuser.at](mailto:chris@linuxuser.at)
 * [github.com/metachris](https://github.com/metachris)
-* [twitter.com/metachris](https://twitter.com/metachris)
-* [linkedin.com/in/metachris](https://www.linkedin.com/in/metachris/)
 * [t.me/metachris](https://t.me/metachris)
 
 ---

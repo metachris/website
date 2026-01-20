@@ -1,4 +1,106 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chris Hager</title><link>https://www.metachris.dev/</link><description>Recent content on Chris Hager</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 25 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://www.metachris.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>Sandbox Your AI Dev Tools: A Practical Guide for VMs and Lima</title><link>https://www.metachris.dev/2025/11/sandbox-your-ai-dev-tools-a-practical-guide-for-vms-and-lima/</link><pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><guid>https://www.metachris.dev/2025/11/sandbox-your-ai-dev-tools-a-practical-guide-for-vms-and-lima/</guid><description>AI coding assistants, npm, pip, and other development tools can run arbitrary code and scripts on your machine, potentially stealing SSH keys, API tokens, wallet keys, sensitive credentials and other private data without you noticing.
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chris Hager</title><link>https://www.metachris.dev/</link><description>Recent content on Chris Hager</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 01 Jan 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://www.metachris.dev/index.xml" rel="self" type="application/rss+xml"/><item><title>2025 - Year in review</title><link>https://www.metachris.dev/2026/01/2025-year-in-review/</link><pubDate>Thu, 01 Jan 2026 00:00:00 +0000</pubDate><guid>https://www.metachris.dev/2026/01/2025-year-in-review/</guid><description>&lt;script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous">&lt;/script>
+&lt;script src="https://www.metachris.dev/js/load-photoswipe.js">&lt;/script>
+
+
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css" integrity="sha256-sCl5PUOGMLfFYctzDW3MtRib0ctyUvI9Qsmq2wXOeBY=" crossorigin="anonymous" />
+&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css" integrity="sha256-BFeI1V+Vh1Rk37wswuOYn5lsTcaU96hGaI7OUVCLjPc=" crossorigin="anonymous" />
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js" integrity="sha256-UplRCs9v4KXVJvVY+p+RSo5Q4ilAUXh7kpjyIP5odyc=" crossorigin="anonymous">&lt;/script>
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js" integrity="sha256-PWHOlUzc96pMc8ThwRIXPn8yH4NOLu42RQ0b9SpnpFk=" crossorigin="anonymous">&lt;/script>
+
+
+&lt;div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+&lt;div class="pswp__bg">&lt;/div>
+
+&lt;div class="pswp__scroll-wrap">
+ 
+ &lt;div class="pswp__container">
+ &lt;div class="pswp__item">&lt;/div>
+ &lt;div class="pswp__item">&lt;/div>
+ &lt;div class="pswp__item">&lt;/div>
+ &lt;/div>
+ 
+ &lt;div class="pswp__ui pswp__ui--hidden">
+ &lt;div class="pswp__top-bar">
+ 
+ &lt;div class="pswp__counter">&lt;/div>
+ &lt;button class="pswp__button pswp__button--close" title="Close (Esc)">&lt;/button>
+ &lt;button class="pswp__button pswp__button--share" title="Share">&lt;/button>
+ &lt;button class="pswp__button pswp__button--fs" title="Toggle fullscreen">&lt;/button>
+ &lt;button class="pswp__button pswp__button--zoom" title="Zoom in/out">&lt;/button>
+ 
+ 
+ &lt;div class="pswp__preloader">
+ &lt;div class="pswp__preloader__icn">
+ &lt;div class="pswp__preloader__cut">
+ &lt;div class="pswp__preloader__donut">&lt;/div>
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+ &lt;div class="pswp__share-tooltip">&lt;/div>
+ &lt;/div>
+ &lt;button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+ &lt;/button>
+ &lt;button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+ &lt;/button>
+ &lt;div class="pswp__caption">
+ &lt;div class="pswp__caption__center">&lt;/div>
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+&lt;/div>
+
+&lt;style type="text/css">
+ .fig1-wrap img {
+ border: 1px solid #b5b5b5;
+ border-radius: 3px;
+ }
+ .book-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+ gap: 1.5rem;
+ margin: 2rem 0;
+ }
+ .book-card {
+ display: flex;
+ gap: 1rem;
+ text-decoration: none;
+ color: inherit;
+ }
+ .book-card img {
+ width: 100px;
+ min-width: 100px;
+ height: auto;
+ border-radius: 4px;
+ box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+ transition: transform 0.2s;
+ }
+ .book-card:hover img {
+ transform: scale(1.05);
+ }
+ .book-card .book-info {
+ display: flex;
+ flex-direction: column;
+ }
+ .book-card .book-title {
+ font-weight: 600;
+ font-size: 1.9rem;
+ margin-bottom: 0.3rem;
+ }
+ .book-card .book-desc {
+ font-size: 1.5rem;
+ line-height: 1.5;
+ }
+ .book-card:hover {
+ text-decoration: none !important;
+ }
+ a:hover .book-desc {
+ color: initial;
+ }
+&lt;/style>
+&lt;p>This post is a look back at 2025: projects, writings, code, books, and a few thoughts on AI, social media, and life.&lt;/p></description></item><item><title>Sandbox Your AI Dev Tools: A Practical Guide for VMs and Lima</title><link>https://www.metachris.dev/2025/11/sandbox-your-ai-dev-tools-a-practical-guide-for-vms-and-lima/</link><pubDate>Tue, 25 Nov 2025 00:00:00 +0000</pubDate><guid>https://www.metachris.dev/2025/11/sandbox-your-ai-dev-tools-a-practical-guide-for-vms-and-lima/</guid><description>AI coding assistants, npm, pip, and other development tools can run arbitrary code and scripts on your machine, potentially stealing SSH keys, API tokens, wallet keys, sensitive credentials and other private data without you noticing.
 This guide shows you how to sandbox these tools in isolated VMs using Lima, so you can experiment and develop freely without putting your sensitive data at risk. Jump straight to the guide, or read on for a bit of personal context.</description></item><item><title>How to Query GitHub for User Contributions in a Specific Timeframe</title><link>https://www.metachris.dev/2025/10/how-to-query-github-for-user-contributions-in-a-specific-timeframe/</link><pubDate>Fri, 10 Oct 2025 00:00:00 +0000</pubDate><guid>https://www.metachris.dev/2025/10/how-to-query-github-for-user-contributions-in-a-specific-timeframe/</guid><description>I needed needed to find all public GitHub repositories a user has contributed to within a specific timeframe, and wanted to share - and record for myself - the API query I learned.
 This can be a useful for generating reports, tracking progress, analyzing activity over a certain period, and more.
 Use the GitHub GraphQL API We leverage the GitHub GraphQL API to get the list of public repositories a user contributed to within a specific timeframe, using the contributionsCollection field to specify a time range and retrieve contributions made by a user during that period.</description></item><item><title>TLS Certificate Cheat Sheet - OpenSSL &amp; Curl</title><link>https://www.metachris.dev/2025/09/tls-certificate-cheat-sheet-openssl-curl/</link><pubDate>Mon, 22 Sep 2025 00:00:00 +0000</pubDate><guid>https://www.metachris.dev/2025/09/tls-certificate-cheat-sheet-openssl-curl/</guid><description>https://collective.flashbots.net/t/tls-certificates-know-how-quick-reference/5292</description></item><item><title>My Mac Dev Setup and Favorite Tools</title><link>https://www.metachris.dev/2024/01/my-mac-dev-setup-and-favorite-tools/</link><pubDate>Fri, 12 Jan 2024 00:00:00 +0000</pubDate><guid>https://www.metachris.dev/2024/01/my-mac-dev-setup-and-favorite-tools/</guid><description>How I setup and use my computer and tools for development.

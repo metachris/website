@@ -14,7 +14,6 @@ AI coding assistants, npm, pip, and other development tools can run arbitrary co
 This guide shows you how to sandbox these tools in isolated VMs using [Lima](https://github.com/lima-vm/lima), so you can experiment and develop freely without putting your sensitive data at risk.
 [Jump straight to the guide](#lima-vm-introduction), or read on for a bit of personal context.
 
-
 <style type="text/css">
     .fig1-wrap img {
         border: 1px solid #b5b5b5;

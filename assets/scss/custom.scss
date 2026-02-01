@@ -785,6 +785,51 @@ tbody tr:hover {
 }
 
 /* Dark mode table styles */
+/* Postage stamp style for images */
+.stamp {
+  display: inline-block;
+  padding: 16px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  // Perforated edge effect using radial gradients
+  --stamp-radius: 5px;
+  --stamp-spacing: 10px;
+
+  mask:
+    radial-gradient(circle at var(--stamp-radius) 0, transparent var(--stamp-radius), black var(--stamp-radius))
+      calc(-1 * var(--stamp-radius)) 0 / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at var(--stamp-radius) 100%, transparent var(--stamp-radius), black var(--stamp-radius))
+      calc(-1 * var(--stamp-radius)) 100% / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at 0 var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
+      0 calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y,
+    radial-gradient(circle at 100% var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
+      100% calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y;
+
+  -webkit-mask:
+    radial-gradient(circle at var(--stamp-radius) 0, transparent var(--stamp-radius), black var(--stamp-radius))
+      calc(-1 * var(--stamp-radius)) 0 / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at var(--stamp-radius) 100%, transparent var(--stamp-radius), black var(--stamp-radius))
+      calc(-1 * var(--stamp-radius)) 100% / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at 0 var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
+      0 calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y,
+    radial-gradient(circle at 100% var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
+      100% calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y;
+
+  img {
+    display: block;
+    border: 1px solid #ccc;
+  }
+}
+
+body.colorscheme-dark .stamp {
+  background: #2a2a2a;
+
+  img {
+    border-color: #555;
+  }
+}
+
 body.colorscheme-dark {
   table {
     border-color: #444;

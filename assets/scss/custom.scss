@@ -241,6 +241,105 @@ article h2 {
     padding-left: 3px;
     padding-right: 3px;
   }
+
+  .home-icons {
+    margin-top: 5rem;
+  }
+
+  .recent-posts {
+    margin-top: 5rem;
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+
+    .all-posts-link {
+      text-align: center;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid #e5e5e5;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      a {
+        font-size: 1.6rem;
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-transform: initial;
+      }
+
+      .date {
+        font-size: 1.3rem;
+        color: #999;
+        margin-left: 1.5rem;
+        flex-shrink: 0;
+      }
+
+      @media only screen and (max-width: 600px) {
+        flex-direction: column;
+        gap: 0.3rem;
+
+        a {
+          white-space: normal;
+        }
+
+        .date {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .all-posts {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 1.4rem;
+      color: #888;
+
+      &:hover {
+        color: $link-color-highlight;
+      }
+    }
+  }
+}
+
+body.colorscheme-dark .home .about .recent-posts {
+  h3 {
+    color: #999;
+  }
+
+  li {
+    border-bottom-color: #444;
+  }
+
+  .all-posts {
+    color: #999;
+  }
 }
 
 .navigation-list a,
@@ -521,6 +620,83 @@ body.colorscheme-dark .postlist[data-view="grid"] .post-entry:hover {
   font-size: 14px;
 }
 
+/* Email subscribe form at end of posts */
+.subscribe-form {
+  text-align: center;
+  padding-bottom: 1rem;
+
+  p {
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    color: #666;
+  }
+
+  form {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  input[type="email"] {
+    padding: 0.8rem 1.2rem;
+    font-size: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 250px;
+    max-width: 100%;
+
+    &:focus {
+      outline: none;
+      border-color: $link-color-highlight;
+      transition: border-color 0.2s ease;
+    }
+  }
+
+  button {
+    padding: 0.8rem 2rem;
+    font-size: 1.5rem;
+    background: #a6a6a6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: $link-color-highlight;
+    }
+  }
+}
+
+body.colorscheme-dark .subscribe-form {
+  p {
+    color: #aaa;
+  }
+
+  input[type="email"] {
+    background: #2a2a2a;
+    border-color: #555;
+    color: #e5e5e5;
+
+    &:focus {
+      border-color: #888;
+    }
+
+    &::placeholder {
+      color: #888;
+    }
+  }
+
+  button {
+    background: #555;
+
+    &:hover {
+      background: #777;
+    }
+  }
+}
+
 .bottomAbout .me {
   .fab {
     color: #939191;
@@ -543,7 +719,6 @@ body.colorscheme-dark .postlist[data-view="grid"] .post-entry:hover {
 
 .bottom-post-links {
   display: flex;
-  margin-top: 20px;
   margin-bottom: 0px;
 
   div {

@@ -26,10 +26,15 @@
     <hr>
 
     {{ if ne .Params.hideEmailSubscribe true }}
-    <!-- <div class="subscribe" style="padding:0px 10px; font-style: italic; font-size: 1.6rem;">
-      If you enjoyed this post, consider subscribing to <a href="https://tinyletter.com/metachris">my newsletter</a> or following me on <a href="https://twitter.com/metachris">Twitter</a> to get updates on my new blog posts and current projects.
+    <div class="subscribe-form">
+      <p>Enjoyed this post? Subscribe to get notified about new articles.</p>
+      <form action="https://buttondown.com/api/emails/embed-subscribe/metachris" method="post" target="_blank">
+        <input type="hidden" name="tag" value="metachris.dev/post">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
     </div>
-    <hr> -->
+    <hr>
     {{ end }}
 
     <div style="float: right">
@@ -62,7 +67,7 @@
       </a>
     </div> -->
 
-    <div style="text-align: center;">
+    <!-- <div style="text-align: center;">
       <a href="https://buttondown.com/metachris" target="_blank" rel="noopener noreferrer">Subscribe</a>
       &nbsp;&middot;&nbsp;
       <a href="/about">About</a>
@@ -72,8 +77,7 @@
       <a href="https://x.com/metachris/" title="Follow me on X" target="_blank" rel="noopener noreferrer">X</a>
       &nbsp;&middot;&nbsp;
       <a href="/index.xml">RSS</a>
-
-    </div>
+    </div> -->
 
     <div class="bottom-post-links">
       <div class="prev">

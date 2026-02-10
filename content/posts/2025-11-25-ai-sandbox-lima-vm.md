@@ -3,8 +3,9 @@ date = "2025-11-25"
 title = "Sandbox Your AI Dev Tools: A Practical Guide for VMs and Lima"
 description = "AI coding assistants and other devtools can steal your credentials and data. Here's how to run them safely in isolated VMs using Lima on macOS/Linux."
 images = ["/images/posts/ai-sandbox/cover.jpg"]  # 1200 x 675 px
-tags = ["AI", "VM", "Security"]
+tags = ["AI", "LLM", "VM", "Security", "Engineering"]
 hideTags = true
+draft = false
 +++
 
 {{< load-photoswipe >}}
@@ -22,7 +23,7 @@ This guide shows you how to sandbox these tools in isolated VMs using [Lima](htt
 </style>
 
 <center class="fig1-wrap" style="max-width: 800px; margin:auto; margin-top: 3.5rem;">
-{{< figure src="/images/posts/ai-sandbox/cover.jpg" alt="Cooperation flow for creating a signature" caption="" class="fig1" >}}
+{{< figure src="/images/posts/ai-sandbox/cover.jpg" alt="A snowglobe representing isolated development environments" caption="" class="fig1" >}}
 </center>
 
 ---

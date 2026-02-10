@@ -18,6 +18,35 @@ Internal pages:
 make docker-serve
 ```
 
+## Shortcodes
+
+### Admonition / Callout
+
+Use admonitions to highlight important information in posts:
+
+```markdown
+{{< admonition note "Optional Title" >}}
+This is a note with a title.
+{{< /admonition >}}
+
+{{< admonition tip >}}
+A tip without a title - supports **markdown** inside.
+{{< /admonition >}}
+```
+
+**Available types:**
+
+| Type | Color | Use case |
+|------|-------|----------|
+| `note` | Blue | General notes (default) |
+| `info` | Blue | Informational |
+| `tip` | Green | Helpful tips |
+| `success` | Green | Success messages |
+| `warning` | Orange | Cautions |
+| `danger` | Red | Critical warnings |
+
+All types support dark mode.
+
 
 # Writing & Publishing Tips
 

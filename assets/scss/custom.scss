@@ -44,7 +44,7 @@ h2 {
 }
 
 h3 {
-  margin: 2.2rem 0 1.6rem 0;
+  margin: 3rem 0 1.6rem 0;
 }
 
 h4 {
@@ -797,24 +797,16 @@ tbody tr:hover {
   --stamp-spacing: 10px;
 
   mask:
-    radial-gradient(circle at var(--stamp-radius) 0, transparent var(--stamp-radius), black var(--stamp-radius))
-      calc(-1 * var(--stamp-radius)) 0 / var(--stamp-spacing) 51% repeat-x,
-    radial-gradient(circle at var(--stamp-radius) 100%, transparent var(--stamp-radius), black var(--stamp-radius))
-      calc(-1 * var(--stamp-radius)) 100% / var(--stamp-spacing) 51% repeat-x,
-    radial-gradient(circle at 0 var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
-      0 calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y,
-    radial-gradient(circle at 100% var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
-      100% calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y;
+    radial-gradient(circle at var(--stamp-radius) 0, transparent var(--stamp-radius), black var(--stamp-radius)) calc(-1 * var(--stamp-radius)) 0 / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at var(--stamp-radius) 100%, transparent var(--stamp-radius), black var(--stamp-radius)) calc(-1 * var(--stamp-radius)) 100% / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at 0 var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius)) 0 calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y,
+    radial-gradient(circle at 100% var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius)) 100% calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y;
 
   -webkit-mask:
-    radial-gradient(circle at var(--stamp-radius) 0, transparent var(--stamp-radius), black var(--stamp-radius))
-      calc(-1 * var(--stamp-radius)) 0 / var(--stamp-spacing) 51% repeat-x,
-    radial-gradient(circle at var(--stamp-radius) 100%, transparent var(--stamp-radius), black var(--stamp-radius))
-      calc(-1 * var(--stamp-radius)) 100% / var(--stamp-spacing) 51% repeat-x,
-    radial-gradient(circle at 0 var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
-      0 calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y,
-    radial-gradient(circle at 100% var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius))
-      100% calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y;
+    radial-gradient(circle at var(--stamp-radius) 0, transparent var(--stamp-radius), black var(--stamp-radius)) calc(-1 * var(--stamp-radius)) 0 / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at var(--stamp-radius) 100%, transparent var(--stamp-radius), black var(--stamp-radius)) calc(-1 * var(--stamp-radius)) 100% / var(--stamp-spacing) 51% repeat-x,
+    radial-gradient(circle at 0 var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius)) 0 calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y,
+    radial-gradient(circle at 100% var(--stamp-radius), transparent var(--stamp-radius), black var(--stamp-radius)) 100% calc(-1 * var(--stamp-radius)) / 51% var(--stamp-spacing) repeat-y;
 
   img {
     display: block;
@@ -850,5 +842,178 @@ body.colorscheme-dark {
 
   tbody tr:hover {
     background: #2a2a2a;
+  }
+}
+
+/**
+ * Admonitions / Callouts
+ */
+.admonition {
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  padding-left: 3.4rem;
+  margin: 1.5rem 0;
+  position: relative;
+
+  .admonition-icon {
+    position: absolute;
+    left: 1rem;
+    top: 1.3rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .admonition-title {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-size: 1.5rem;
+  }
+
+  .admonition-content {
+    font-size: 1.5rem;
+
+    >*:first-child {
+      margin-top: 0;
+    }
+
+    >*:last-child {
+      margin-bottom: 0;
+    }
+
+    p {
+      margin: 0.4rem 0;
+    }
+
+    code {
+      font-size: 1.4rem;
+    }
+  }
+
+  // Note (default) - blue
+  &.note {
+    background: #e7f2fa;
+    border-left: 4px solid #6ab0de;
+
+    .admonition-title {
+      color: #2980b9;
+    }
+
+    .admonition-icon svg {
+      stroke: #6ab0de;
+    }
+  }
+
+  // Info - blue
+  &.info {
+    background: #e7f2fa;
+    border-left: 4px solid #209cee;
+
+    .admonition-title {
+      color: #1a7dc4;
+    }
+
+    .admonition-icon svg {
+      stroke: #209cee;
+    }
+  }
+
+  // Tip - green
+  &.tip {
+    background: #e6f6e6;
+    border-left: 4px solid #3cb371;
+
+    .admonition-title {
+      color: #2d8659;
+    }
+
+    .admonition-icon svg {
+      stroke: #3cb371;
+    }
+  }
+
+  // Success - green
+  &.success {
+    background: #e6f6e6;
+    border-left: 4px solid #23d160;
+
+    .admonition-title {
+      color: #1da04b;
+    }
+
+    .admonition-icon svg {
+      stroke: #23d160;
+    }
+  }
+
+  // Warning - yellow/orange
+  &.warning {
+    background: #fff8e6;
+    border-left: 4px solid #f0ad4e;
+
+    .admonition-title {
+      color: #946c00;
+    }
+
+    .admonition-icon svg {
+      stroke: #f0ad4e;
+    }
+  }
+
+  // Danger - red
+  &.danger {
+    background: #fdf2f2;
+    border-left: 4px solid #d9534f;
+
+    .admonition-title {
+      color: #b52b27;
+    }
+
+    .admonition-icon svg {
+      stroke: #d9534f;
+    }
+  }
+}
+
+// Dark mode admonitions
+body.colorscheme-dark .admonition {
+  &.note {
+    background: #1e3a5f;
+
+    .admonition-title {
+      color: #7ec8e3;
+    }
+  }
+
+  &.info {
+    background: #1e3a5f;
+
+    .admonition-title {
+      color: #5dade2;
+    }
+  }
+
+  &.tip,
+  &.success {
+    background: #1a3d1a;
+
+    .admonition-title {
+      color: #6dd66d;
+    }
+  }
+
+  &.warning {
+    background: #3d3520;
+
+    .admonition-title {
+      color: #f5c779;
+    }
+  }
+
+  &.danger {
+    background: #3d1f1f;
+
+    .admonition-title {
+      color: #e57373;
+    }
   }
 }

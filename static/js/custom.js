@@ -5,6 +5,24 @@ document.addEventListener('DOMContentLoaded', function () {
         element.insertAdjacentHTML('beforeend', `<a href="#${element.id}" class="hanchor" ariaLabel="Anchor">#</a>`)
     })
 
+    // Click-to-copy for inline code elements
+    document.querySelectorAll('article code').forEach(function (codeEl) {
+        // Skip code elements inside code blocks
+        if (codeEl.closest('.highlight')) return;
+
+        codeEl.style.cursor = 'pointer';
+        codeEl.title = 'Click to copy';
+
+        codeEl.addEventListener('click', function () {
+            navigator.clipboard.writeText(codeEl.textContent).then(function () {
+                codeEl.classList.add('copied');
+                setTimeout(function () {
+                    codeEl.classList.remove('copied');
+                }, 1500);
+            });
+        });
+    });
+
     // Add copy buttons to code blocks
     document.querySelectorAll('.highlight').forEach(function (codeBlock) {
         // Create copy button

@@ -32,19 +32,21 @@ I've had the privilege to work with:
 
 ### Ethereum & MEV Infrastructure
 
-* **[BuilderNet](https://buildernet.org/)** - Ethereum block building network running in Trusted Execution Environments (TEEs), enabling decentralized and verifiable block construction
+* [BuilderNet](https://buildernet.org/) - Ethereum block building network running in Trusted Execution Environments (TEEs), enabling decentralized and verifiable block construction
 
-* **[MEV-Boost](https://github.com/flashbots/mev-boost)** - Critical Ethereum infrastructure allowing validators to outsource block construction. Used by majority of Ethereum validators post-Merge
+* [MEV-Boost](https://github.com/flashbots/mev-boost) - Critical Ethereum infrastructure allowing validators to outsource block construction. Used by majority of Ethereum validators post-Merge
 
-* **[MEV-Boost Relay](https://github.com/flashbots/mev-boost-relay)** - High-performance relay mediating between Ethereum validators and block builders, processing billions in transaction value. Powers [boost-relay.flashbots.net](https://boost-relay.flashbots.net/)
+* [MEV-Boost Relay](https://github.com/flashbots/mev-boost-relay) - High-performance relay mediating between Ethereum validators and block builders, processing billions in transaction value. Powers [boost-relay.flashbots.net](https://boost-relay.flashbots.net/)
 
-* **[SUAVE](https://github.com/flashbots/suave-specs)** - Single Unifying Auction for Value Expression. Next-generation decentralized block building infrastructure
+* [Builder Playground](https://github.com/flashbots/builder-playground) - A fast, self-contained environment for end-to-end block building on L1s and L2s.
 
-* **[Mempool Dumpster](https://mempool-dumpster.flashbots.net/index.html)** - Free public archive of Ethereum mempool transactions for research and analysis
+* [Relayscan.io](https://www.relayscan.io/) - Comprehensive statistics and monitoring for the MEV-Boost relay ecosystem
 
-* **[Relayscan.io](https://www.relayscan.io/)** - Comprehensive statistics and monitoring for the MEV-Boost relay ecosystem
+* [Mempool Dumpster](https://mempool-dumpster.flashbots.net/index.html) - Free public archive of Ethereum mempool transactions for research and analysis
 
-* **[Flashbots Protect](https://github.com/flashbots/rpc-endpoint)** - RPC endpoint protecting users from frontrunning and MEV, integrated with wallets like MetaMask
+* [SUAVE](https://github.com/flashbots/suave-specs) - Single Unifying Auction for Value Expression. Next-generation decentralized block building infrastructure
+
+* [Flashbots Protect](https://github.com/flashbots/rpc-endpoint) - RPC endpoint protecting users from frontrunning and MEV, integrated with wallets like MetaMask
 
 ### Blockchain Tools & Infrastructure
 
@@ -62,21 +64,19 @@ I've had the privilege to work with:
 
 ### NEO Blockchain Ecosystem
 
-* **[neo-python](http://neo-python.readthedocs.io/en/latest/)** - Python SDK and full implementation of the NEO blockchain. Core tool for NEO development
+* [neo-python](http://neo-python.readthedocs.io/en/latest/) - Python SDK and full implementation of the NEO blockchain. Core tool for NEO development.
 
-* **[NEO Private Network](https://github.com/CityOfZion/neo-privatenet-docker)** - Docker-based local NEO blockchain for development and testing
+* [NEO Private Network](https://github.com/CityOfZion/neo-privatenet-docker) - Docker-based local NEO blockchain for development and testing.
 
-* **[Python NEO Smart Contract Workshop](https://github.com/CityOfZion/python-smart-contract-workshop)** - Educational materials and tutorials for NEO smart contract development
+* [Python NEO Smart Contract Workshop](https://github.com/CityOfZion/python-smart-contract-workshop) - Educational materials and tutorials for NEO smart contract development.
 
-* Docker images: [NEO private network](https://hub.docker.com/r/cityofzion/neo-privatenet), [neo-python](https://hub.docker.com/r/cityofzion/neo-python)
+* [Red Pulse Smart Contract](https://github.com/RedPulse/phx-smart-contract) - Token migration smart contract.
 
-* [Red Pulse Smart Contract](https://github.com/RedPulse/phx-smart-contract) - Token migration smart contract
+### Apps
 
-### Applications
+* [Nash App](https://play.google.com/store/apps/details?id=io.nash.app) - Cross-platform cryptocurrency wallet and trading platform
 
-* **[Nash App](https://play.google.com/store/apps/details?id=io.nash.app)** - Cross-platform cryptocurrency wallet and trading platform
-
-* **[Red Pulse App](https://play.google.com/store/apps/details?id=com.redpulse.android)** - Cross-platform app for blockchain-based research platform
+* [Red Pulse App](https://play.google.com/store/apps/details?id=com.redpulse.android) - Cross-platform app for blockchain-based research platform
 
 * [Flock Multiplayer Engine](https://metachris.gitlab.io/flock-engine) - Mobile multiplayer-as-a-service platform
 
@@ -84,23 +84,23 @@ I've had the privilege to work with:
 
 ### Hardware & IoT
 
-* **[frischluft.works](http://frischluft.works)** - CO2 monitoring system with real-time charts and alerts. Built with MicroPython on ESP32
+* [frischluft.works](http://frischluft.works) - CO2 monitoring system with real-time charts and alerts. Built with MicroPython on ESP32
 
-* **[micropython-ctl](https://github.com/metachris/micropython-ctl)** - TypeScript library for communicating with MicroPython devices
+* [micropython-ctl](https://github.com/metachris/micropython-ctl) - TypeScript library for communicating with MicroPython devices
 
-* **[RPIO](https://github.com/metachris/RPIO)** - Raspberry Pi GPIO library with advanced features including software PWM
+* [RPIO](https://github.com/metachris/RPIO) - Raspberry Pi GPIO library with advanced features including software PWM
 
-* **[Blinkenschild](http://hackaday.com/2014/04/03/blinkenschild-the-rgb-led-display-for-every-occasion)** - RGB LED display for events and installations ([featured on Hackaday](http://hackaday.com/2014/04/03/blinkenschild-the-rgb-led-display-for-every-occasion), [video](https://www.youtube.com/watch?v=VX14pmky07Q), [source](https://github.com/hackerspaceshop/Blinkenschild))
+* [Blinkenschild](http://hackaday.com/2014/04/03/blinkenschild-the-rgb-led-display-for-every-occasion) - RGB LED display for events and installations ([featured on Hackaday](http://hackaday.com/2014/04/03/blinkenschild-the-rgb-led-display-for-every-occasion), [video](https://www.youtube.com/watch?v=VX14pmky07Q), [source](https://github.com/hackerspaceshop/Blinkenschild))
 
 * [USB Looper, Multilooper](https://www.usblooper.com/) - Robust media player designed for exhibitions and museums
 
 ### Developer Tools & Libraries
 
-* **[TypeScript Boilerplate](https://github.com/metachris/typescript-boilerplate)** - Modern TypeScript project template for Node.js and browsers. 2.8k+ GitHub stars
+* [TypeScript Boilerplate](https://github.com/metachris/typescript-boilerplate) - Modern TypeScript project template for Node.js and browsers. 2.8k+ GitHub stars
 
-* **[logzero](https://github.com/metachris/logzero)** - Robust and effective logging for Python 2 and 3. 1k+ GitHub stars, widely used in production
+* [logzero](https://github.com/metachris/logzero) - Robust and effective logging for Python 2 and 3. 1k+ GitHub stars, widely used in production
 
-* **[python-boilerplate.com](https://www.python-boilerplate.com/)** - Interactive Python project boilerplate generator
+* [python-boilerplate.com](https://www.python-boilerplate.com/) - Interactive Python project boilerplate generator
 
 * [go-template](https://github.com/flashbots/go-template) - Golang project template and toolbox for rapid, well-structured development
 
@@ -109,9 +109,9 @@ I've had the privilege to work with:
 
 ### Early Projects & Historical
 
-* **[Most Simple Ajax Chat Ever](/projects/most-simple-ajax-chat-ever/)** (2006) - One of the first Ajax-based chat applications
+* [Most Simple Ajax Chat Ever](/projects/most-simple-ajax-chat-ever/) (2006) - One of the first Ajax-based chat applications
 
-* **[Ajax Chess](https://web.archive.org/web/20080927084030/http://www.linuxuser.at/chess/index.php)** (2006) - The world's first JavaScript multiplayer online chess game
+* [Ajax Chess](https://web.archive.org/web/20080927084030/http://www.linuxuser.at/chess/index.php) (2006) - The world's first JavaScript multiplayer online chess game
 
 * [Android Snippets](http://www.androidsnippets.com) - Android code sharing platform (pre-Stack Overflow era)
 
@@ -129,32 +129,31 @@ I've had the privilege to work with:
 
 ### Podcasts & Interviews
 
-* **[UCC2: An Incomplete Guide to PBS](https://www.ucc2.xyz/podcast/episode/1bb543a8/an-incomplete-guide-to-pbs-with-mike-neuder-and-chris-hager)** - Deep dive into Protocol Block Space with Mike Neuder
+* [UCC2: An Incomplete Guide to PBS](https://www.ucc2.xyz/podcast/episode/1bb543a8/an-incomplete-guide-to-pbs-with-mike-neuder-and-chris-hager) - Deep dive into Protocol Block Space with Mike Neuder
 
-* **[zeroknowledge.fm Episode 243](https://zeroknowledge.fm/243-2/)** - Dive Back into MEV with Alex Stokes and Chris Hager
+* [zeroknowledge.fm Episode 243](https://zeroknowledge.fm/243-2/) - Dive Back into MEV with Alex Stokes and Chris Hager
 
-* **[Shanghai Debrief with Galaxy](https://twitter.com/i/spaces/1LyxBqrnanYJN?s=20)** - What's next for Ethereum post-Shanghai upgrade
+* [Shanghai Debrief with Galaxy](https://twitter.com/i/spaces/1LyxBqrnanYJN?s=20) - What's next for Ethereum post-Shanghai upgrade
 
-* **[Chaos Radio (CRE071)](http://cre.fm/cre071-one-laptop-per-child)** (70 min, German) - Deep dive into One Laptop Per Child initiative
+* [Chaos Radio (CRE071)](http://cre.fm/cre071-one-laptop-per-child) (70 min, German) - Deep dive into One Laptop Per Child initiative
 
-* **[Rundfreifunk at 24C3](http://www.public-ip.org/sendung-211.html)** (15 min, English) - Live from Chaos Communication Congress about OLPC
+* [Rundfreifunk at 24C3](http://www.public-ip.org/sendung-211.html) (15 min, English) - Live from Chaos Communication Congress about OLPC
 
 ### Workshops & Conferences
 
 **NEO Smart Contract Development with Python:**
 
-* **NEO DevCon 2018** (San Francisco) - Full-day workshop at GitHub headquarters teaching Python smart contract development ([YouTube recording](https://www.youtube.com/watch?v=sk8tu1uqRDI), 2h 17m)
+* NEO DevCon 2018 (San Francisco) - Full-day workshop at GitHub headquarters teaching Python smart contract development ([YouTube recording](https://www.youtube.com/watch?v=sk8tu1uqRDI), 2h 17m)
 
-* **Neo World Tour 2018** (Vienna, Austria) - Smart contract development workshop
+* Neo World Tour 2018 (Vienna, Austria) - Smart contract development workshop
 
-* **Blockchain Summit 2019** (Vienna, Austria) - NEO smart contract workshop
+* Blockchain Summit 2019 (Vienna, Austria) - NEO smart contract workshop
 
-* Workshop resources: [Python Smart Contract Workshop materials](https://github.com/CityOfZion/python-smart-contract-workshop)
 
 **Other Speaking & Teaching:**
 
-* **Software Engineering & Android Development** - Lecturer at [University of Applied Sciences Vienna](https://www.technikum-wien.at/en/)
+* Software Engineering & Android Development - Lecturer at [University of Applied Sciences Vienna](https://www.technikum-wien.at/en/)
 
-* **[Git Workshops at Metalab Vienna](https://metalab.at/wiki/GIT_Workshop_2014)** (2014) - Community workshops on version control
+* [Git Workshops at Metalab Vienna](https://metalab.at/wiki/GIT_Workshop_2014) (2014) - Community workshops on version control
 
-* **Space Generation Advisory Council Congress** (Daejeon, South Korea, 2012) - International space development conference
+* Space Generation Advisory Council Congress (Daejeon, South Korea, 2012) - International space development conference

@@ -159,6 +159,22 @@ li ul {
   opacity: 1;
 }
 
+/* Inline code copy-on-click */
+article code:not(.highlight code) {
+  cursor: pointer;
+  transition: background 0.2s ease;
+
+  &.copied {
+    background: #b2f5b2;
+  }
+}
+
+body.colorscheme-dark article code:not(.highlight code) {
+  &.copied {
+    background: #2e7d32;
+  }
+}
+
 /* Dark mode support */
 body.colorscheme-dark {
   .copy-code-button {

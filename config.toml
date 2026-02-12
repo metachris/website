@@ -18,6 +18,8 @@ pygmentscodefencesguesssyntax = true
 
 summaryLength = 70
 
+ignoreFiles = ['\.crdownload$', '\.tmp$', '\.part$', '~$']
+
 # enableGitInfo = true
 enableEmoji = true
 

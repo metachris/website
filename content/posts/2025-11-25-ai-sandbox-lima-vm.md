@@ -15,16 +15,11 @@ AI coding assistants, npm, pip, and other development tools can run arbitrary co
 This guide shows you how to sandbox these tools in isolated VMs using [Lima](https://github.com/lima-vm/lima), so you can experiment and develop freely without putting your sensitive data at risk.
 [Jump straight to the guide](#lima-vm-introduction), or read on for a bit of personal context.
 
-<style type="text/css">
-    .fig1-wrap img {
-        border: 1px solid #b5b5b5;
-        border-radius: 3px;
-    }
-</style>
+{{< admonition info "Related Content" >}}
 
-<center class="fig1-wrap" style="max-width: 800px; margin:auto; margin-top: 3.5rem;">
-{{< figure src="/images/posts/ai-sandbox/cover.jpg" alt="A snowglobe representing isolated development environments" caption="" class="fig1" >}}
-</center>
+In February 2026, I published ["Safe Yolo Mode: Running LLM Agents in VMs with Libvirt and Virsh"]({{< relref "2026-02-02-llm-vm-isolation-with-virsh.md" >}}), which uses [Libvirt](https://libvirt.org/) and [Virsh](https://www.libvirt.org/manpages/virsh.html) to create and manage VMs on Linux servers.
+
+{{< /admonition >}}
 
 ---
 

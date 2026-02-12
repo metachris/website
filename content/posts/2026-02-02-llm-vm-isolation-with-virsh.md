@@ -18,19 +18,16 @@ draft = false
     }
 </style>
 
-This is a quick guide about isolating LLM agents in virtual machines, using [libvirt](https://libvirt.org/) and [`virsh`](https://www.libvirt.org/manpages/virsh.html) on Linux servers.
+This is a guide for isolating LLM agents in virtual machines, using [libvirt](https://libvirt.org/) and [virsh](https://www.libvirt.org/manpages/virsh.html) on Linux servers.
 
-Running LLMs inside VMs provides isolation from the host system, which reduces risks such as unauthorized file access and destructive operations. This is particularly recommended when granting LLM agents broader permissions, like auto-approving tool use without confirmation prompts (aka "yolo mode"). It's also useful to keep sessions running for extended periods of time, and to interact with agents from the phone / on the go.
+Running LLMs in VMs isolates them from the host system, mitigating numerous security risks such as destructive operations or unauthorized file access (i.e. private keys, secrets, credentials for communication tools). This is particularly important when granting LLM agents broad permissions, like auto-approving tool use ("yolo mode"). It's also useful to keep sessions running for extended periods of time, and to interact with agents from the phone / on the go.
 
-<center class="fig1-wrap" style="max-width: 560px; margin:auto; margin-top: 3.5rem;">
-{{< figure src="/images/posts/2026-vm-libvirt.jpg" alt="VM isolation for LLM agents, created by ChatGPT" class="fig1" >}}
-</center>
+{{< admonition info "Related Content" >}}
 
+I published ["Sandbox Your AI Dev Tools: A Practical Guide for VMs and Lima"]({{< relref "2025-11-25-ai-sandbox-lima-vm.md" >}}) back in November 2025, which uses [Lima VM](https://github.com/lima-vm/lima) for macOS/Linux desktop use.
+Another noteworthy related post is [Claude Code On-The-Go (granda.org)](https://granda.org/en/2026/01/02/claude-code-on-the-go/) which very concisely outlines a nice remote Claude Code setup, which gave me some inspiration.
 
-
-**Related content:**
-I published [_Sandbox Your AI Dev Tools: A Practical Guide for VMs and Lima_]({{< relref "2025-11-25-ai-sandbox-lima-vm.md" >}}) back in November, which uses [Lima VM](https://github.com/lima-vm/lima) for macOS/Linux desktop use.
-Another noteworthy related post is [Claude Code On-The-Go (granda.org)](https://granda.org/en/2026/01/02/claude-code-on-the-go/) which concisely outlines a neat remote Claude Code setup, where I drew some inspiration from.
+{{< /admonition >}}
 
 ---
 
@@ -44,9 +41,9 @@ Another noteworthy related post is [Claude Code On-The-Go (granda.org)](https://
 
 [Libvirt](https://libvirt.org/) is the standard virtualization API for Linux, providing a unified interface to manage VMs across different hypervisors (KVM, QEMU, Xen, etc.). The `virsh` command-line tool is the primary way to interact with libvirt.
 
-Libvirt is ideal for production-grade VM isolation of LLM agents on Linux servers, and the combination of Ubuntu cloud images and cloud-init makes VM provisioning fast, pleasant, and scriptable.
 
-### Libvirt vs Lima: When to Use Which?
+<details>
+<summary>Libvirt vs <a href="{{< relref "2025-11-25-ai-sandbox-lima-vm.md" >}}">Lima</a>: When to use which? (click to expand)</summary>
 
 Both libvirt/virsh and [Lima]({{< relref "2025-11-25-ai-sandbox-lima-vm.md" >}}) are excellent tools for VM-based isolation, with some notable differences:
 
@@ -60,9 +57,12 @@ Both libvirt/virsh and [Lima]({{< relref "2025-11-25-ai-sandbox-lima-vm.md" >}})
 | **Host directory sharing** | Manual ([9p](https://www.linux-kvm.org/page/9p_virtio), [virtiofs](https://libvirt.org/kbase/virtiofs.html)) | Built-in, YAML config, home by default (dangerous) |
 | **Port forwarding** | [Manual](https://wiki.libvirt.org/Networking.html) iptables/NAT config | Built-in, YAML config |
 | **GUI tools** | virt-manager available | None (CLI only) |
-| **Snapshots** | Native, robust | `snapshot` experimental on macOS |
+| **Snapshots** | Native, robust | Not working on macOS |
 
 For server-based LLM agent isolation, libvirt is generally the better choice due to its maturity, lower overhead, and robust management features.
+
+</details>
+
 
 ---
 
@@ -97,24 +97,36 @@ sudo usermod -aG libvirt $USER
 
 ## Download a Cloud Image
 
-Ubuntu provides pre-built cloud images that work seamlessly with cloud-init for automated provisioning.
-
-First, check which OS variants are available:
-
-```bash
-osinfo-query os | grep ubuntu
-```
-
-Download the Ubuntu 24.04 (Noble Numbat) cloud image:
+We'll use Ubuntu, which provides pre-built [cloud images](https://cloud-images.ubuntu.com). These images boot quickly and work seamlessly with [cloud-init](https://cloudinit.readthedocs.io/en/latest/) for automated provisioning.
+Download an image to `/var/lib/libvirt/images/project1-ubuntu.img`:
 
 ```bash
-wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+wget -O /var/lib/libvirt/images/project1-ubuntu.img https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
 ```
 
 Notes:
-- Cloud images are minimal (~700MB) and boot quickly
-- They're designed for cloud environments with cloud-init support
-- For ARM servers, use the `arm64` variant instead
+<ul>
+<li>For ARM servers, use the `arm64` variant instead</li>
+<li>
+<details>
+<summary>You can find all available OS variants with <code>osinfo-query</code> (click to expand)</summary>
+
+```bash
+sudo apt install libosinfo-bin
+osinfo-query os | grep ubuntu
+```
+
+</details>
+</li>
+</ul>
+
+
+Increase the disk size of the image to 40 GB (or more):
+
+```bash
+sudo qemu-img resize /var/lib/libvirt/images/project1-ubuntu.img 40G
+```
+
 
 ---
 
@@ -127,101 +139,42 @@ sudo virt-install \
   --name project1 \
   --ram 16384 \
   --vcpus 4 \
-  --disk size=40 \
   --import \
-  --disk noble-server-cloudimg-amd64.img \
+  --disk /var/lib/libvirt/images/project1-ubuntu.img \
   --os-variant ubuntu24.04 \
   --cloud-init
 ```
 
 This creates a VM named `project1` with:
+- Ubuntu 24.04 as the guest OS
 - 16 GB RAM
 - 4 vCPUs
-- 40 GB disk
-- Ubuntu 24.04 as the guest OS
-- Cloud-init for initial setup (creates a user with SSH key)
+- 40 GB disk (defined by resizing the image earlier)
+- Cloud-init for automatic setup
 
-The `--cloud-init` flag automatically configures the VM with your current user and SSH public key.
+The VM starts within a few seconds and you'll be in the console. You can exit it with <kbd>Ctrl</kbd> + <kbd>]</kbd>.
 
-After the VM starts, you'll see the console output. Press <kbd>Ctrl</kbd> + <kbd>]</kbd> to detach from the console.
 
 ---
 
-## VM Management with Virsh
+## Access the VM
 
-Here are the essential [commands](https://www.libvirt.org/manpages/virsh.html) for managing your VMs:
+The Linux console (which you can open with `virsh console project1 --force`) provides a pretty rudimentary way to interact with the VM. Use SSH for a better experience!
 
-### Lifecycle Commands
-
-```bash
-# List all VMs (running and stopped)
-virsh list --all
-
-# Start a VM
-virsh start project1
-
-# Enable autostart (start on boot)
-virsh autostart project1
-
-# Disable autostart
-virsh autostart --disable project1
-
-# Gracefully shutdown a VM
-virsh shutdown project1
-
-# Force stop a VM (like pulling the power)
-virsh destroy project1
-
-# Delete a VM and its storage
-virsh undefine project1 --remove-all-storage
-
-# Reboot a VM
-virsh reboot project1
-```
-
-### Console Access
+Either use the internal IP address assigned to the VM, or set up Tailscale for easy remote access. First, add your SSH key to the VM - add it to `/home/ubuntu/.ssh/authorized_keys`.
 
 ```bash
-# Connect to the VM console
-virsh console project1
+vim /home/ubuntu/.ssh/authorized_keys
 ```
 
-Press <kbd>Ctrl</kbd> + <kbd>]</kbd> to detach from the console.
+### SSH using the internal IP
 
-### VM Information
-
-```bash
-# Show VM details
-virsh dominfo project1
-
-# Show VM IP address
-virsh domifaddr project1
-
-# Show VM disk information
-virsh domblklist project1
-```
-
----
-
-## Accessing the VM
-
-This section covers ways to access the VM, depending on your needs.
-
-### Console Access (host only)
-
-From the host, you can connect to the VM console:
-
-```
-virsh console project1
-```
-
-### SSH Access
-
-You can access the VM via SSH, since libvirt sets up a default NAT network that provides VMs with internal IP addresses and internet access, and cloud-init automatically adds your host's SSH key to the VM.
+Libvirt sets up a default NAT network that provides VMs with internal IP addresses and internet access:
 
 ```bash
 # Get the VM's IP address
-$ virsh domifaddr project1
+virsh domifaddr project1
+
  Name       MAC address          Protocol     Address
 -------------------------------------------------------
  vnet0      52:54:00:xx:xx:xx    ipv4         192.168.122.xxx/24
@@ -233,10 +186,7 @@ ssh ubuntu@192.168.122.xxx
 To access the VM from a remote machine, use the host as a jump server with ProxyJump. Note that cloud-init only adds the host's SSH key by default, so you'll need to add your remote machine's public key to the VM first:
 
 ```bash
-# From the host, add your remote machine's public key to the VM
-ssh ubuntu@192.168.122.xxx "echo 'ssh-ed25519 AAAA...' >> ~/.ssh/authorized_keys"
-
-# Then from any remote machine (one-liner)
+# From any remote machine (one-liner)
 ssh -J user@your-host ubuntu@192.168.122.xxx
 
 # Or configure in ~/.ssh/config for convenience
@@ -246,7 +196,7 @@ Host project1-vm
     ProxyJump user@your-host
 ```
 
-### Tailscale for Remote Access
+### Tailscale for remote access
 
 [Tailscale](https://tailscale.com/) creates an encrypted mesh VPN between your devices, letting you connect directly to the VM from anywhere on your tailnet, without exposing anything to the public internet.
 It also works when the host is behind NAT or a firewall without port forwarding. Once installed, the VM gets a stable IP and hostname on your private tailnet.
@@ -260,39 +210,14 @@ sudo tailscale up
 
 # Get your Tailscale IP
 tailscale ip -4
+100.95.xxx.xxx
 ```
 
-You can use this Tailscale IP (or the Tailscale hostname) from any machine on your tailnet to access the VM.
-
-### Expose Services with Cloudflare Tunnel
-
-To make a dev server accessible to the public internet (e.g., for webhooks, demos, or API testing), [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) provides a quick and secure way to expose services without opening ports on your firewall.
-
-Install `cloudflared` inside the VM:
+Use this Tailscale IP (or the Tailscale hostname) to access the VM from any machine on your tailnet:
 
 ```bash
-curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
-sudo dpkg -i cloudflared.deb
+ssh root@100.95.xxx.xxx
 ```
-
-Create a quick tunnel (no account required, temporary URL):
-
-```bash
-cloudflared tunnel --url http://localhost:3000
-```
-
-For persistent tunnels, authenticate first:
-
-```bash
-cloudflared tunnel login
-cloudflared tunnel create my-tunnel
-cloudflared tunnel route dns my-tunnel myapp.example.com
-cloudflared tunnel run my-tunnel
-```
-
-{{< admonition tip >}}
-See also <a href="https://ngrok.com/">ngrok</a> and [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel) as alternatives to Cloudflare Tunnel.
-{{< /admonition >}}
 
 ---
 
@@ -300,7 +225,7 @@ See also <a href="https://ngrok.com/">ngrok</a> and [Tailscale Funnel](https://t
 
 ### Basic tools and configuration
 
-Once inside the VM, run basic setup:
+Once inside the VM, do some basic setup:
 
 ```bash
 # Update system and install essentials
@@ -313,20 +238,32 @@ git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
 
-For a persistent coding experience, my `ubuntu` user automatically resumes the previous `tmux` session on login. Add the following to `~/.bashrc`:
+### Tmux for persistent sessions
+
+For a persistent coding experience, I like the `ubuntu` user to auto-resume the last `tmux` session on login. To achieve this, I add a little helper to `~/.bashrc`:
 
 ```bash
+tee -a ~/.bashrc > /dev/null << 'EOF'
+
 # Open tmux session, if not already inside
 if [[ -z "$TMUX" && $- == *i* && -t 0 ]]; then
 	tmux attach -t main 2>/dev/null || tmux new -s main
 fi
+
+EOF
+```
+
+Let's source the updated `~/.bashrc` to apply the changes immediately and jump into tmux:
+
+```bash
+source ~/.bashrc
 ```
 
 ### Bash utilities and helpers
 
 
 <details>
-<summary>I like to add a few opinionated goodies to <code>/etc/bash.bashrc</code> (click to expand).</summary>
+<summary>💡 I like to add a few opinionated goodies to <code>/etc/bash.bashrc</code> (click to expand).</summary>
 
 ```bash
 sudo tee -a /etc/bash.bashrc > /dev/null << 'EOF'
@@ -449,7 +386,7 @@ EOF
 ```
 
 
-### Installing LLMs and Tools
+### Installing basic tools
 
 For detailed instructions on installing [Claude Code](https://code.claude.com/), [Gemini CLI](https://geminicli.com/) and [Codex CLI](https://developers.openai.com/codex/cli/), see the [tool installation section]({{< relref "2025-11-25-ai-sandbox-lima-vm.md#claude-code-codex-and-gemini" >}}) in the Lima guide; the steps are identical once you're inside the VM.
 
@@ -465,6 +402,16 @@ source ~/.bashrc
 nvm install --lts
 ```
 
+**[fzf](https://github.com/junegunn/fzf) (fuzzy finder + bash fuzzy search)**
+
+```bash
+FZF_LATEST=$(curl -s https://api.github.com/repos/junegunn/fzf/releases/latest | jq -r .tag_name)
+curl -Lo fzf.tar.gz "https://github.com/junegunn/fzf/releases/download/${FZF_LATEST}/fzf-${FZF_LATEST#v}-linux_amd64.tar.gz"
+sudo tar -xzf fzf.tar.gz -C /usr/local/bin fzf
+rm fzf.tar.gz
+echo 'eval "$(fzf --bash)"' >> ~/.bashrc
+```
+
 **Golang**
 
 ```bash
@@ -477,9 +424,9 @@ sudo rm -rf /usr/local/go && sudo tar -C /usr/local -xzf go.tar.gz
 rm go.tar.gz
 ```
 
-**Containerd + nerdctl**
+**Docker / Containerd + nerdctl**
 
-[nerdctl](https://github.com/containerd/nerdctl) is a Docker-compatible CLI for containerd. It's lightweight and works well in VMs.
+If you want Docker, consider containerd and [nerdctl](https://github.com/containerd/nerdctl). It's pretty much fully Docker-compatible and works well in VMs.
 
 ```bash
 # Download and install nerdctl (full package includes containerd, CNI plugins and BuildKit)
@@ -489,33 +436,118 @@ curl -sSL "https://github.com/containerd/nerdctl/releases/download/${NERDCTL_LAT
 # Enable and start containerd, and BuildKit for image building
 sudo systemctl enable --now containerd
 sudo systemctl enable --now buildkit
+```
 
-# Test the installation
+Test the installation
+
+```bash
 sudo nerdctl ps
 sudo nerdctl run --rm hello-world
 ```
 
-To run nerdctl without sudo, enable rootless mode:
+### Install LLMs
 
+**Claude Code**
 ```bash
-containerd-rootless-setuptool.sh install
-nerdctl run --rm hello-world
-```
-
-**LLM Agents**
-
-```bash
-# Install Claude Code CLI (run with 'claude')
 curl -fsSL https://claude.ai/install.sh | bash
 echo 'alias claude="claude --dangerously-skip-permissions"' >> ~/.bashrc
+```
 
-# Install Gemini CLI (run with 'gemini')
+**Gemini**
+```bash
 npm install -g @google/gemini-cli@latest
 echo 'alias gemini="gemini --yolo"' >> ~/.bashrc
+```
 
-# Install Codex CLI (run with 'codex')
+**Codex CLI**
+```bash
 npm install -g @openai/codex@latest
 echo 'alias codex="codex --dangerously-bypass-approvals-and-sandbox"' >> ~/.bashrc
+```
+
+## Expose Services with a Tunnel
+
+To make a dev server - or any service - accessible via the public internet (e.g., for webhooks, demos, or API testing), you can use tunnels such as [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/), <a href="https://ngrok.com/">ngrok</a> or [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel).
+
+For using Cloudflare, install `cloudflared` inside the VM:
+
+```bash
+curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb -o cloudflared.deb
+sudo dpkg -i cloudflared.deb
+```
+
+Create a quick tunnel (no account required, temporary URL):
+
+```bash
+cloudflared tunnel --url http://localhost:3000
+```
+
+For persistent tunnels, authenticate first:
+
+```bash
+cloudflared tunnel login
+cloudflared tunnel create my-tunnel
+cloudflared tunnel route dns my-tunnel myapp.example.com
+cloudflared tunnel run my-tunnel
+```
+
+---
+
+## VM Management with Virsh
+
+Here are the essential [commands](https://www.libvirt.org/manpages/virsh.html) for managing your VMs:
+
+### Lifecycle commands
+
+```bash
+# List all VMs (running and stopped)
+virsh list --all
+
+# Start a VM
+virsh start project1
+
+# Enable autostart (start on boot)
+virsh autostart project1
+
+# Disable autostart
+virsh autostart --disable project1
+
+# Gracefully shutdown a VM
+virsh shutdown project1
+
+# Force stop a VM (like pulling the power)
+virsh destroy project1
+
+# Delete a VM and its storage
+virsh undefine project1 --remove-all-storage
+
+# Reboot a VM
+virsh reboot project1
+```
+
+### Console access
+
+```bash
+# Connect to the VM console
+virsh console project1
+
+# If an existing session is active, you may need to force it:
+virsh console project1 --force
+```
+
+Press <kbd>Ctrl</kbd> + <kbd>]</kbd> to detach from the console.
+
+### VM information
+
+```bash
+# Show VM details
+virsh dominfo project1
+
+# Show VM IP address
+virsh domifaddr project1
+
+# Show VM disk information
+virsh domblklist project1
 ```
 
 ---
@@ -552,9 +584,8 @@ sudo virt-install \
   --name project1 \
   --ram 16384 \
   --vcpus 4 \
-  --disk size=40 \
   --import \
-  --disk noble-server-cloudimg-amd64.img \
+  --disk /var/lib/libvirt/images/project1-ubuntu.img \
   --os-variant ubuntu24.04 \
   --cloud-init user-data=user-data.yaml
 ```
@@ -566,7 +597,10 @@ sudo virt-install \
 Snapshots let you save the VM state and revert if something goes wrong; useful before running experimental LLM-generated code.
 
 ```bash
-# Create a snapshot
+# Shutdown the source VM first
+virsh shutdown project1
+
+# Create a snapshot (takes about 10 seconds)
 virsh snapshot-create-as project1 --name "before-experiment" --description "Clean state"
 
 # List snapshots
@@ -625,20 +659,22 @@ sudo apt install qemu-kvm libvirt-daemon-system virtinst
 sudo systemctl enable --now libvirtd
 
 # Download cloud image
-wget https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
+wget -O /var/lib/libvirt/images/project1-ubuntu.img https://cloud-images.ubuntu.com/noble/current/noble-server-cloudimg-amd64.img
 
 # Create VM
-sudo virt-install --name project1 --ram 16384 --vcpus 4 --disk size=40 \
-  --import --disk noble-server-cloudimg-amd64.img \
+sudo virt-install --name project1 --ram 16384 --vcpus 4 \
+  --import --disk /var/lib/libvirt/images/project1-ubuntu.img \
   --os-variant ubuntu24.04 --cloud-init
 
 # VM lifecycle
 virsh list --all             # List VMs
 virsh start project1         # Start
 virsh autostart project1     # Enable autostart
+virsh console project1       # Console access (Ctrl+] to exit)
+
 virsh shutdown project1      # Graceful shutdown
 virsh destroy project1       # Force stop
-virsh console project1       # Console access (Ctrl+] to exit)
+virsh undefine project1 --remove-all-storage
 
 # Snapshots
 virsh snapshot-create-as project1 --name "clean"
